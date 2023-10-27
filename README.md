@@ -9,8 +9,7 @@ A powerful and flexible jQuery grid plugin for displaying and editing tabular da
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
-- [Displaying Your Data](#display your data)
-- [How It Works](#how it works)
+- [Displaying Your Data](#installation)
 
 ## Features
 
@@ -29,13 +28,11 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
 
 ## Display Your Data
 
-## How It Works
-1. Link jQuery and the plugin file into your HTML file:
-   ```ruby
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="grid-plugin.js"></script>
-    ```
-2. Format grid data into an object with these 3 properties
+1. Data adapter. Defines how to get the grid data. There are two ways to do this(check index.html for the syntax):
+    - Restful API Call
+    - Supplying Local Data
+      
+2. Grid Data. Formatted into an object with these 3 properties:
    - count: specifies the # of rows
    - rows: an array of objects that holds the data for each row
    - schema: an array of objects that defines the behaviors of the columns, by listing properties such as:
@@ -46,16 +43,5 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
      - ro: read-only. If set to true, column is non-editable. If set to false, column is editable
      - type: the data type that the values in said column must be(int, date, etc.)
 
-2. Format a data adapter. There are two ways to do this(check index.html for the syntax):
-    - Restful API Call
-    - Supplying Local Data
 
-3. Call the plugin on a DOM object and supply the data adapter to the plugin as an argument:
-    ```ruby
-    let grid = $("#some_dom_object").grid_ng(your_data_adapter);
-    ```
 
-5. Load the grid using the api the plugin returns
-    ```ruby
-    grid.api.load_grid();
-    ```
