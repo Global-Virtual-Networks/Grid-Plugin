@@ -30,7 +30,7 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
 
 ## Components
 
-1. Data adapter is the property instructs the plugin how to get the grid data. There are two ways to do this(check index.html for the syntax):
+1. Data adapter is the property that instructs the plugin how to get the grid data. There are two ways to do this(check index.html for the syntax):
     - Restful API Call
     - Supplying Local Data
       
