@@ -13,6 +13,23 @@
       on_row_click: function () {
         alert("h1");
       },
+      icons: {
+        ascending:
+          "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAPBJREFUWEftljEOwjAQBCcVf4GWhg4+wQt4GSWfgIqOEj5CRwNaFCPL2HFEzkqE7CqSE+94b++UhpFXM7I+FeBvHZgDe+AB7IBbKmslHJD4AVi0oldgm4JIARyBdUeHnIBNZD8Ud68kISwBfHEJ+g7oOQphVYJQXJZLUEviriRfEFYAZ2AV3PLZAkjDB7wAS1cbKwBlZhYk3geQnuuMu58fK4BYXkOAaKYrwK9t6OxMzQPtDypBbhAVB7D4TRjkgAWAXNSKjezP+SW7oNclKsBkHejbhrk6d82J97dDB1ExgNzBZvuTzYDZDXMHVQeqAy+8ETIhWCfLNQAAAABJRU5ErkJggg==",
+        descending:
+          "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAONJREFUWEftlDEOwjAQBCcVf4GWhg4+wQt4GSWfgIqOEj5CRwNaFEsnJ7GScMgB+ZpEsnM73ty6InNVmfUpAMWByTpwBNYOCTkBm1SfLgeyAzgcvl+Lyc5AP3yHXX/tgAZZNSoFDubyrJskXf40hqmc/zZA9l9QAIY6oMjNgB1wqz+Oh3AO7IG7jabXRXQGVsAV2NYQFkDiB2ABXIBlOKEXgBUIEHqqJBrELeB7cew90Jb/GELCKonqvSHuDaB+FsLOUat4CmDoENr9MUSn+LcAghOa+EeUjMbBvIZwtGMFoDjwAvUAMiFB9k7bAAAAAElFTkSuQmCC",
+        neutral:
+          "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAFJJREFUWEft08EVABAMBNHRGZVTmqtDrqzDKCA2/2Ub4dfC/2MABb4UmEC/1I4FjHN2JRAPcGn5euyXN6CAAvEaxgN4AwooEK9hPIA3oIACTwU2v58MIZifSLoAAAAASUVORK5CYII=",
+        next: "data:image/png;base64, R0lGODlhEAAQAMQRACRIkChNli1TnjNZpjhgrz9otx1m9S9kzy9l0zBiyD5z2yRq8ixx7jRy6ERvwEp1yE970P///1OA1lOE3VWF3liH30+K9k+J/VeH4F+M4Wec+2ic+YWu/4iu/6K9/6W//yH5BAEAABEALAAAAAAQABAAAAU2YCSOZGmeqIilppSxJPS9cPRoX1U7F/dRsMJF0/FMWASGRaOADRaNQ01gSNQiAcQ1Ath6v7UQADs=",
+        prev: "data:image/png;base64, R0lGODlhEAAQAMQfAF+M4aW//1WF3lOE3Sxx7h1m9S9kz4iu/y1Tnk970CRq8jhgr6K9/0+K9oWu/yRIkC9l0zBiyERvwD5z20p1yDNZpliH31OA1leH4D9ot2ib/TRy6Gic+UeE+yhNlv///yH5BAEAAB8ALAAAAAAQABAAAAU34CeOZGmeaImlJXCxIxAk8GcFGgULgdNIrAHjwOlkYBNOg7CoGTaKSu0TKSCmH4gH+3lwv2BTCAA7",
+        last: "data:image/png;base64, R0lGODlhEAAQAMQNACRIkC1TnjNZpj9otyxm2Dhu3D913Sxx7kRvwEJt1Ep1yEh630574f///1OA1lGD4VaE6V+L4GCM5GiU5W+W7G2Z5mec+3Ga536f7oKg542r8Iiu/5a076G+8KK9/6rE7yH5BAEAAA0ALAAAAAAQABAAAAVZYCOOZGme52Ve2WRWUVl9jzl58Th1jil5m8RIwumVIhyLRdiIaBSmh8ZyIAgaDwzCtLhUAaIFZWAyPAhgkYFyLRUSaVFB0iahSwRIwETgM+IoInCAgYWGDSEAOw==",
+        first:
+          "data:image/png;base64, R0lGODlhEAAQAMQNACRIkC1TnjNZpj9otyxm2Dhu3D913Sxx7kRvwEJt1Ep1yEh630574f///1OA1lGD4VaE6V+L4GCM5GiU5W+W7G2Z5mec+3Ga536f7oKg542r8Iiu/5a076G+8KK9/6rE7yH5BAEAAA0ALAAAAAAQABAAAAVWYCOOZGme55RdJls+X1VGcul0Exl5uc1Jo8TGAywpNBFRwmLhJEsIzKMhIBwsmmlpQFmIANaLtySgGEbgx5ksKZAACXcpACGUwCYAw17iv+EogYKDJCEAOw==",
+        search:
+          "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAhNJREFUWEfV103oDVEYx/HPfyErC3YIiQ3KisIKC8oKIWVlgbzsWKGwkAVKiVIWklI2siFSVl4WWAgrSsjLhsKKRI/O1DTdO2fm3nH/nDo1t3nOc773Ob/zPM+MGecxNs77+68ANmIlFqb5Ax/wEedxA5/aRrRJBA5jAxZknH/FJexqA5EDOIftyeEtPMEj3MVPLC7NVcnuM9bgQROQOoBfJQe7cTbj8AT2lmym4X0Ooh/AHSxPi+fiZc5Rer8U99LzdaxFaKXv6AUQZ34orViG+w03L8zm4EX6cQThrxXA0yS4k9jXcvPCPIR4Bu+wqO4oqhGIq3YFIbjVA25eLLuJEGZtFKoAp7EHR3FwSIDjKYJXsb6frypAIb4Qz7UhATbjchJwCLnnqAJ8wSRMT+c3DMMMvMZ3TGwKEKl0cscAbzCzKcBzzEv3t6sjeJiyZaMjKDTQpQgvYGvTCGxJBaXLaxibB0SjCEzBqyTELhJRbDo7+WwEEEZRdHZ2lIqPYX/bVBz2xW2I50GL0W2sw7dBAJZUitAg5fgZNiFuVqtiVBhPTa1WNBcxmjYkUYZnpYKWhch1RBNwANsQDUZuRP04lQCiqEUbVwuRAyhHY0epIY00G81ozMeI846+4W2JcH6qrLUQTQFy/7zf+yzE3wYIsFqIUQBUIaKrji7pzxgVQAFxEfH9sGI8AHrqZJQR+DcBfgOzr3YhBsQOIwAAAABJRU5ErkJggg==",
+        restore_defaults:
+          "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAmdJREFUWEft1knITlEYB/CfpZkNijKUBTYKKTOZkmKhDCHTgiJDMi3MyVBkiEhkKKVICREJEaGULEhJpChFxEKGHp1Pr7f3vfe+H/VtvlO3czvnGf7PfJpo4NWkgfVrBFCrB/pjLGLvho789uIbPMMZnMXHoqEtCqAD9mJSAcFfcRBb8TaPvgiAITiHtknYeTzEA9zHT/RB37RPTHSfMAUXs0DkAZiFo0lAKJ2HRzlWRXhOoWuiW4Vt6f8GfmB4nYwsAOMR1sZahH157iy5b449mJPONmFt8lYc/dFbDUAnPEUzlFpQjiEs+o4RVcAtxc50N7vEm7kAjmEmbmNQhuUR/78sqkC7DuvLzjMBRLK9xxf0wKt/BBDshzG3RE4mgPk4gBPJC1mhz/JAhCcqqNLKBHAtxXQJduckXhaA6xhWgf8qRmVVwQe0xlDc/AcAhYqmUhXUWdUSnwsC6JcaUyGlpUSVAETyNUV7vMuReBmjE81+rKllDlQrnxfogjG4UsCk6diBmBfR+5fjZAG+qvUbfX8CVmJ7QUGtsBGLE30k8sgivJVCsDBNviJlWK6jFw4hWnHv+gJol5rPN4TAl0UE1Zem2iyIRhQNKVrx4JIhUl89VfmqAeiMJ8mVy7Drv2tOArPG8ThcSHQxTDbUCGJz8uIKHKnGm/cgmYHjifkepiLKNGsNTGO3eyKajNP1BRB8A9JDMxpTrLu4hRg2sbdIQycGT7TvniXKpqXXUc05UM7QBluwoGAYInSr8TiPPi8E5fyRnPHQjPyI//hiXrzGc9zBpQLvxj9yawWQZ1DN940AGtwDvwBf2G0hSZYeNgAAAABJRU5ErkJggg==",
+      },
       grid_mode: "pagination",
       style: {
         //css relating to table
@@ -287,7 +304,7 @@
 
       const search_icon = append_child("img", search_container, "search_icon");
       css(conf.style.search_icon, search_icon);
-      search_icon.src = "/Scripts/Grid-Plugin-NG/images/search-icon.png";
+      search_icon.setAttribute("src", conf.icons.search);
 
       search_bar = append_child("input", search_container, "search_bar");
       css(conf.style.search_bar, search_bar);
@@ -476,13 +493,13 @@
 
       first_butt = append_child("button", pager_cont, "first_butt");
       const fir_butt_img = append_child("img", first_butt);
-      fir_butt_img.src = "/Scripts/Grid-Plugin-NG/images/first.gif";
+      fir_butt_img.setAttribute("src", conf.icons.first);
       css(conf.style.pager_butts, fir_butt_img);
       css(conf.style.spacing, first_butt);
 
       prev_butt = append_child("button", pager_cont, "prev_butt");
       const prev_butt_img = append_child("img", prev_butt);
-      prev_butt_img.src = "/Scripts/Grid-Plugin-NG/images/prev.gif";
+      prev_butt_img.setAttribute("src", conf.icons.prev);
       css(conf.style.pager_butts, prev_butt_img);
       css(conf.style.spacing, prev_butt);
 
@@ -497,13 +514,13 @@
 
       next_butt = append_child("button", pager_cont, "next_butt");
       const next_butt_img = append_child("img", next_butt);
-      next_butt_img.src = "/Scripts/Grid-Plugin-NG/images/next.gif";
+      next_butt_img.setAttribute("src", conf.icons.next);
       css(conf.style.pager_butts, next_butt_img);
       css(conf.style.spacing, next_butt);
 
       last_butt = append_child("button", pager_cont, "last_butt");
       const last_butt_img = append_child("img", last_butt);
-      last_butt_img.src = "/Scripts/Grid-Plugin-NG/images/last.gif";
+      last_butt_img.setAttribute("src", conf.icons.last);
       css(conf.style.pager_butts, last_butt_img);
       css(conf.style.spacing, last_butt);
 
@@ -983,8 +1000,8 @@
       //only do this hover effect if the icon was neutral to begin with
       let icon_cell_click;
       icon_cell.addEventListener("mouseover", function () {
-        if (icon.src.includes("images/neutral.png")) {
-          icon.src = "/Scripts/Grid-Plugin-NG/images/ascending.png";
+        if (icon.src.includes(conf.icons.neutral)) {
+          icon.setAttribute("src", conf.icons.ascending);
           icon_cell_click = header_click.get_count();
         }
       });
@@ -992,7 +1009,7 @@
         //only return the img src to neutral.png if the user has not triggered the header cell click event
         const h = header_click.get_count();
         if (header_click.get_count() === icon_cell_click) {
-          icon.src = "/Scripts/Grid-Plugin-NG/images/neutral.png";
+          icon.setAttribute("src", conf.icons.neutral);
         }
       });
       icon_cell.addEventListener("click", function () {
@@ -1082,7 +1099,8 @@
       const img = append_child("img", cell);
       css(conf.style.img, img);
       img.setAttribute("id", id);
-      img.src = "/Scripts/Grid-Plugin-NG/images/neutral.png";
+      img.setAttribute("src", conf.icons.neutral);
+
       //add extra css to header cells
       css(conf.style.header_cells_ex, cell);
       return img;
@@ -1117,13 +1135,14 @@
         //modify the img_src
         if (header_cell === target_cell) {
           if (cols_ascending[header_id]) {
-            header_img.src = "/Scripts/Grid-Plugin-NG/images/descending.png";
+            header_img.setAttribute("src", conf.icons.descending);
           } else {
-            header_img.src = "/Scripts/Grid-Plugin-NG/images/ascending.png";
+            header_img.setAttribute("src", conf.icons.ascending);
           }
           css(["opacity: 1"], header_img);
         } else {
-          header_img.src = "/Scripts/Grid-Plugin-NG/images/neutral.png";
+          header_img.setAttribute("src", conf.icons.neutral);
+
           css(conf.style.img, header_img);
         }
       }
