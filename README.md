@@ -9,7 +9,7 @@ A powerful and flexible jQuery grid plugin for displaying and editing tabular da
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
-- [Key Components](#keycomponents)
+- [Key Components](#key components)
 
 ## Features
 
