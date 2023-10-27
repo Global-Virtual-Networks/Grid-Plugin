@@ -30,35 +30,407 @@
           .then((data) => {
             // Handle the data returned from the file
             callback(JSON.parse(data));
+          })
+          .catch((error) => {
+            // Handle any errors that occurred during the API call
+            console.error("API call failed:", error);
           });
-        //   .catch((error) => {
-        //     // Handle any errors that occurred during the API call
-        //     console.error("API call failed:", error);
-        //   });
       },
     },
     on_row_click: null,
   };
   let client = {
     data_adapter: {
-      load: function (parameters) {
-        var callback = null;
-        if (arguments.length > 1) callback = arguments[1];
-        rs = new $.ls.recordSet("Sales.SelectGrid");
-        rs.finish = function () {
-          data = rs.properties.getRecordset();
-          //rs does NOT have a getValue function, so the open function in Main.html does not work
-          if (callback) callback(data, this, self);
-        };
-        rs.open(parameters, function () {
-          let data = rs.properties.getRecordset();
-          if (callback) callback(data);
+      load: function (callback) {
+        callback({
+          count: 30,
+          rows: [
+            {
+              id: "0",
+              cell: [
+                "1",
+                "Brandon Smith",
+                "Sierra Leone",
+                "victor58@example.net",
+                "2011",
+                "http://www.burnett.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "2",
+                "James Dillond",
+                "Guatemala",
+                "joseph26@example.com",
+                "2004",
+                "http://www.hammond.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "3",
+                "Tim Merritt",
+                "Gambia",
+                "charles09@example.net",
+                "1982",
+                "https://www.pierce.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "4",
+                "Kylie Austin",
+                "Hong Kong",
+                "stephaniestark@example.net",
+                "2011",
+                "http://www.turner-kennedy.biz/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "5",
+                "Sandra Cross",
+                "Burundi",
+                "benjaminstanley@example.net",
+                "1971",
+                "http://newman.biz/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "6",
+                "Troy Orr",
+                "Turkmenistan",
+                "jcook@example.net",
+                "2023",
+                "https://mosley.biz/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "7",
+                "Amy Wilson",
+                "Tonga",
+                "reynoldsdevin@example.com",
+                "2012",
+                "https://www.vasquez.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "8",
+                "Thomas Dalton",
+                "South Africa",
+                "donna05@example.net",
+                "1973",
+                "https://www.kim.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "9",
+                "Bryan Miller",
+                "Kenya",
+                "escobarwilliam@example.net",
+                "1977",
+                "https://www.jones-keith.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "10",
+                "Anthony Hunter",
+                "Maldives",
+                "erin25@example.com",
+                "2023",
+                "https://www.thomas.info/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "11",
+                "Joseph Morris",
+                "Cape Verde",
+                "katherinejenkins@example.net",
+                "1986",
+                "http://salazar.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "12",
+                "Brittney Stephens",
+                "Martinique",
+                "fblake@example.org",
+                "2017",
+                "https://bell.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "13",
+                "Mary Butler",
+                "Sweden",
+                "sarahmartin@example.com",
+                "1993",
+                "http://estes-cervantes.biz/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "14",
+                "John Smith",
+                "French Guiana",
+                "cpark@example.org",
+                "1998",
+                "https://walter.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "15",
+                "Nichole Holden",
+                "Bermuda",
+                "watkinsnicholas@example.net",
+                "2017",
+                "https://mckinney-rice.net/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "16",
+                "John White",
+                "Canada",
+                "duffysamantha@example.com",
+                "2018",
+                "https://www.blair-wall.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "17",
+                "Nicholas Sanchez",
+                "Serbia",
+                "ahouse@example.org",
+                "2009",
+                "http://www.grant.info/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "18",
+                "Rhonda Graham",
+                "Colombia",
+                "annette64@example.net",
+                "2011",
+                "http://allison.info/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "19",
+                "Steven Johnson",
+                "Solomon Islands",
+                "angelanichols@example.net",
+                "2008",
+                "http://scott-ball.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "20",
+                "Micheal Jones",
+                "Costa Rica",
+                "imahoney@example.net",
+                "1971",
+                "https://hurley.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "21",
+                "Eddie Bennett",
+                "Central African Republic",
+                "michele28@example.net",
+                "1977",
+                "https://www.carter-fowler.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "22",
+                "Anthony Morales",
+                "Faroe Islands",
+                "wthomas@example.net",
+                "2018",
+                "http://www.poole.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "23",
+                "Scott Norton",
+                "Germany",
+                "hortonbrooke@example.net",
+                "1978",
+                "http://www.lewis.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "24",
+                "Jonathan Rubio",
+                "Bouvet Island (Bouvetoya)",
+                "samantha85@example.net",
+                "2020",
+                "http://dunn.org/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "25",
+                "Natalie Sutton",
+                "Morocco",
+                "jamie82@example.org",
+                "1978",
+                "http://glenn-ruiz.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "26",
+                "Ms. Caroline Morgan",
+                "Thailand",
+                "justinlamb@example.net",
+                "2021",
+                "http://www.miller.biz/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "27",
+                "Christine Vasquez",
+                "Sudan",
+                "baxterchristopher@example.com",
+                "1999",
+                "http://henry.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "28",
+                "Emily Hall",
+                "Anguilla",
+                "woodjason@example.com",
+                "1975",
+                "https://hansen-wright.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "29",
+                "Caitlin Barajas",
+                "Mali",
+                "debbiewilliamson@example.net",
+                "1978",
+                "https://stanton-hester.com/",
+              ],
+            },
+            {
+              id: "0",
+              cell: [
+                "30",
+                "Julia Gross",
+                "Mongolia",
+                "colerobin@example.org",
+                "1991",
+                "https://www.baker.org/",
+              ],
+            },
+          ],
+          schema: [
+            {
+              bind: true,
+              len: 0,
+              name: "id",
+              ord: 0,
+              ro: true,
+              type: "numeric",
+            },
+            {
+              bind: false,
+              len: 0,
+              name: "name",
+              ord: 1,
+              ro: false,
+              type: "string",
+            },
+            {
+              bind: false,
+              len: 0,
+              name: "country_of_origin",
+              ord: 4,
+              ro: true,
+              type: "string",
+            },
+            {
+              bind: true,
+              len: 0,
+              name: "email",
+              ord: 3,
+              ro: false,
+              type: "string",
+            },
+            {
+              bind: true,
+              len: 0,
+              name: "birth_year",
+              ord: 2,
+              ro: false,
+              type: "date",
+            },
+            {
+              bind: true,
+              len: 0,
+              name: "portfolio",
+              ord: 5,
+              ro: false,
+              type: "string",
+            },
+          ],
         });
-        return self;
       },
     },
     on_row_click: null,
   };
-  const select_grid = $("#grid_container").grid_ng(restful_api);
+  const select_grid = $("#grid_container").grid_ng(client);
   select_grid.api.load_grid();
 </script>

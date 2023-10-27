@@ -741,7 +741,10 @@
         const row_dobj = add_row(row);
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
-            conf.on_row_click(rs.properties, idx);
+            // conf.on_row_click(rs.properties, idx);
+            if (typeof on_row_click !== "undefined") {
+              conf.on_row_click();
+            }
           }
         });
       });
