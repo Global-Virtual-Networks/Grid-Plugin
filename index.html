@@ -1,17 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="table-plugin.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="grid-plugin.js"></script>
     <title>Grid Plugin Demo</title>
-</head>
-<body>
-    <div id="grid_container" style="display: block; height: 510px;"></div>
-</body>
+  </head>
+  <body>
+    <div id="grid_container" style="display: block; height: 510px"></div>
+  </body>
 </html>
-<script type='text/javascript'>
-    const select_grid = $("#grid_container").grid_ng();
-    select_grid.api.load_grid();
+<script type="text/javascript">
+  let restful_api = {
+    data_adapter: {
+      load: function (callback) {
+        // Define the URL of the file you want to fetch
+        var url = "grid_data.json";
+
+        // Make the API call using the fetch API
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.text(); // Or use response.json() for JSON data
+          })
+          .then((data) => {
+            // Handle the data returned from the file
+            callback(JSON.parse(data));
+          });
+        //   .catch((error) => {
+        //     // Handle any errors that occurred during the API call
+        //     console.error("API call failed:", error);
+        //   });
+      },
+    },
+    on_row_click: null,
+  };
+  let client = {
+    data_adapter: {
+      load: function (parameters) {
+        var callback = null;
+        if (arguments.length > 1) callback = arguments[1];
+        rs = new $.ls.recordSet("Sales.SelectGrid");
+        rs.finish = function () {
+          data = rs.properties.getRecordset();
+          //rs does NOT have a getValue function, so the open function in Main.html does not work
+          if (callback) callback(data, this, self);
+        };
+        rs.open(parameters, function () {
+          let data = rs.properties.getRecordset();
+          if (callback) callback(data);
+        });
+        return self;
+      },
+    },
+    on_row_click: null,
+  };
+  const select_grid = $("#grid_container").grid_ng(restful_api);
+  select_grid.api.load_grid();
 </script>
