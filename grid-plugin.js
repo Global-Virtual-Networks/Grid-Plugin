@@ -760,7 +760,7 @@
                     if (!event.ctrlKey && !edit_mode.get_mode()) {
                         // conf.on_row_click(rs.properties, idx);
                         if (typeof conf.on_row_click === "function") {
-                            const _idx = this.id.indexOf("_");                    
+                            const _idx = this.id.indexOf("_");
                             conf.on_row_click(_idx);
                         }
                     }
