@@ -9,6 +9,8 @@ A powerful and flexible jQuery grid plugin for displaying and editing tabular da
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
+- [Displaying Your Data](#display your data)
+- [How It Works](#how it works)
 
 ## Features
 
@@ -24,6 +26,10 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
 
 ## Installation
 
+
+## Display Your Data
+
+## How It Works
 1. Link jQuery and the plugin file into your HTML file:
    ```ruby
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
