@@ -24,5 +24,6 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
 
 ## Installation
 
-'''ruby
+```ruby
 var x = "3";
+```
