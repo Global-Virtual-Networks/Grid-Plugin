@@ -33,7 +33,7 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
 
 2. Format a data adapter. There are two ways to do this:
   - Restful API Call:
-    ```
+    ```ruby
       let restful_api = {
     data_adapter: {
       load: function (callback) {
@@ -62,7 +62,7 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
   };
     ```
     - Supplying Local Data:
-      ```
+      ```ruby
   let client = {
     data_adapter: {
       load: function (callback) {
@@ -183,11 +183,11 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
       ```
 
 3. Call the plugin on a DOM object and supply the data adapter to the plugin as an argument:
-```
+```ruby
 let grid = $("#some_dom_object").grid_ng([data_adapter]#data_adapter);
 ```
 
 5. Load the grid using the api the plugin returns
-   ```
+   ```ruby
 grid.api.load_grid();
    ```
