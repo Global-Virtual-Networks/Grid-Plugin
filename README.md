@@ -35,11 +35,11 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
   - Supplying Local Data
 
 3. Call the plugin on a DOM object and supply the data adapter to the plugin as an argument:
-  ```ruby
-  let grid = $("#some_dom_object").grid_ng(your_data_adapter);
-  ```
+    ```ruby
+    let grid = $("#some_dom_object").grid_ng(your_data_adapter);
+    ```
 
 5. Load the grid using the api the plugin returns
-  ```ruby
-  grid.api.load_grid();
-  ```
+    ```ruby
+    grid.api.load_grid();
+    ```
