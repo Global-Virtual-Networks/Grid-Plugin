@@ -9,7 +9,7 @@ A powerful and flexible jQuery grid plugin for displaying and editing tabular da
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
-- [Key Components](#key components)
+- [Components](#components)
 
 ## Features
 
@@ -28,7 +28,7 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
 2. Modify the data adapter/grid data to your liking
 3. That's it
 
-## Key Components
+## Components
 
 1. Data adapter is the property that instructs the plugin how to get the grid data. There are two ways to do this(check index.html for the syntax):
     - Restful API Call
