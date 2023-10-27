@@ -34,7 +34,7 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
     - Restful API Call
     - Supplying Local Data
       
-2. Grid Data Object. Must include these 3 properties:
+2. Grid Data Object. Must include these 3 properties(Reference grid_data.json for a visual):
    - count: specifies the # of rows
    - rows: an array of objects that holds the data for each row
    - schema: an array of objects that defines the behaviors of the columns, by listing these properties:
