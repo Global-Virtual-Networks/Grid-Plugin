@@ -41,8 +41,8 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
      - type: the data type that the values in said column must be(int, date, etc.)
 
 2. Format a data adapter. There are two ways to do this(check index.html for the syntax):
-  - Restful API Call
-  - Supplying Local Data
+    - Restful API Call
+    - Supplying Local Data
 
 3. Call the plugin on a DOM object and supply the data adapter to the plugin as an argument:
     ```ruby
