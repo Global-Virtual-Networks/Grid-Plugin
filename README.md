@@ -9,7 +9,7 @@ A powerful and flexible jQuery grid plugin for displaying and editing tabular da
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
-- [Displaying Your Data](#installation)
+- [Key Components](#components)
 
 ## Features
 
@@ -24,15 +24,17 @@ A powerful and flexible jQuery grid plugin for displaying and editing tabular da
 For a live demonstration, visit our [Demo Page](https://global-virtual-networks.github.io/Grid-Plugin/).
 
 ## Installation
+1. Clone or Download the project
+2. Modify the data adapter/grid data to your liking
+3. That's it
 
+## Components
 
-## Display Your Data
-
-1. Data adapter. Defines how to get the grid data. There are two ways to do this(check index.html for the syntax):
+1. Data adapter is the property instructs the plugin how to get the grid data. There are two ways to do this(check index.html for the syntax):
     - Restful API Call
     - Supplying Local Data
       
-2. Grid Data. Formatted into an object with these 3 properties:
+2. Grid Data Object. Must include these 3 properties:
    - count: specifies the # of rows
    - rows: an array of objects that holds the data for each row
    - schema: an array of objects that defines the behaviors of the columns, by listing properties such as:
