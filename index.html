@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="table-plugin.js"></script>
+    <title>Grid Plugin Demo</title>
+</head>
+<body>
+    <div id="grid_container" style="display: block; height: 510px;"></div>
+</body>
+</html>
+<script type='text/javascript'>
+    const select_grid = $("#grid_container").grid_ng();
+    select_grid.api.load_grid();
+</script>
