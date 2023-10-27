@@ -1221,21 +1221,10 @@
             });
         };
 
-        var getParameters = function () {
-            let parameters = {};
-            parameters.searchTerm = "";
-            parameters.searchField = "name";
-            parameters.status = "";
-            parameters.orderType = "";
-            parameters.passType = "";
-            return parameters;
-        };
-
         this.api = {
             load_grid: function () {
                 // conf.data_adapter.load(getParameters(), function (data, th, se) {
                 conf.data_adapter.load(function (data) {
-                    debugger;
                     num_of_pages = Math.ceil(data.rows.length / page_len);
                     add_headers(data.schema);
                     // populate_table(data.rows, th, se);
