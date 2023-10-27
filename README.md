@@ -25,9 +25,10 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
 ## Installation
 
 1. Link jQuery and the plugin file into your HTML file:
-'''ruby
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="grid-plugin.js"></script>
+     - '''ruby
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="grid-plugin.js"></script>
+    '''
 
 
 2. Format a data adapter. There are two ways to do this:
