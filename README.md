@@ -28,7 +28,7 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
 '''ruby
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="grid-plugin.js"></script>
-'''
+
 
 2. Format a data adapter. There are two ways to do this:
   - Restful API Call:
