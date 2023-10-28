@@ -1,7 +1,8 @@
 # Grid-Plugin
 
 A powerful and flexible jQuery grid plugin for displaying and editing tabular data.
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)(OPEN-SOURCE)
+[![Open-Source]]
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ## Table of Contents
 
