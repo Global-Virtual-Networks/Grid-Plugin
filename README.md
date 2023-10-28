@@ -37,8 +37,6 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
    - count: specifies the # of rows
    - rows: an array of objects that holds the data for each row
    - schema: an array of objects that defines the behaviors of the columns, by listing these properties:
-     - bind(not in use, define it as null or undefined)
-     - len(not in use, define it as null or undefined)
      - name: The name for the column header. Define it in snakecase, and the plugin will use the Title Case version for the grid(birth_year => Birth Year)
      - ord: the index position of the column
      - ro: read-only. If set to true, column is non-editable. If set to false, column is editable
