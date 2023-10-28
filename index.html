@@ -42,7 +42,7 @@
     },
     on_row_click: null,
   };
-  let client = {
+  let local = {
     data_adapter: {
       load: function (callback) {
         callback({
@@ -381,48 +381,36 @@
           ],
           schema: [
             {
-              bind: true,
-              len: 0,
               name: "id",
               ord: 0,
               ro: true,
               type: "numeric",
             },
             {
-              bind: false,
-              len: 0,
               name: "name",
               ord: 1,
               ro: false,
               type: "string",
             },
             {
-              bind: false,
-              len: 0,
               name: "country_of_origin",
               ord: 4,
               ro: true,
               type: "string",
             },
             {
-              bind: true,
-              len: 0,
               name: "email",
               ord: 3,
               ro: false,
               type: "string",
             },
             {
-              bind: true,
-              len: 0,
               name: "birth_year",
               ord: 2,
               ro: false,
               type: "date",
             },
             {
-              bind: true,
-              len: 0,
               name: "portfolio",
               ord: 5,
               ro: false,
@@ -434,6 +422,6 @@
     },
     on_row_click: null,
   };
-  const select_grid = $("#grid_container").grid_ng(client);
-  select_grid.api.load_grid();
+  const grid = $("#grid_container").grid_ng(local);
+  grid.api.load_grid();
 </script>
