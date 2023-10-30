@@ -11,7 +11,14 @@
   <body>
     <div
       id="grid_container"
-      style="display: block; height: 510px; margin-top: 2em"
+      style="
+        width: auto;
+        max-width: 1000px;
+        height: auto;
+        max-height: 750px;
+        margin: 4em 2em;
+        border: 2px solid black;
+      "
     ></div>
   </body>
 </html>
@@ -40,7 +47,9 @@
           });
       },
     },
-    on_row_click: null,
+    on_row_click: function () {
+      alert("Clicked on row #" + this.on_row_click.row_num);
+    },
   };
   let local = {
     data_adapter: {
@@ -420,8 +429,10 @@
         });
       },
     },
-    on_row_click: null,
+    on_row_click: function () {
+      alert("Clicked on row #" + this.on_row_click.row_num);
+    },
   };
-  const grid = $("#grid_container").grid_ng(local);
+  const grid = $("#grid_container").grid_ng(restful_api);
   grid.api.load_grid();
 </script>
