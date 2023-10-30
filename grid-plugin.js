@@ -10,9 +10,6 @@
 
     const plugin_dom_obj = this[0];
     const conf = {
-      on_row_click: function () {
-        alert("h1");
-      },
       icons: {
         ascending:
           "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAPBJREFUWEftljEOwjAQBCcVf4GWhg4+wQt4GSWfgIqOEj5CRwNaFCPL2HFEzkqE7CqSE+94b++UhpFXM7I+FeBvHZgDe+AB7IBbKmslHJD4AVi0oldgm4JIARyBdUeHnIBNZD8Ud68kISwBfHEJ+g7oOQphVYJQXJZLUEviriRfEFYAZ2AV3PLZAkjDB7wAS1cbKwBlZhYk3geQnuuMu58fK4BYXkOAaKYrwK9t6OxMzQPtDypBbhAVB7D4TRjkgAWAXNSKjezP+SW7oNclKsBkHejbhrk6d82J97dDB1ExgNzBZvuTzYDZDXMHVQeqAy+8ETIhWCfLNQAAAABJRU5ErkJggg==",
@@ -758,10 +755,11 @@
         const row_dobj = add_row(row);
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
-            // conf.on_row_click(rs.properties, idx);
             if (typeof conf.on_row_click === "function") {
               const _idx = this.id.indexOf("_");
-              conf.on_row_click(_idx);
+              conf.on_row_click.id = this.id;
+              conf.on_row_click.row_num = this.id.slice(_idx + 1);
+              conf.on_row_click();
             }
           }
         });

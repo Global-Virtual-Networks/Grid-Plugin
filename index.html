@@ -47,7 +47,9 @@
           });
       },
     },
-    on_row_click: null,
+    on_row_click: function () {
+      alert("Clicked on row #" + this.on_row_click.row_num);
+    },
   };
   let local = {
     data_adapter: {
@@ -427,8 +429,10 @@
         });
       },
     },
-    on_row_click: null,
+    on_row_click: function () {
+      alert("Clicked on row #" + this.on_row_click.row_num);
+    },
   };
-  const grid = $("#grid_container").grid_ng(local);
+  const grid = $("#grid_container").grid_ng(restful_api);
   grid.api.load_grid();
 </script>
