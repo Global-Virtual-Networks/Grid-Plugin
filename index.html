@@ -48,8 +48,11 @@
       },
     },
     on_row_click: function () {
-      alert("Clicked on row #" + this.on_row_click.row_num);
+      const row_id = this.on_row_click.dom_object.id;
+      const _idx = row_id.indexOf("_");
+      alert("Clicked on row #" + row_id.slice(_idx + 1));
     },
+    // style: { alt_color: ["background-color: red"] },
   };
   let local = {
     data_adapter: {
@@ -430,7 +433,9 @@
       },
     },
     on_row_click: function () {
-      alert("Clicked on row #" + this.on_row_click.row_num);
+      const row_id = this.on_row_click.dom_object.id;
+      const _idx = row_id.indexOf("_");
+      alert("Clicked on row #" + row_id.slice(_idx + 1));
     },
   };
   const grid = $("#grid_container").grid_ng(restful_api);
