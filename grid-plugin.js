@@ -191,6 +191,12 @@
       },
     };
     if (arguments.length > 0) {
+      //   const entries = Object.entries(config.style);
+      //   for (const [key, value] of entries) {
+      //     if (key in conf.style) {
+      //       conf.style[key] = value;
+      //     }
+      //   }
       $.extend(conf, config);
     }
     //add event listeners that will change the cursor depending on whether the ctrl key is being held or not
@@ -1031,7 +1037,7 @@
       let timeout;
       let cutoff_div;
       const cell_cont = append_child("div", td, "cell_cont");
-      css(["border-right: 1px solid black;"], cell_cont);
+      css(["border-right: 1px solid #ddd;"], cell_cont);
       cell_cont.appendChild(cell);
 
       //add a hover event listener to each table row that highlights the rows the cursor is hovering over
