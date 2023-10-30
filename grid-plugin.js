@@ -49,7 +49,6 @@
           "width: 100%;",
         ],
         cell: [
-          "border-right: 1px solid #dddddd;",
           "padding: .8em;",
           "height: auto;",
           "font-size: .8em;",
@@ -608,7 +607,7 @@
         "row_" + extract_row_num(Object.keys(bef_aft_obj)[0])
       );
       reset_row_backgrounds(edited_row);
-      change_pos("left", edited_row);
+      change_alignment("left", edited_row);
 
       //wipe the object clean
       bef_aft_obj = {};
@@ -866,7 +865,7 @@
       responsive_design();
     };
 
-    const change_pos = function (position, row) {
+    const change_alignment = function (position, row) {
       for (const td of row.cells) {
         const cell_cont = td.children[0];
         css(conf.style.center_child_elems, cell_cont);
@@ -917,7 +916,7 @@
             cell_tb.select();
           }
         }
-        change_pos("center", row);
+        change_alignment("center", row);
       }
     };
 
@@ -1032,7 +1031,7 @@
       let timeout;
       let cutoff_div;
       const cell_cont = append_child("div", td, "cell_cont");
-      // css(["position: relative;"], cell_cont);
+      css(["border-right: 1px solid black;"], cell_cont);
       cell_cont.appendChild(cell);
 
       //add a hover event listener to each table row that highlights the rows the cursor is hovering over
