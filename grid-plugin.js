@@ -756,9 +756,7 @@
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
-              const _idx = this.id.indexOf("_");
-              conf.on_row_click.id = this.id;
-              conf.on_row_click.row_num = this.id.slice(_idx + 1);
+              conf.on_row_click.dom_object = this;
               conf.on_row_click();
             }
           }
