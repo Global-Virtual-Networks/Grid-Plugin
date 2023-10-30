@@ -10,9 +10,6 @@
 
         const plugin_dom_obj = this[0];
         const conf = {
-            on_row_click: function () {
-                alert("h1");
-            },
             icons: {
                 ascending:
                     "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAPBJREFUWEftljEOwjAQBCcVf4GWhg4+wQt4GSWfgIqOEj5CRwNaFCPL2HFEzkqE7CqSE+94b++UhpFXM7I+FeBvHZgDe+AB7IBbKmslHJD4AVi0oldgm4JIARyBdUeHnIBNZD8Ud68kISwBfHEJ+g7oOQphVYJQXJZLUEviriRfEFYAZ2AV3PLZAkjDB7wAS1cbKwBlZhYk3geQnuuMu58fK4BYXkOAaKYrwK9t6OxMzQPtDypBbhAVB7D4TRjkgAWAXNSKjezP+SW7oNclKsBkHejbhrk6d82J97dDB1ExgNzBZvuTzYDZDXMHVQeqAy+8ETIhWCfLNQAAAABJRU5ErkJggg==",
@@ -925,14 +922,15 @@
             }
         };
 
-        const edit_cell = (el, row_num) => {
+        const edit_cell = (el) => {
             el.addEventListener("click", function (event) {
+                const row_num = extract_row_num(this.id);
                 const curr_row = plugin_dom_obj.querySelectorAll("tr")[row_num];
                 edit_mode.set_edit_row(curr_row);
                 //if edit mode was enabled by the user
                 if (entries_container.parentNode == footer_container && event.ctrlKey) {
                     const row = edit_mode.get_edit_row();
-                    add_inputs_to_row(el, row, row_num);
+                    add_inputs_to_row(this, row, row_num);
                 }
             });
         };
@@ -989,7 +987,7 @@
                 td = document.createElement("td");
                 //add a click event listener to every cell inside the grid if ro is false for its corresponding column
                 if (!ord_ro_obj[cell_num]) {
-                    edit_cell(cell, row_num);
+                    edit_cell(cell);
                 }
             }
             cell_on_hov_events(td, cell, tr, row_arr);
@@ -1211,7 +1209,6 @@
         };
 
         const pagination_active = (new_page) => {
-            //   conf.data_adapter.load(getParameters(), function (data) {
             conf.data_adapter.load(function (data) {
                 curr_page = new_page;
                 first_entry_index = (new_page - 1) * page_len;
@@ -1224,7 +1221,6 @@
 
         this.api = {
             load_grid: function () {
-                // conf.data_adapter.load(getParameters(), function (data, th, se) {
                 conf.data_adapter.load(function (data) {
                     num_of_pages = Math.ceil(data.rows.length / page_len);
                     add_headers(data.schema);
