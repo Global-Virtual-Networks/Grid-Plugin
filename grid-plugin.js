@@ -269,6 +269,19 @@
       tot_pgs.innerText = "of " + num_of_pages;
     };
 
+    const mode = function () {
+      let mode = true;
+
+      return {
+        set: function (bool) {
+          mode = bool;
+        },
+        get: function () {
+          return mode;
+        },
+      };
+    };
+
     const self = this;
     let page_len = 14;
     let curr_page = 1;
@@ -286,6 +299,7 @@
     let reset_butt;
     let export_butt;
     const grid_mode = grid_mde();
+    const search_mode = mode();
 
     const create_header = () => {
       grid_container = append_child("div", plugin_dom_obj, "grid_container");
@@ -323,24 +337,21 @@
         search_bar.style.outline = "none";
       });
       search_bar.addEventListener("input", function () {
-        highlight_on_search();
+        if (this.value.length > 0) {
+          search_mode.set(true);
+          const search_match_idxs = highlight_on_search();
+          populate_table(search_match_idxs);
+        } else {
+          search_mode.set(false);
+        }
       });
     };
 
     const highlight_on_search = () => {
       conf.data_adapter.load(function (data) {
-        //modify first_entry_index and page_len
-        const curr_feidx = first_entry_index;
-        curr_pl = page_len;
-        first_entry_index = 0;
-        page_len = tabledata_len;
-
-        //load the grid with all existing rows
-        populate_table(data.rows);
-        responsive_design();
-
         const typed_text = search_bar.value.toLowerCase();
         const rows = table.rows;
+        let search_matches = [];
         let row;
 
         //set background row color for header row to main row color because it is getting altered
@@ -364,21 +375,19 @@
               match = true;
 
               //add 'highlight' effect by adding <mark> tag around the substring
-              cell.innerHTML =
-                txt_content.substring(0, index) +
-                "<mark>" +
-                txt_content.substring(index, index + typed_text.length) +
-                "</mark>" +
-                txt_content.substring(index + typed_text.length);
+              //   cell.innerHTML =
+              //     txt_content.substring(0, index) +
+              //     "<mark>" +
+              //     txt_content.substring(index, index + typed_text.length) +
+              //     "</mark>" +
+              //     txt_content.substring(index + typed_text.length);
             }
           }
           if (match) {
-            set_row_background_color(row);
-            row.style.display = "";
-          } else if (!match) {
-            row.style.display = "none";
+            search_matches.push(i);
           }
         }
+        return search_matches;
       });
     };
 
@@ -755,6 +764,7 @@
     };
 
     const populate_table = (tabledata_rows) => {
+      debugger;
       //remove all rows from table
       const table_rows = table.rows;
       while (table_rows.length > 1) {
