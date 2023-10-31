@@ -328,53 +328,60 @@
     };
 
     const highlight_on_search = () => {
-      const typed_text = search_bar.value.toLowerCase();
+      conf.data_adapter.load(function (data) {
+        debugger;
 
-      const table_rows = plugin_dom_obj.querySelectorAll("table tr");
-      const rows = Array.from(table_rows).splice(
-        first_entry_index - 1,
-        last_entry_index + 1
-      );
+        //modify first_entry_index and page_len
+        const curr_feidx = first_entry_index;
+        curr_pl = page_len;
+        first_entry_index = 0;
+        page_len = tabledata_len;
 
-      let row;
+        //load the grid with all existing rows
+        populate_table(data.rows);
+        responsive_design();
 
-      //set background row color for header row to main row color, not alt_color
-      background_count.reset();
-      set_row_background_color(rows[0]);
+        const typed_text = search_bar.value.toLowerCase();
+        const rows = table.rows;
+        let row;
 
-      for (let i = 1; i < rows.length; i++) {
-        row = rows[i];
-        row.style.display = "";
+        //set background row color for header row to main row color because it is getting altered
+        background_count.reset();
+        set_row_background_color(rows[0]);
 
-        const cells = row.querySelectorAll("td");
+        for (let i = 1; i < rows.length; i++) {
+          row = rows[i];
+          const cells = row.querySelectorAll("td");
 
-        let match = false;
-        for (let cell of cells) {
-          cell = cell.childNodes[0].childNodes[0];
-          const txt_content = cell.innerText;
-          const index = txt_content.toLowerCase().indexOf(typed_text);
+          let match = false;
+          for (let cell of cells) {
+            cell = cell.childNodes[0].childNodes[0];
+            const txt_content = cell.innerText;
+            const index = txt_content.toLowerCase().indexOf(typed_text);
 
-          //string <mark> tags out
-          cell.innerHTML = txt_content;
+            //string <mark> tags out
+            cell.innerHTML = txt_content;
 
-          if (index > -1) {
-            match = true;
+            if (index > -1) {
+              match = true;
 
-            //add 'highlight' effect by adding <mark> tag around the substring
-            cell.innerHTML =
-              txt_content.substring(0, index) +
-              "<mark>" +
-              txt_content.substring(index, index + typed_text.length) +
-              "</mark>" +
-              txt_content.substring(index + typed_text.length);
+              //add 'highlight' effect by adding <mark> tag around the substring
+              cell.innerHTML =
+                txt_content.substring(0, index) +
+                "<mark>" +
+                txt_content.substring(index, index + typed_text.length) +
+                "</mark>" +
+                txt_content.substring(index + typed_text.length);
+            }
+          }
+          if (match) {
+            set_row_background_color(row);
+            row.style.display = "";
+          } else if (!match) {
+            row.style.display = "none";
           }
         }
-        if (match) {
-          set_row_background_color(row);
-        } else if (!match) {
-          row.style.display = "none";
-        }
-      }
+      });
     };
 
     const is_integer = (str) => {
@@ -873,8 +880,6 @@
           child.style.display = "flex";
         }
         edit_butts_cont.style.display = "none";
-
-        //highlight_on_search();
       }
       responsive_design();
     };
@@ -1000,37 +1005,37 @@
       }
       //set class attribute on td dom object and add right click event listeners to it
       td.setAttribute("class", "column" + cell_num);
-      td.addEventListener("contextmenu", function (event) {
-        event.preventDefault();
-        //make sure edit mode is not on and no other right click context menus exists before creating one
-        if (
-          !edit_mode.get_mode() &&
-          plugin_dom_obj.querySelectorAll("#context_menu").length === 0
-        ) {
-          const context_menu = append_child(
-            "div",
-            plugin_dom_obj,
-            "context_menu"
-          );
-          css(conf.style.context_menu, context_menu);
-          context_menu.style.position = "absolute";
-          context_menu.style.top = event.clientY + "px";
-          context_menu.style.left = event.clientX + "px";
+      //   td.addEventListener("contextmenu", function (event) {
+      //     event.preventDefault();
+      //     //make sure edit mode is not on and no other right click context menus exists before creating one
+      //     if (
+      //       !edit_mode.get_mode() &&
+      //       plugin_dom_obj.querySelectorAll("#context_menu").length === 0
+      //     ) {
+      //       const context_menu = append_child(
+      //         "div",
+      //         plugin_dom_obj,
+      //         "context_menu"
+      //       );
+      //       css(conf.style.context_menu, context_menu);
+      //       context_menu.style.position = "absolute";
+      //       context_menu.style.top = event.clientY + "px";
+      //       context_menu.style.left = event.clientX + "px";
 
-          const delete_opt = context_menu_opt("Delete Column", context_menu);
-          delete_opt.addEventListener("click", function () {});
+      //       const delete_opt = context_menu_opt("Delete Column", context_menu);
+      //       delete_opt.addEventListener("click", function () {});
 
-          const add_opt = context_menu_opt("Add Column", context_menu);
+      //       const add_opt = context_menu_opt("Add Column", context_menu);
 
-          // Remove the context menu when user clicks anywhere else
-          window.addEventListener("click", function (e) {
-            if (e.target !== context_menu) {
-              plugin_dom_obj.removeChild(context_menu);
-            }
-          });
-        }
-        const col_cells = plugin_dom_obj.querySelectorAll("." + this.className);
-      });
+      //       // Remove the context menu when user clicks anywhere else
+      //       window.addEventListener("click", function (e) {
+      //         if (e.target !== context_menu) {
+      //           plugin_dom_obj.removeChild(context_menu);
+      //         }
+      //       });
+      //     }
+      //     const col_cells = plugin_dom_obj.querySelectorAll("." + this.className);
+      //   });
 
       //add more event listeners to cells
       cell_on_hov_events(td, cell, tr, row_arr);
@@ -1232,7 +1237,6 @@
 
     const create_grid = function () {
       create_header();
-      header_container.style.display = "none";
       table_cont = append_child("div", grid_container, "table_cont");
       table = append_child("table", table_cont, "table1");
       css(conf.style.table, table);
