@@ -57,6 +57,12 @@
           "white-space: nowrap;",
           "text-overflow: ellipsis;",
         ],
+        context_menu: [
+          "background-color: white;",
+          "z-index: 999;",
+          "border: 1px solid black;",
+        ],
+        context_menu_opt: ["padding: .75em;", "font-size: .75em;"],
         larger_width_cell: ["padding: .5em 1em;", "font-size: .75em;"],
         cutoff_div: [
           "border: 1px solid black",
@@ -214,8 +220,10 @@
     //child_el = child element
     const append_child = (child_el, parent, id) => {
       const child = document.createElement(child_el);
-      child.setAttribute("id", id);
       parent.appendChild(child);
+      if (typeof id != "undefined") {
+        child.setAttribute("id", id);
+      }
       return child;
     };
 
@@ -926,18 +934,6 @@
       }
     };
 
-    const edit_cell = (el, row_num) => {
-      el.addEventListener("click", function (event) {
-        const curr_row = plugin_dom_obj.querySelectorAll("tr")[row_num];
-        edit_mode.set_edit_row(curr_row);
-        //if edit mode was enabled by the user
-        if (entries_container.parentNode == footer_container && event.ctrlKey) {
-          const row = edit_mode.get_edit_row();
-          add_inputs_to_row(el, row, row_num);
-        }
-      });
-    };
-
     const add_row = (row_arr, headers_arr) => {
       //update rows_arr every time array is added
       const cells = row_arr.cell;
@@ -975,6 +971,7 @@
       cell.innerText = cell_text;
       const row_num = rows_arr.length - 1;
       let td;
+      //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
         td = document.createElement("th");
         cell.setAttribute("id", cell_text);
@@ -988,14 +985,71 @@
           row_num + "_" + conv_to_snakecase(cell_text.toString())
         );
         td = document.createElement("td");
-        //add a click event listener to every cell inside the grid if ro is false for its corresponding column
+        //add a click event listener to every cell inside the grid if corresponding schema ro property is false
         if (!ord_ro_obj[cell_num]) {
-          edit_cell(cell, row_num);
+          cell.addEventListener("click", function (event) {
+            const row_num = extract_row_num(this.id);
+            const curr_row = plugin_dom_obj.querySelectorAll("tr")[row_num];
+            edit_mode.set_edit_row(curr_row);
+            if (!edit_mode.get_mode() && event.ctrlKey) {
+              const row = edit_mode.get_edit_row();
+              add_inputs_to_row(this, row, row_num);
+            }
+          });
         }
       }
-      cell_on_hov_events(td, cell, tr, row_arr);
+      //set class attribute on td dom object and add right click event listeners to it
+      td.setAttribute("class", "column" + cell_num);
+      td.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
+        //make sure edit mode is not on and no other right click context menus exists before creating one
+        if (
+          !edit_mode.get_mode() &&
+          !plugin_dom_obj.contains(document.getElementById("#context_menu"))
+        ) {
+          const context_menu = append_child(
+            "div",
+            plugin_dom_obj,
+            "context_menu"
+          );
+          css(conf.style.context_menu, context_menu);
+          context_menu.style.position = "absolute";
+          context_menu.style.top = event.clientY + "px";
+          context_menu.style.left = event.clientX + "px";
 
+          const delete_opt = context_menu_opt("Delete Column", context_menu);
+          delete_opt.addEventListener("click", function () {});
+
+          const add_opt = context_menu_opt("Add Column", context_menu);
+
+          // Remove the context menu when user clicks anywhere else
+          window.addEventListener("click", function (e) {
+            if (e.target !== context_menu) {
+              plugin_dom_obj.removeChild(context_menu);
+            }
+          });
+        }
+        const col_cells = plugin_dom_obj.querySelectorAll("." + this.className);
+      });
+
+      //add more event listeners to cells
+      cell_on_hov_events(td, cell, tr, row_arr);
+      //return td for add_row function to use
       return td;
+    };
+
+    const context_menu_opt = function (text, parent_elem) {
+      const opt = append_child("div", parent_elem);
+      opt.innerText = text;
+      css(conf.style.context_menu_opt, opt);
+
+      opt.addEventListener("mouseover", function () {
+        css(["background-color: #ddd;", "cursor: pointer"], this);
+      });
+      opt.addEventListener("mouseout", function () {
+        css(["background-color: #fff"], this);
+      });
+      return opt;
     };
 
     const header_cell_effects = (icon_cell, icon) => {
