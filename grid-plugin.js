@@ -339,8 +339,7 @@
       search_bar.addEventListener("input", function () {
         if (this.value.length > 0) {
           search_mode.set(true);
-          const search_match_idxs = highlight_on_search();
-          populate_table(search_match_idxs);
+          highlight_on_search();
         } else {
           search_mode.set(false);
         }
@@ -350,21 +349,18 @@
     const highlight_on_search = () => {
       conf.data_adapter.load(function (data) {
         const typed_text = search_bar.value.toLowerCase();
-        const rows = table.rows;
+        const rows = data.rows;
         let search_matches = [];
         let row;
 
         //set background row color for header row to main row color because it is getting altered
-        background_count.reset();
-        set_row_background_color(rows[0]);
+        // background_count.reset();
+        // set_row_background_color(rows[0]);
 
         for (let i = 1; i < rows.length; i++) {
           row = rows[i];
-          const cells = row.querySelectorAll("td");
-
-          let match = false;
-          for (let cell of cells) {
-            cell = cell.childNodes[0].childNodes[0];
+          debugger;
+          for (let cell of row.cell) {
             const txt_content = cell.innerText;
             const index = txt_content.toLowerCase().indexOf(typed_text);
 
@@ -372,7 +368,8 @@
             cell.innerHTML = txt_content;
 
             if (index > -1) {
-              match = true;
+              search_matches.push(row);
+              break;
 
               //add 'highlight' effect by adding <mark> tag around the substring
               //   cell.innerHTML =
@@ -383,11 +380,8 @@
               //     txt_content.substring(index + typed_text.length);
             }
           }
-          if (match) {
-            search_matches.push(i);
-          }
         }
-        return search_matches;
+        populate_table(search_matches);
       });
     };
 
@@ -764,7 +758,6 @@
     };
 
     const populate_table = (tabledata_rows) => {
-      debugger;
       //remove all rows from table
       const table_rows = table.rows;
       while (table_rows.length > 1) {
