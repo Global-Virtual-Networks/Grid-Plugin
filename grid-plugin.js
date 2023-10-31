@@ -357,15 +357,13 @@
         // background_count.reset();
         // set_row_background_color(rows[0]);
 
-        for (let i = 1; i < rows.length; i++) {
+        for (let i = 0; i < rows.length; i++) {
           row = rows[i];
-          debugger;
           for (let cell of row.cell) {
-            const txt_content = cell.innerText;
-            const index = txt_content.toLowerCase().indexOf(typed_text);
+            const index = cell.toLowerCase().indexOf(typed_text);
 
             //string <mark> tags out
-            cell.innerHTML = txt_content;
+            // cell.innerHTML = txt_content;
 
             if (index > -1) {
               search_matches.push(row);
@@ -382,6 +380,8 @@
           }
         }
         populate_table(search_matches);
+        set_pagination_nums();
+        responsive_design();
       });
     };
 
