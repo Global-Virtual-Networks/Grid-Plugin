@@ -1005,7 +1005,7 @@
         //make sure edit mode is not on and no other right click context menus exists before creating one
         if (
           !edit_mode.get_mode() &&
-          !plugin_dom_obj.contains(document.getElementById("#context_menu"))
+          plugin_dom_obj.querySelectorAll("#context_menu").length === 0
         ) {
           const context_menu = append_child(
             "div",
