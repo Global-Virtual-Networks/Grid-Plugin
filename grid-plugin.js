@@ -329,8 +329,6 @@
 
     const highlight_on_search = () => {
       conf.data_adapter.load(function (data) {
-        debugger;
-
         //modify first_entry_index and page_len
         const curr_feidx = first_entry_index;
         curr_pl = page_len;
