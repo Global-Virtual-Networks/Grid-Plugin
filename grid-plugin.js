@@ -270,7 +270,7 @@
     };
 
     const mode = function () {
-      let mode = true;
+      let mode = false;
 
       return {
         set: function (bool) {
@@ -379,7 +379,7 @@
             }
           }
         }
-        debugger;
+        num_of_pages = Math.ceil(search_matches.length / page_len);
         populate_table(search_matches);
         set_pagination_nums();
         responsive_design();
@@ -618,6 +618,7 @@
 
       reset_butt.innerText = "Reset";
       reset_butt.addEventListener("click", function () {
+        search_mode.set(false);
         pagination_active(1);
       });
       /*           export_butt = append_child("button", container, "export_butt");
@@ -949,12 +950,12 @@
       }
 
       //rearrange cols to match schema ord
+      const row_arr_copy = Array.from(row_arr);
+      for (let i = 0; i < headers_ord.length; i++) {
+        const desired_idx = headers_ord[i];
+        row_arr[i] = row_arr_copy[desired_idx];
+      }
       if (!load_grid_called || headers_arr) {
-        const row_arr_copy = Array.from(row_arr);
-        for (let i = 0; i < headers_ord.length; i++) {
-          const desired_idx = headers_ord[i];
-          row_arr[i] = row_arr_copy[desired_idx];
-        }
       }
 
       rows_arr.push(row_arr);
