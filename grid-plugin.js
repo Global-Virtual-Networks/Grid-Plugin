@@ -379,6 +379,7 @@
             }
           }
         }
+        debugger;
         populate_table(search_matches);
         set_pagination_nums();
         responsive_design();
@@ -1271,14 +1272,21 @@
     };
 
     const pagination_active = (new_page) => {
-      conf.data_adapter.load(function (data) {
+      if (search_mode.get()) {
         curr_page = new_page;
         first_entry_index = (new_page - 1) * page_len;
-        set_pagination_nums();
         pag_tb.value = curr_page;
-        populate_table(data.rows);
-        responsive_design();
-      });
+        highlight_on_search();
+      } else {
+        conf.data_adapter.load(function (data) {
+          curr_page = new_page;
+          first_entry_index = (new_page - 1) * page_len;
+          set_pagination_nums();
+          pag_tb.value = curr_page;
+          populate_table(data.rows);
+          responsive_design();
+        });
+      }
     };
 
     this.api = {
