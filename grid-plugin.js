@@ -963,6 +963,7 @@
     const create_cell = (cell_num, cell_text, row_arr, header_row, tr) => {
       const cell = document.createElement("div");
       const row_num = rows_arr.length - 1;
+      cell.innerText = cell_text;
       let td;
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
@@ -973,7 +974,6 @@
         cols_ascending[cell_text] = true;
         cell.onclick = handle_click;
       } else {
-        cell.innerText = cell_text;
         //add 'highlight' effect by adding <mark> tag around the substring
         const txt_content = cell_text.toLowerCase();
         const typed_text = search_bar.value.toLowerCase();
