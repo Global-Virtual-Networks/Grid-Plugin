@@ -368,14 +368,6 @@
             if (index > -1) {
               search_matches.push(row);
               break;
-
-              //add 'highlight' effect by adding <mark> tag around the substring
-              //   cell.innerHTML =
-              //     txt_content.substring(0, index) +
-              //     "<mark>" +
-              //     txt_content.substring(index, index + typed_text.length) +
-              //     "</mark>" +
-              //     txt_content.substring(index + typed_text.length);
             }
           }
         }
@@ -976,6 +968,14 @@
     };
 
     const create_cell = (cell_num, cell_text, row_arr, header_row, tr) => {
+      //add 'highlight' effect by adding <mark> tag around the substring
+      //   cell.innerHTML =
+      //     txt_content.substring(0, index) +
+      //     "<mark>" +
+      //     txt_content.substring(index, index + typed_text.length) +
+      //     "</mark>" +
+      //     txt_content.substring(index + typed_text.length);
+
       const cell = document.createElement("div");
       cell.innerText = cell_text;
       const row_num = rows_arr.length - 1;
