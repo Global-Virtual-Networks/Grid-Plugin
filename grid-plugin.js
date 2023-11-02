@@ -353,14 +353,26 @@
         let search_matches = [];
         let row;
 
+        let sf_idx = self.headers_arr.indexOf("Birth Year"); //sf equals search filter
+        sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
         for (let i = 0; i < rows.length; i++) {
           row = rows[i];
-          for (let cell of row.cell) {
+          const cell = row.cell[sf_idx];
+
+          if (sf_idx > -1) {
             const index = cell.toLowerCase().indexOf(typed_text);
 
             if (index > -1) {
               search_matches.push(row);
-              break;
+            }
+          } else {
+            for (let cell of row.cell) {
+              const index = cell.toLowerCase().indexOf(typed_text);
+
+              if (index > -1) {
+                search_matches.push(row);
+                break;
+              }
             }
           }
         }
@@ -977,8 +989,12 @@
         //add 'highlight' effect by adding <mark> tag around the substring
         const txt_content = cell_text.toLowerCase();
         const typed_text = search_bar.value.toLowerCase();
-        if (txt_content.includes(typed_text)) {
-          const index = txt_content.indexOf(typed_text);
+
+        let sf_idx = self.headers_arr.indexOf("Birth Year"); //sf equals search filter
+        sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
+        const index = txt_content.indexOf(typed_text);
+
+        if (index > -1 && cell_num === sf_idx && typed_text !== "") {
           cell.innerHTML =
             cell_text.substring(0, index) +
             "<mark>" +
