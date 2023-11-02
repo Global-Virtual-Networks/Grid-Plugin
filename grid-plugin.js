@@ -269,6 +269,19 @@
       tot_pgs.innerText = "of " + num_of_pages;
     };
 
+    const mode = function () {
+      let mode = false;
+
+      return {
+        set: function (bool) {
+          mode = bool;
+        },
+        get: function () {
+          return mode;
+        },
+      };
+    };
+
     const self = this;
     let page_len = 14;
     let curr_page = 1;
@@ -286,6 +299,7 @@
     let reset_butt;
     let export_butt;
     const grid_mode = grid_mde();
+    const search_mode = mode();
 
     const create_header = () => {
       grid_container = append_child("div", plugin_dom_obj, "grid_container");
@@ -323,58 +337,53 @@
         search_bar.style.outline = "none";
       });
       search_bar.addEventListener("input", function () {
-        highlight_on_search();
+        if (this.value.length > 0) {
+          search_mode.set(true);
+          highlight_on_search();
+        } else {
+          search_mode.set(false);
+        }
       });
     };
 
     const highlight_on_search = () => {
-      const typed_text = search_bar.value.toLowerCase();
+      conf.data_adapter.load(function (data) {
+        const typed_text = search_bar.value.toLowerCase();
+        const rows = data.rows;
+        let search_matches = [];
+        let row;
 
-      const table_rows = plugin_dom_obj.querySelectorAll("table tr");
-      const rows = Array.from(table_rows).splice(
-        first_entry_index - 1,
-        last_entry_index + 1
-      );
+        //set background row color for header row to main row color because it is getting altered
+        // background_count.reset();
+        // set_row_background_color(rows[0]);
 
-      let row;
+        for (let i = 0; i < rows.length; i++) {
+          row = rows[i];
+          for (let cell of row.cell) {
+            const index = cell.toLowerCase().indexOf(typed_text);
 
-      //set background row color for header row to main row color, not alt_color
-      background_count.reset();
-      set_row_background_color(rows[0]);
+            //string <mark> tags out
+            // cell.innerHTML = txt_content;
 
-      for (let i = 1; i < rows.length; i++) {
-        row = rows[i];
-        row.style.display = "";
+            if (index > -1) {
+              search_matches.push(row);
+              break;
 
-        const cells = row.querySelectorAll("td");
-
-        let match = false;
-        for (let cell of cells) {
-          cell = cell.childNodes[0].childNodes[0];
-          const txt_content = cell.innerText;
-          const index = txt_content.toLowerCase().indexOf(typed_text);
-
-          //string <mark> tags out
-          cell.innerHTML = txt_content;
-
-          if (index > -1) {
-            match = true;
-
-            //add 'highlight' effect by adding <mark> tag around the substring
-            cell.innerHTML =
-              txt_content.substring(0, index) +
-              "<mark>" +
-              txt_content.substring(index, index + typed_text.length) +
-              "</mark>" +
-              txt_content.substring(index + typed_text.length);
+              //add 'highlight' effect by adding <mark> tag around the substring
+              //   cell.innerHTML =
+              //     txt_content.substring(0, index) +
+              //     "<mark>" +
+              //     txt_content.substring(index, index + typed_text.length) +
+              //     "</mark>" +
+              //     txt_content.substring(index + typed_text.length);
+            }
           }
         }
-        if (match) {
-          set_row_background_color(row);
-        } else if (!match) {
-          row.style.display = "none";
-        }
-      }
+        num_of_pages = Math.ceil(search_matches.length / page_len);
+        populate_table(search_matches);
+        set_pagination_nums();
+        responsive_design();
+      });
     };
 
     const is_integer = (str) => {
@@ -609,6 +618,7 @@
 
       reset_butt.innerText = "Reset";
       reset_butt.addEventListener("click", function () {
+        search_mode.set(false);
         pagination_active(1);
       });
       /*           export_butt = append_child("button", container, "export_butt");
@@ -873,8 +883,6 @@
           child.style.display = "flex";
         }
         edit_butts_cont.style.display = "none";
-
-        //highlight_on_search();
       }
       responsive_design();
     };
@@ -942,12 +950,12 @@
       }
 
       //rearrange cols to match schema ord
+      const row_arr_copy = Array.from(row_arr);
+      for (let i = 0; i < headers_ord.length; i++) {
+        const desired_idx = headers_ord[i];
+        row_arr[i] = row_arr_copy[desired_idx];
+      }
       if (!load_grid_called || headers_arr) {
-        const row_arr_copy = Array.from(row_arr);
-        for (let i = 0; i < headers_ord.length; i++) {
-          const desired_idx = headers_ord[i];
-          row_arr[i] = row_arr_copy[desired_idx];
-        }
       }
 
       rows_arr.push(row_arr);
@@ -1000,37 +1008,37 @@
       }
       //set class attribute on td dom object and add right click event listeners to it
       td.setAttribute("class", "column" + cell_num);
-      td.addEventListener("contextmenu", function (event) {
-        event.preventDefault();
-        //make sure edit mode is not on and no other right click context menus exists before creating one
-        if (
-          !edit_mode.get_mode() &&
-          plugin_dom_obj.querySelectorAll("#context_menu").length === 0
-        ) {
-          const context_menu = append_child(
-            "div",
-            plugin_dom_obj,
-            "context_menu"
-          );
-          css(conf.style.context_menu, context_menu);
-          context_menu.style.position = "absolute";
-          context_menu.style.top = event.clientY + "px";
-          context_menu.style.left = event.clientX + "px";
+      //   td.addEventListener("contextmenu", function (event) {
+      //     event.preventDefault();
+      //     //make sure edit mode is not on and no other right click context menus exists before creating one
+      //     if (
+      //       !edit_mode.get_mode() &&
+      //       plugin_dom_obj.querySelectorAll("#context_menu").length === 0
+      //     ) {
+      //       const context_menu = append_child(
+      //         "div",
+      //         plugin_dom_obj,
+      //         "context_menu"
+      //       );
+      //       css(conf.style.context_menu, context_menu);
+      //       context_menu.style.position = "absolute";
+      //       context_menu.style.top = event.clientY + "px";
+      //       context_menu.style.left = event.clientX + "px";
 
-          const delete_opt = context_menu_opt("Delete Column", context_menu);
-          delete_opt.addEventListener("click", function () {});
+      //       const delete_opt = context_menu_opt("Delete Column", context_menu);
+      //       delete_opt.addEventListener("click", function () {});
 
-          const add_opt = context_menu_opt("Add Column", context_menu);
+      //       const add_opt = context_menu_opt("Add Column", context_menu);
 
-          // Remove the context menu when user clicks anywhere else
-          window.addEventListener("click", function (e) {
-            if (e.target !== context_menu) {
-              plugin_dom_obj.removeChild(context_menu);
-            }
-          });
-        }
-        const col_cells = plugin_dom_obj.querySelectorAll("." + this.className);
-      });
+      //       // Remove the context menu when user clicks anywhere else
+      //       window.addEventListener("click", function (e) {
+      //         if (e.target !== context_menu) {
+      //           plugin_dom_obj.removeChild(context_menu);
+      //         }
+      //       });
+      //     }
+      //     const col_cells = plugin_dom_obj.querySelectorAll("." + this.className);
+      //   });
 
       //add more event listeners to cells
       cell_on_hov_events(td, cell, tr, row_arr);
@@ -1232,7 +1240,6 @@
 
     const create_grid = function () {
       create_header();
-      header_container.style.display = "none";
       table_cont = append_child("div", grid_container, "table_cont");
       table = append_child("table", table_cont, "table1");
       css(conf.style.table, table);
@@ -1266,14 +1273,21 @@
     };
 
     const pagination_active = (new_page) => {
-      conf.data_adapter.load(function (data) {
+      if (search_mode.get()) {
         curr_page = new_page;
         first_entry_index = (new_page - 1) * page_len;
-        set_pagination_nums();
         pag_tb.value = curr_page;
-        populate_table(data.rows);
-        responsive_design();
-      });
+        highlight_on_search();
+      } else {
+        conf.data_adapter.load(function (data) {
+          curr_page = new_page;
+          first_entry_index = (new_page - 1) * page_len;
+          set_pagination_nums();
+          pag_tb.value = curr_page;
+          populate_table(data.rows);
+          responsive_design();
+        });
+      }
     };
 
     this.api = {
