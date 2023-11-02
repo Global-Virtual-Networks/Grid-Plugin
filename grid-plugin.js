@@ -619,6 +619,7 @@
       reset_butt.innerText = "Reset";
       reset_butt.addEventListener("click", function () {
         search_mode.set(false);
+        search_bar.value = "";
         pagination_active(1);
       });
       /*           export_butt = append_child("button", container, "export_butt");
@@ -1273,21 +1274,10 @@
     };
 
     const pagination_active = (new_page) => {
-      if (search_mode.get()) {
-        curr_page = new_page;
-        first_entry_index = (new_page - 1) * page_len;
-        pag_tb.value = curr_page;
-        highlight_on_search();
-      } else {
-        conf.data_adapter.load(function (data) {
-          curr_page = new_page;
-          first_entry_index = (new_page - 1) * page_len;
-          set_pagination_nums();
-          pag_tb.value = curr_page;
-          populate_table(data.rows);
-          responsive_design();
-        });
-      }
+      curr_page = new_page;
+      first_entry_index = (new_page - 1) * page_len;
+      pag_tb.value = curr_page;
+      highlight_on_search();
     };
 
     this.api = {
