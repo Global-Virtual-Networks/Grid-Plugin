@@ -339,10 +339,10 @@
       search_bar.addEventListener("input", function () {
         if (this.value.length > 0) {
           search_mode.set(true);
-          highlight_on_search();
         } else {
           search_mode.set(false);
         }
+        highlight_on_search();
       });
     };
 
@@ -368,14 +368,6 @@
             if (index > -1) {
               search_matches.push(row);
               break;
-
-              //add 'highlight' effect by adding <mark> tag around the substring
-              //   cell.innerHTML =
-              //     txt_content.substring(0, index) +
-              //     "<mark>" +
-              //     txt_content.substring(index, index + typed_text.length) +
-              //     "</mark>" +
-              //     txt_content.substring(index + typed_text.length);
             }
           }
         }
@@ -619,6 +611,7 @@
       reset_butt.innerText = "Reset";
       reset_butt.addEventListener("click", function () {
         search_mode.set(false);
+        search_bar.value = "";
         pagination_active(1);
       });
       /*           export_butt = append_child("button", container, "export_butt");
@@ -975,6 +968,14 @@
     };
 
     const create_cell = (cell_num, cell_text, row_arr, header_row, tr) => {
+      //add 'highlight' effect by adding <mark> tag around the substring
+      //   cell.innerHTML =
+      //     txt_content.substring(0, index) +
+      //     "<mark>" +
+      //     txt_content.substring(index, index + typed_text.length) +
+      //     "</mark>" +
+      //     txt_content.substring(index + typed_text.length);
+
       const cell = document.createElement("div");
       cell.innerText = cell_text;
       const row_num = rows_arr.length - 1;
@@ -1273,21 +1274,10 @@
     };
 
     const pagination_active = (new_page) => {
-      if (search_mode.get()) {
-        curr_page = new_page;
-        first_entry_index = (new_page - 1) * page_len;
-        pag_tb.value = curr_page;
-        highlight_on_search();
-      } else {
-        conf.data_adapter.load(function (data) {
-          curr_page = new_page;
-          first_entry_index = (new_page - 1) * page_len;
-          set_pagination_nums();
-          pag_tb.value = curr_page;
-          populate_table(data.rows);
-          responsive_design();
-        });
-      }
+      curr_page = new_page;
+      first_entry_index = (new_page - 1) * page_len;
+      pag_tb.value = curr_page;
+      highlight_on_search();
     };
 
     this.api = {
