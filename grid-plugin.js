@@ -339,10 +339,10 @@
       search_bar.addEventListener("input", function () {
         if (this.value.length > 0) {
           search_mode.set(true);
-          highlight_on_search();
         } else {
           search_mode.set(false);
         }
+        highlight_on_search();
       });
     };
 
