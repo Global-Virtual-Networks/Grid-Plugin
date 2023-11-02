@@ -968,16 +968,7 @@
     };
 
     const create_cell = (cell_num, cell_text, row_arr, header_row, tr) => {
-      //add 'highlight' effect by adding <mark> tag around the substring
-      //   cell.innerHTML =
-      //     txt_content.substring(0, index) +
-      //     "<mark>" +
-      //     txt_content.substring(index, index + typed_text.length) +
-      //     "</mark>" +
-      //     txt_content.substring(index + typed_text.length);
-
       const cell = document.createElement("div");
-      cell.innerText = cell_text;
       const row_num = rows_arr.length - 1;
       let td;
       //determine whether it is a header cell or not, and execute the corresponding code
@@ -989,6 +980,20 @@
         cols_ascending[cell_text] = true;
         cell.onclick = handle_click;
       } else {
+        cell.innerText = cell_text;
+        //add 'highlight' effect by adding <mark> tag around the substring
+        const txt_content = cell_text.toLowerCase();
+        const typed_text = search_bar.value.toLowerCase();
+        if (txt_content.includes(typed_text)) {
+          const index = txt_content.indexOf(typed_text);
+          cell.innerHTML =
+            cell_text.substring(0, index) +
+            "<mark>" +
+            cell_text.substring(index, index + typed_text.length) +
+            "</mark>" +
+            cell_text.substring(index + typed_text.length);
+        }
+
         cell.setAttribute(
           "id",
           row_num + "_" + conv_to_snakecase(cell_text.toString())
