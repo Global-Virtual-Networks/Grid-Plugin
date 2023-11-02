@@ -353,17 +353,10 @@
         let search_matches = [];
         let row;
 
-        //set background row color for header row to main row color because it is getting altered
-        // background_count.reset();
-        // set_row_background_color(rows[0]);
-
         for (let i = 0; i < rows.length; i++) {
           row = rows[i];
           for (let cell of row.cell) {
             const index = cell.toLowerCase().indexOf(typed_text);
-
-            //string <mark> tags out
-            // cell.innerHTML = txt_content;
 
             if (index > -1) {
               search_matches.push(row);
