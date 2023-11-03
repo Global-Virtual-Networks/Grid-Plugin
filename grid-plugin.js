@@ -281,7 +281,7 @@
     };
 
     const self = this;
-    let page_len = 14;
+    let page_len = 12;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
@@ -369,14 +369,14 @@
           row = rows[i];
           const cell = row.cell[sf_idx];
           if (sf_idx > -1) {
-            const index = cell.toLowerCase().indexOf(typed_text);
+            const index = cell.toString().toLowerCase().indexOf(typed_text);
 
             if (index > -1) {
               search_matches.push(row);
             }
           } else {
             for (let cell of row.cell) {
-              const index = cell.toLowerCase().indexOf(typed_text);
+              const index = cell.toString().toLowerCase().indexOf(typed_text);
 
               if (index > -1) {
                 search_matches.push(row);
@@ -973,7 +973,13 @@
       //add cells to 'tr'
       for (let i = 0; i < row_arr.length; i++) {
         //create and add cell to table row
-        const td = create_cell(i, row_arr[i], row_arr, headers_arr, tr);
+        const td = create_cell(
+          i,
+          row_arr[i].toString(),
+          row_arr,
+          headers_arr,
+          tr
+        );
         tr.appendChild(td);
       }
       tr.setAttribute("id", "row_" + (rows_arr.length - 1));
