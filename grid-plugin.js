@@ -98,7 +98,7 @@
           "justify-content: right;",
           "margin: 1em;",
         ],
-        search_ddl: ["cursor: pointer", "padding: .3em"],
+        search_ddl: ["cursor: pointer", "padding: .4em"],
         sddl_opt: ["cursor: pointer;"],
         search_container: [
           "display: flex;",
@@ -316,6 +316,13 @@
       css(conf.style.header_container, header_container);
       self.search_ddl = append_child("select", header_container, "search_ddl");
       css(conf.style.search_ddl, self.search_ddl);
+      self.search_ddl.addEventListener("change", function () {
+        default_sf = this.value;
+        //if there is a search currently in the textbox, need to call highight_on_search function for an accurate response/filter
+        if (search_mode.get()) {
+          highlight_on_search();
+        }
+      });
 
       const sddl_option = append_child("option", self.search_ddl, default_sf);
       sddl_option.innerText = default_sf;
