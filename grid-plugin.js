@@ -300,6 +300,7 @@
     let export_butt;
     const grid_mode = grid_mde();
     const search_mode = mode();
+    let sf_idx;
 
     const create_header = () => {
       grid_container = append_child("div", plugin_dom_obj, "grid_container");
@@ -353,8 +354,9 @@
         let search_matches = [];
         let row;
 
-        let sf_idx = self.headers_arr.indexOf("Birth Year"); //sf equals search filter
+        sf_idx = self.headers_arr.indexOf("Id"); //sf equals search filter
         sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
+
         for (let i = 0; i < rows.length; i++) {
           row = rows[i];
           const cell = row.cell[sf_idx];
@@ -989,12 +991,13 @@
         //add 'highlight' effect by adding <mark> tag around the substring
         const txt_content = cell_text.toLowerCase();
         const typed_text = search_bar.value.toLowerCase();
-
-        let sf_idx = self.headers_arr.indexOf("Birth Year"); //sf equals search filter
-        sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
         const index = txt_content.indexOf(typed_text);
 
-        if (index > -1 && cell_num === sf_idx && typed_text !== "") {
+        if (
+          index > -1 &&
+          headers_ord[cell_num] === sf_idx &&
+          typed_text !== ""
+        ) {
           cell.innerHTML =
             cell_text.substring(0, index) +
             "<mark>" +
