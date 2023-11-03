@@ -300,6 +300,7 @@
     let export_butt;
     const grid_mode = grid_mde();
     const search_mode = mode();
+    let sf_idx;
 
     const create_header = () => {
       grid_container = append_child("div", plugin_dom_obj, "grid_container");
@@ -353,21 +354,27 @@
         let search_matches = [];
         let row;
 
-        //set background row color for header row to main row color because it is getting altered
-        // background_count.reset();
-        // set_row_background_color(rows[0]);
+        sf_idx = self.headers_arr.indexOf("Id"); //sf equals search filter
+        sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
 
         for (let i = 0; i < rows.length; i++) {
           row = rows[i];
-          for (let cell of row.cell) {
-            const index = cell.toLowerCase().indexOf(typed_text);
+          const cell = row.cell[sf_idx];
 
-            //string <mark> tags out
-            // cell.innerHTML = txt_content;
+          if (sf_idx > -1) {
+            const index = cell.toLowerCase().indexOf(typed_text);
 
             if (index > -1) {
               search_matches.push(row);
-              break;
+            }
+          } else {
+            for (let cell of row.cell) {
+              const index = cell.toLowerCase().indexOf(typed_text);
+
+              if (index > -1) {
+                search_matches.push(row);
+                break;
+              }
             }
           }
         }
@@ -970,6 +977,7 @@
     const create_cell = (cell_num, cell_text, row_arr, header_row, tr) => {
       const cell = document.createElement("div");
       const row_num = rows_arr.length - 1;
+      cell.innerText = cell_text;
       let td;
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
@@ -980,12 +988,16 @@
         cols_ascending[cell_text] = true;
         cell.onclick = handle_click;
       } else {
-        cell.innerText = cell_text;
         //add 'highlight' effect by adding <mark> tag around the substring
         const txt_content = cell_text.toLowerCase();
         const typed_text = search_bar.value.toLowerCase();
-        if (txt_content.includes(typed_text)) {
-          const index = txt_content.indexOf(typed_text);
+        const index = txt_content.indexOf(typed_text);
+
+        if (
+          index > -1 &&
+          headers_ord[cell_num] === sf_idx &&
+          typed_text !== ""
+        ) {
           cell.innerHTML =
             cell_text.substring(0, index) +
             "<mark>" +
