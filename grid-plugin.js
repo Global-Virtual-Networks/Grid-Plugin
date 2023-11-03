@@ -98,12 +98,14 @@
           "justify-content: right;",
           "margin: 1em;",
         ],
+        search_ddl: ["cursor: pointer", "padding: .3em"],
+        sddl_opt: ["cursor: pointer;"],
         search_container: [
           "display: flex;",
           "align-items: center;",
           "margin-right: 0",
         ],
-        larger_width_search_container: ["margin-right: 2em;"],
+        larger_width_search_container: ["margin: 0 2em;"],
         search_bar: [
           "border: 2px solid black;",
           "border-left: none;",
@@ -301,7 +303,7 @@
     const grid_mode = grid_mde();
     const search_mode = mode();
     let sf_idx;
-    let search_filter = "All";
+    let default_sf = "All"; //sf equals search filter
 
     const create_header = () => {
       grid_container = append_child("div", plugin_dom_obj, "grid_container");
@@ -312,12 +314,14 @@
         "header_container"
       );
       css(conf.style.header_container, header_container);
+      self.search_ddl = append_child("select", header_container, "search_ddl");
+      css(conf.style.search_ddl, self.search_ddl);
 
-      create_search_ddl();
+      const sddl_option = append_child("option", self.search_ddl, default_sf);
+      sddl_option.innerText = default_sf;
+
       create_search_bar();
     };
-
-    const create_search_ddl = () => {};
 
     const create_search_bar = () => {
       //add search bar
@@ -355,7 +359,7 @@
         let search_matches = [];
         let row;
 
-        sf_idx = self.headers_arr.indexOf(search_filter); //sf equals search filter
+        sf_idx = self.headers_arr.indexOf(default_sf); //sf equals search filter
         sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
 
         for (let i = 0; i < rows.length; i++) {
@@ -997,7 +1001,7 @@
           (index > -1 &&
             headers_ord[cell_num] === sf_idx &&
             typed_text !== "") ||
-          search_filter === "All"
+          default_sf === "All"
         ) {
           cell.innerHTML =
             cell_text.substring(0, index) +
@@ -1270,7 +1274,12 @@
       self.headers_arr = [];
       for (const schem of schema) {
         headers_ord.push(schem.ord);
-        self.headers_arr.push(conv_to_Title_Case(schem.name));
+        const header = conv_to_Title_Case(schem.name);
+        self.headers_arr.push(header);
+
+        //add header to search_ddl
+        const sddl_opt = append_child("option", self.search_ddl, header);
+        sddl_opt.innerText = header;
       }
 
       ord_ro_obj = {};
