@@ -630,6 +630,8 @@
       reset_butt.addEventListener("click", function () {
         search_mode.set(false);
         search_bar.value = "";
+        default_sf = "All";
+        self.search_ddl.value = "All";
         pagination_active(1);
       });
       /*           export_butt = append_child("button", container, "export_butt");
