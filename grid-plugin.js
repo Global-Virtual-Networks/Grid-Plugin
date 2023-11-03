@@ -1010,10 +1010,10 @@
         const index = txt_content.indexOf(typed_text);
 
         if (
-          (index > -1 &&
+          index > -1 ||
+          (default_sf === "All" &&
             headers_ord[cell_num] === sf_idx &&
-            typed_text !== "") ||
-          default_sf === "All"
+            typed_text !== "")
         ) {
           cell.innerHTML =
             cell_text.substring(0, index) +
