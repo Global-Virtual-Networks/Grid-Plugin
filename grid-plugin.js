@@ -974,13 +974,13 @@
       //add cells to 'tr'
       for (let i = 0; i < row_arr.length; i++) {
         //create and add cell to table row
-        const td = create_cell(
-          i,
-          row_arr[i].toString(),
-          row_arr,
-          headers_arr,
-          tr
-        );
+        let txt = row_arr[i];
+        if (txt) {
+          txt = txt.toString();
+        } else {
+          txt = "null";
+        }
+        const td = create_cell(i, txt, row_arr, headers_arr, tr);
         tr.appendChild(td);
       }
       tr.setAttribute("id", "row_" + (rows_arr.length - 1));
