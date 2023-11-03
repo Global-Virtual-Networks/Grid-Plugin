@@ -91,21 +91,16 @@
 
         //css relating to header
         header_container: [
-          "width: 100%;",
           "max-height: 10%;",
           "display: flex;",
           "align-items: center;",
           "justify-content: right;",
-          "margin: 1em;",
+          "margin: 1em 0;",
         ],
         search_ddl: ["cursor: pointer", "padding: .4em"],
         sddl_opt: ["cursor: pointer;"],
-        search_container: [
-          "display: flex;",
-          "align-items: center;",
-          "margin-right: 0",
-        ],
-        larger_width_search_container: ["margin: 0 2em;"],
+        search_container: ["display: flex;", "align-items: center;"],
+        larger_width_search_container: ["margin: 0 1em;"],
         search_bar: [
           "border: 2px solid black;",
           "border-left: none;",
