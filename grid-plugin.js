@@ -329,18 +329,22 @@
 
     const create_search_bar = () => {
       //add search bar
-      const search_container = append_child(
+      self.search_container = append_child(
         "div",
         header_container,
         "search_container"
       );
-      css(conf.style.search_container, search_container);
+      css(conf.style.search_container, self.search_container);
 
-      const search_icon = append_child("img", search_container, "search_icon");
-      css(conf.style.search_icon, search_icon);
-      search_icon.setAttribute("src", conf.icons.search);
+      self.search_icon = append_child(
+        "img",
+        self.search_container,
+        "search_icon"
+      );
+      css(conf.style.search_icon, self.search_icon);
+      self.search_icon.setAttribute("src", conf.icons.search);
 
-      search_bar = append_child("input", search_container, "search_bar");
+      search_bar = append_child("input", self.search_container, "search_bar");
       css(conf.style.search_bar, search_bar);
       //eliminate highlight on focus
       search_bar.addEventListener("focus", function () {
@@ -424,8 +428,8 @@
         css(conf.style.larger_width_footer_container, footer_container);
         //header container media queries
         css(conf.style.larger_width_search_bar, search_bar);
-        css(conf.style.larger_width_search_container, search_container);
-        css(conf.style.larger_width_search_icon, search_icon);
+        css(conf.style.larger_width_search_container, self.search_container);
+        css(conf.style.larger_width_search_icon, self.search_icon);
         //grid cells media queries
         iterate_through_cells(cells, conf.style.larger_width_cell);
       } else {
@@ -435,8 +439,8 @@
         css(conf.style.footer_container, footer_container);
         //header container defaults
         css(conf.style.search_bar, search_bar);
-        css(conf.style.search_container, search_container);
-        css(conf.style.search_icon, search_icon);
+        css(conf.style.search_container, self.search_container);
+        css(conf.style.search_icon, self.search_icon);
         //grid cells media defaults
       }
 
@@ -705,7 +709,7 @@
           } else {
             css(conf.style.row_hov_color, grid_container);
             css(["background-color: #fff;"], bott_row_headers);
-            css(["background-color: #fff;"], search_icon);
+            css(["background-color: #fff;"], self.search_icon);
           }
           edit();
         },
