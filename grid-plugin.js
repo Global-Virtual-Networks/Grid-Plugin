@@ -141,7 +141,7 @@
           "font-size: .7em",
         ],
         larger_width_pager_cont: ["font-size: .8em"],
-        pager_butts: ["margin-top: .2em;", "width: .75em;", "padding: .4em;"],
+        pager_butts: ["margin-top: .2em;", "width: .75em;", "padding: .1em;"],
         entries_container: [
           "padding: 0 .5em;",
           "text-align: center;",
@@ -157,12 +157,13 @@
           "font-size: 1em",
           "width: 3em;",
           "height: .6em;",
-          "padding: 1em;",
+          "padding: .5em;",
           "margin: 0 .5em;",
           "border: 1.5px solid black;",
           "border-radius: .5em;",
           "text-align: center;",
         ],
+        reset_butt: ["font-size: .75em;", "padding: .5em"],
         spacing: ["margin: 0 .5em;", " cursor: pointer;"],
         cancel_butt: [
           "font-size: .8em",
@@ -624,7 +625,7 @@
       );
       css(["margin: 0 1em"], container);
       reset_butt = append_child("button", container, "reset_butt");
-      css(["margin: 0 .5em"], reset_butt);
+      css(conf.style.reset_butt, reset_butt);
 
       reset_butt.innerText = "Reset";
       reset_butt.addEventListener("click", function () {
