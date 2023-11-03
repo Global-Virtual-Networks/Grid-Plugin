@@ -91,19 +91,16 @@
 
         //css relating to header
         header_container: [
-          "width: 100%;",
           "max-height: 10%;",
           "display: flex;",
           "align-items: center;",
           "justify-content: right;",
-          "margin: 1em;",
+          "margin: 1em 0;",
         ],
-        search_container: [
-          "display: flex;",
-          "align-items: center;",
-          "margin-right: 0",
-        ],
-        larger_width_search_container: ["margin-right: 2em;"],
+        search_ddl: ["cursor: pointer", "padding: .4em"],
+        sddl_opt: ["cursor: pointer;"],
+        search_container: ["display: flex;", "align-items: center;"],
+        larger_width_search_container: ["margin: 0 1em;"],
         search_bar: [
           "border: 2px solid black;",
           "border-left: none;",
@@ -139,7 +136,7 @@
           "font-size: .7em",
         ],
         larger_width_pager_cont: ["font-size: .8em"],
-        pager_butts: ["margin-top: .2em;", "width: .75em;", "padding: .4em;"],
+        pager_butts: ["margin-top: .2em;", "width: .75em;", "padding: .1em;"],
         entries_container: [
           "padding: 0 .5em;",
           "text-align: center;",
@@ -155,12 +152,13 @@
           "font-size: 1em",
           "width: 3em;",
           "height: .6em;",
-          "padding: 1em;",
+          "padding: .5em;",
           "margin: 0 .5em;",
           "border: 1.5px solid black;",
           "border-radius: .5em;",
           "text-align: center;",
         ],
+        reset_butt: ["font-size: .75em;", "padding: .5em"],
         spacing: ["margin: 0 .5em;", " cursor: pointer;"],
         cancel_butt: [
           "font-size: .8em",
@@ -301,6 +299,7 @@
     const grid_mode = grid_mde();
     const search_mode = mode();
     let sf_idx;
+    let default_sf = "All"; //sf equals search filter
 
     const create_header = () => {
       grid_container = append_child("div", plugin_dom_obj, "grid_container");
@@ -311,12 +310,21 @@
         "header_container"
       );
       css(conf.style.header_container, header_container);
+      self.search_ddl = append_child("select", header_container, "search_ddl");
+      css(conf.style.search_ddl, self.search_ddl);
+      self.search_ddl.addEventListener("change", function () {
+        default_sf = this.value;
+        //if there is a search currently in the textbox, need to call highight_on_search function for an accurate response/filter
+        if (search_mode.get()) {
+          highlight_on_search();
+        }
+      });
 
-      create_search_ddl();
+      const sddl_option = append_child("option", self.search_ddl, default_sf);
+      sddl_option.innerText = default_sf;
+
       create_search_bar();
     };
-
-    const create_search_ddl = () => {};
 
     const create_search_bar = () => {
       //add search bar
@@ -354,13 +362,12 @@
         let search_matches = [];
         let row;
 
-        sf_idx = self.headers_arr.indexOf("Id"); //sf equals search filter
+        sf_idx = self.headers_arr.indexOf(default_sf); //sf equals search filter
         sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
 
         for (let i = 0; i < rows.length; i++) {
           row = rows[i];
           const cell = row.cell[sf_idx];
-
           if (sf_idx > -1) {
             const index = cell.toLowerCase().indexOf(typed_text);
 
@@ -613,12 +620,14 @@
       );
       css(["margin: 0 1em"], container);
       reset_butt = append_child("button", container, "reset_butt");
-      css(["margin: 0 .5em"], reset_butt);
+      css(conf.style.reset_butt, reset_butt);
 
       reset_butt.innerText = "Reset";
       reset_butt.addEventListener("click", function () {
         search_mode.set(false);
         search_bar.value = "";
+        default_sf = "All";
+        self.search_ddl.value = "All";
         pagination_active(1);
       });
       /*           export_butt = append_child("button", container, "export_butt");
@@ -994,9 +1003,10 @@
         const index = txt_content.indexOf(typed_text);
 
         if (
-          index > -1 &&
-          headers_ord[cell_num] === sf_idx &&
-          typed_text !== ""
+          (index > -1 &&
+            headers_ord[cell_num] === sf_idx &&
+            typed_text !== "") ||
+          default_sf === "All"
         ) {
           cell.innerHTML =
             cell_text.substring(0, index) +
@@ -1018,8 +1028,8 @@
             const curr_row = plugin_dom_obj.querySelectorAll("tr")[row_num];
             edit_mode.set_edit_row(curr_row);
             if (!edit_mode.get_mode() && event.ctrlKey) {
-              const row = edit_mode.get_edit_row();
-              add_inputs_to_row(this, row, row_num);
+              // const row = edit_mode.get_edit_row();
+              // add_inputs_to_row(this, row, row_num);
             }
           });
         }
@@ -1269,7 +1279,12 @@
       self.headers_arr = [];
       for (const schem of schema) {
         headers_ord.push(schem.ord);
-        self.headers_arr.push(conv_to_Title_Case(schem.name));
+        const header = conv_to_Title_Case(schem.name);
+        self.headers_arr.push(header);
+
+        //add header to search_ddl
+        const sddl_opt = append_child("option", self.search_ddl, header);
+        sddl_opt.innerText = header;
       }
 
       ord_ro_obj = {};
