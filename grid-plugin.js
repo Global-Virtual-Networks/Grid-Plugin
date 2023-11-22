@@ -1044,8 +1044,8 @@
             const curr_row = plugin_dom_obj.querySelectorAll("tr")[row_num];
             edit_mode.set_edit_row(curr_row);
             if (!edit_mode.get_mode() && event.ctrlKey) {
-              // const row = edit_mode.get_edit_row();
-              // add_inputs_to_row(this, row, row_num);
+              const row = edit_mode.get_edit_row();
+              add_inputs_to_row(this, row, row_num);
             }
           });
         }
