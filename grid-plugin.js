@@ -228,7 +228,7 @@
 
     const grid_mde = () => {
       return {
-          set: function (mode) {
+        set: function (mode) {
           if (mode === "scroll") {
             css(conf.style.scroll_mode, plugin_dom_obj);
             footer_container.style.display = "none";
@@ -350,7 +350,7 @@
       search_bar.addEventListener("focus", function () {
         search_bar.style.outline = "none";
       });
-        search_bar.addEventListener("input", function () {
+      search_bar.addEventListener("input", function () {
         if (this.value.length > 0) {
           search_mode.set(true);
         } else {
@@ -361,7 +361,7 @@
     };
 
     const highlight_on_search = () => {
-        conf.data_adapter.load(function (data) {
+      conf.data_adapter.load(function (data) {
         const typed_text = search_bar.value.toLowerCase();
         const rows = data.rows;
         let search_matches = [];
@@ -381,7 +381,12 @@
             }
           } else {
             for (let cell of row.cell) {
-              const index = cell.toString().toLowerCase().indexOf(typed_text);
+              let index;
+              try {
+                index = cell.toString().toLowerCase().indexOf(typed_text);
+              } catch {
+                index = -1;
+              }
 
               if (index > -1) {
                 search_matches.push(row);
@@ -414,7 +419,7 @@
       }
     };
 
-      const responsive_design = () => {
+    const responsive_design = () => {
       const cells = plugin_dom_obj.querySelectorAll("#cell_cont");
       //grid cells media defaults
       iterate_through_cells(cells, conf.style.cell);
@@ -447,7 +452,7 @@
       uncompress_col_headers(cells);
     };
 
-      const uncompress_col_headers = (cells) => {
+    const uncompress_col_headers = (cells) => {
       // check if any of the headers are cut off, and if so, increase the max-width for that column
       let header_cells = [].slice.call(cells); //convert NodeList to array
       header_cells = header_cells.splice(0, tot_num_cols);
