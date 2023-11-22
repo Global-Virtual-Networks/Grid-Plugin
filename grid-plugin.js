@@ -97,16 +97,19 @@
           "justify-content: right;",
           "margin: 1em 0;",
         ],
-        search_ddl: ["cursor: pointer", "padding: .4em"],
+        search_ddl: [
+          "cursor: pointer;",
+          "padding: .2em;",
+          "border: 2px solid black;",
+        ],
         sddl_opt: ["cursor: pointer;"],
         search_container: ["display: flex;", "align-items: center;"],
         larger_width_search_container: ["margin: 0 1em;"],
         search_bar: [
           "border: 2px solid black;",
-          "border-left: none;",
           "width: 10em;",
           "height: 1em;",
-          "padding: 1.05em;",
+          "padding: 1em;",
           "margin-right: .5em",
           "font-size: .85em",
           "border-radius: 0;",
@@ -114,14 +117,9 @@
         larger_width_search_bar: [
           "width: 240px;",
           "height: 1.5em;",
-          "font-size: .75em",
+          "font-size: 1em",
         ],
-        search_icon: [
-          "border: 2px solid black;",
-          "border-right: none;",
-          "width: 1em;",
-          "padding: 2.7px 2.5px;",
-        ],
+        search_icon: [],
         larger_width_search_icon: ["padding: 4.7px 4.5px;"],
         //css relating to footer
         center_child_elems: [
@@ -337,12 +335,18 @@
       css(conf.style.search_container, self.search_container);
 
       self.search_icon = append_child(
-        "img",
+        "h3",
         self.search_container,
         "search_icon"
       );
-      css(conf.style.search_icon, self.search_icon);
-      self.search_icon.setAttribute("src", conf.icons.search);
+      search_icon.innerText = "Search:";
+      // self.search_icon = append_child(
+      //   "img",
+      //   self.search_container,
+      //   "search_icon"
+      // );
+      // css(conf.style.search_icon, self.search_icon);
+      // self.search_icon.setAttribute("src", conf.icons.search);
 
       search_bar = append_child("input", self.search_container, "search_bar");
       css(conf.style.search_bar, search_bar);
