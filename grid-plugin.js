@@ -97,30 +97,29 @@
           "justify-content: right;",
           "margin: 1em 0;",
         ],
-        search_ddl: ["cursor: pointer", "padding: .4em"],
+        search_ddl: [
+          "cursor: pointer;",
+          "padding: .2em;",
+          "border: 2px solid black;",
+        ],
         sddl_opt: ["cursor: pointer;"],
         search_container: ["display: flex;", "align-items: center;"],
         larger_width_search_container: ["margin: 0 1em;"],
         search_bar: [
           "border: 2px solid black;",
-          "border-left: none;",
           "width: 10em;",
           "height: 1em;",
-          "padding: .3em;",
+          "padding: 1em;",
           "margin-right: .5em",
           "font-size: .85em",
+          "border-radius: 0;",
         ],
         larger_width_search_bar: [
-          "width: 20em;",
+          "width: 240px;",
           "height: 1.5em;",
-          "font-size: .75em",
+          "font-size: 1em",
         ],
-        search_icon: [
-          "border: 2px solid black;",
-          "border-right: none;",
-          "width: 1em;",
-          "padding: 2.7px 2.5px;",
-        ],
+        search_icon: [],
         larger_width_search_icon: ["padding: 4.7px 4.5px;"],
         //css relating to footer
         center_child_elems: [
@@ -281,7 +280,7 @@
     };
 
     const self = this;
-    let page_len = 14;
+    let page_len = 12;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
@@ -328,18 +327,28 @@
 
     const create_search_bar = () => {
       //add search bar
-      const search_container = append_child(
+      self.search_container = append_child(
         "div",
         header_container,
         "search_container"
       );
-      css(conf.style.search_container, search_container);
+      css(conf.style.search_container, self.search_container);
 
-      const search_icon = append_child("img", search_container, "search_icon");
-      css(conf.style.search_icon, search_icon);
-      search_icon.setAttribute("src", conf.icons.search);
+      self.search_icon = append_child(
+        "h3",
+        self.search_container,
+        "search_icon"
+      );
+      search_icon.innerText = "Search:";
+      // self.search_icon = append_child(
+      //   "img",
+      //   self.search_container,
+      //   "search_icon"
+      // );
+      // css(conf.style.search_icon, self.search_icon);
+      // self.search_icon.setAttribute("src", conf.icons.search);
 
-      search_bar = append_child("input", search_container, "search_bar");
+      search_bar = append_child("input", self.search_container, "search_bar");
       css(conf.style.search_bar, search_bar);
       //eliminate highlight on focus
       search_bar.addEventListener("focus", function () {
@@ -369,14 +378,19 @@
           row = rows[i];
           const cell = row.cell[sf_idx];
           if (sf_idx > -1) {
-            const index = cell.toLowerCase().indexOf(typed_text);
+            const index = cell.toString().toLowerCase().indexOf(typed_text);
 
             if (index > -1) {
               search_matches.push(row);
             }
           } else {
             for (let cell of row.cell) {
-              const index = cell.toLowerCase().indexOf(typed_text);
+              let index;
+              try {
+                index = cell.toString().toLowerCase().indexOf(typed_text);
+              } catch {
+                index = -1;
+              }
 
               if (index > -1) {
                 search_matches.push(row);
@@ -423,8 +437,8 @@
         css(conf.style.larger_width_footer_container, footer_container);
         //header container media queries
         css(conf.style.larger_width_search_bar, search_bar);
-        css(conf.style.larger_width_search_container, search_container);
-        css(conf.style.larger_width_search_icon, search_icon);
+        css(conf.style.larger_width_search_container, self.search_container);
+        css(conf.style.larger_width_search_icon, self.search_icon);
         //grid cells media queries
         iterate_through_cells(cells, conf.style.larger_width_cell);
       } else {
@@ -434,8 +448,8 @@
         css(conf.style.footer_container, footer_container);
         //header container defaults
         css(conf.style.search_bar, search_bar);
-        css(conf.style.search_container, search_container);
-        css(conf.style.search_icon, search_icon);
+        css(conf.style.search_container, self.search_container);
+        css(conf.style.search_icon, self.search_icon);
         //grid cells media defaults
       }
 
@@ -453,7 +467,7 @@
         // if any of the headers are cut off, readjust cell max-width here
         do {
           let max_width = parseInt(cell_child.style.maxWidth);
-          max_width *= 1.1;
+          max_width = Math.ceil(max_width * 1.1);
           cell_child.style.maxWidth = max_width + "vw";
           compressed_headers[idx] = max_width;
         } while (cell_child.scrollWidth > cell_child.parentElement.clientWidth);
@@ -704,7 +718,7 @@
           } else {
             css(conf.style.row_hov_color, grid_container);
             css(["background-color: #fff;"], bott_row_headers);
-            css(["background-color: #fff;"], search_icon);
+            css(["background-color: #fff;"], self.search_icon);
           }
           edit();
         },
@@ -973,7 +987,13 @@
       //add cells to 'tr'
       for (let i = 0; i < row_arr.length; i++) {
         //create and add cell to table row
-        const td = create_cell(i, row_arr[i], row_arr, headers_arr, tr);
+        let txt = row_arr[i];
+        if (txt) {
+          txt = txt.toString();
+        } else {
+          txt = "null";
+        }
+        const td = create_cell(i, txt, row_arr, headers_arr, tr);
         tr.appendChild(td);
       }
       tr.setAttribute("id", "row_" + (rows_arr.length - 1));
