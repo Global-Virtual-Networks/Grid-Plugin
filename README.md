@@ -24,7 +24,7 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
 
 ## Installation
 1. Clone or Download the project
-2. Modify the data adapter/grid data to your liking
+2. Create a data adapter
 3. That's it
 
 ## Components
