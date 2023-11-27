@@ -52,7 +52,7 @@
           "padding: .8em;",
           "height: auto;",
           "font-size: .8em;",
-          "text - align: left;",
+          "text-align: left;",
           "overflow: hidden;",
           "white-space: nowrap;",
           "text-overflow: ellipsis;",
@@ -1014,10 +1014,10 @@
       if (header_row) {
         td = document.createElement("th");
         cell.setAttribute("id", cell_text);
-        const img = add_img_to_header(cell, cell_text);
-        header_cell_effects(cell, img);
-        cols_ascending[cell_text] = true;
-        cell.onclick = handle_click;
+        // const img = add_img_to_header(cell, cell_text);
+        // header_cell_effects(cell, img);
+        // cell.onclick = handle_click;
+        // cols_ascending[cell_text] = true;
       } else {
         //add 'highlight' effect by adding <mark> tag around the substring
         const txt_content = cell_text.toLowerCase();
