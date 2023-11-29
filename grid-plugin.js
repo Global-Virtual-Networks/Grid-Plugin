@@ -52,7 +52,7 @@
           "padding: .8em;",
           "height: auto;",
           "font-size: .8em;",
-          "text - align: left;",
+          "text-align: left;",
           "overflow: hidden;",
           "white-space: nowrap;",
           "text-overflow: ellipsis;",
@@ -366,43 +366,45 @@
 
     const highlight_on_search = () => {
       conf.data_adapter.load(function (data) {
-        const typed_text = search_bar.value.toLowerCase();
-        const rows = data.rows;
-        let search_matches = [];
-        let row;
+        if (typeof data !== "undefined") {
+          const typed_text = search_bar.value.toLowerCase();
+          const rows = data.rows;
+          let search_matches = [];
+          let row;
 
-        sf_idx = self.headers_arr.indexOf(default_sf); //sf equals search filter
-        sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
+          sf_idx = self.headers_arr.indexOf(default_sf); //sf equals search filter
+          sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
 
-        for (let i = 0; i < rows.length; i++) {
-          row = rows[i];
-          const cell = row.cell[sf_idx];
-          if (sf_idx > -1) {
-            const index = cell.toString().toLowerCase().indexOf(typed_text);
-
-            if (index > -1) {
-              search_matches.push(row);
-            }
-          } else {
-            for (let cell of row.cell) {
-              let index;
-              try {
-                index = cell.toString().toLowerCase().indexOf(typed_text);
-              } catch {
-                index = -1;
-              }
+          for (let i = 0; i < rows.length; i++) {
+            row = rows[i];
+            const cell = row.cell[sf_idx];
+            if (sf_idx > -1) {
+              const index = cell.toString().toLowerCase().indexOf(typed_text);
 
               if (index > -1) {
                 search_matches.push(row);
-                break;
+              }
+            } else {
+              for (let cell of row.cell) {
+                let index;
+                try {
+                  index = cell.toString().toLowerCase().indexOf(typed_text);
+                } catch {
+                  index = -1;
+                }
+
+                if (index > -1) {
+                  search_matches.push(row);
+                  break;
+                }
               }
             }
           }
+          num_of_pages = Math.ceil(search_matches.length / page_len);
+          populate_table(search_matches);
+          set_pagination_nums();
+          responsive_design();
         }
-        num_of_pages = Math.ceil(search_matches.length / page_len);
-        populate_table(search_matches);
-        set_pagination_nums();
-        responsive_design();
       });
     };
 
@@ -1012,10 +1014,10 @@
       if (header_row) {
         td = document.createElement("th");
         cell.setAttribute("id", cell_text);
-        const img = add_img_to_header(cell, cell_text);
-        header_cell_effects(cell, img);
-        cols_ascending[cell_text] = true;
-        cell.onclick = handle_click;
+        // const img = add_img_to_header(cell, cell_text);
+        // header_cell_effects(cell, img);
+        // cell.onclick = handle_click;
+        // cols_ascending[cell_text] = true;
       } else {
         //add 'highlight' effect by adding <mark> tag around the substring
         const txt_content = cell_text.toLowerCase();
@@ -1026,7 +1028,7 @@
           (index > -1 &&
             headers_ord[cell_num] === sf_idx &&
             typed_text !== "") ||
-          default_sf === "All"
+          (index > -1 && default_sf === "All" && typed_text !== "")
         ) {
           cell.innerHTML =
             cell_text.substring(0, index) +
