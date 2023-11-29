@@ -95,11 +95,11 @@
           "display: flex;",
           "align-items: center;",
           "justify-content: right;",
-          "margin: 1em 0;",
+          "margin-top: .5em;",
         ],
         search_ddl: [
           "cursor: pointer;",
-          "padding: .2em;",
+          "padding: 3px;",
           "border: 2px solid black;",
         ],
         sddl_opt: ["cursor: pointer;"],
@@ -107,20 +107,12 @@
         larger_width_search_container: ["margin: 0 1em;"],
         search_bar: [
           "border: 2px solid black;",
-          "width: 10em;",
-          "height: 1em;",
-          "padding: 1em;",
-          "margin-right: .5em",
-          "font-size: .85em",
           "border-radius: 0;",
+          "padding: 5px",
         ],
-        larger_width_search_bar: [
-          "width: 240px;",
-          "height: 1.5em;",
-          "font-size: 1em",
-        ],
+        larger_width_search_bar: ["width: 240px;"],
         search_icon: [],
-        larger_width_search_icon: ["padding: 4.7px 4.5px;"],
+        larger_width_search_icon: ["padding: 5px;"],
         //css relating to footer
         center_child_elems: [
           "display: flex;",
