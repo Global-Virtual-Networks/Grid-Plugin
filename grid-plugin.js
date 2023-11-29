@@ -50,7 +50,7 @@
         ],
         cell: [
           "padding: 5px 10px;",
-          "font-size: 8px;",
+          "font-size: 12px;",
           "text-align: left;",
           "overflow: hidden;",
           "white-space: nowrap;",
@@ -179,8 +179,8 @@
         r_butt_hov_eff: ["background-color: #ffffff;", " color: #000;"],
         bot_row_headers: [
           "text-align: left;",
-          "padding: 1em;",
-          "font-size: .75em;",
+          "padding: 5px 10px;",
+          "font-size: 12px;",
         ],
       },
     };
@@ -271,7 +271,7 @@
     };
 
     const self = this;
-    let page_len = 18;
+    let page_len = 14;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
