@@ -49,21 +49,20 @@
           "width: 100%;",
         ],
         cell: [
-          "padding: .8em;",
-          "height: auto;",
-          "font-size: .8em;",
+          "padding: 5px 10px;",
+          "font-size: 8px;",
           "text-align: left;",
           "overflow: hidden;",
           "white-space: nowrap;",
           "text-overflow: ellipsis;",
         ],
+        larger_width_cell: [],
         context_menu: [
           "background-color: white;",
           "z-index: 999;",
           "border: 1px solid black;",
         ],
         context_menu_opt: ["padding: .75em;", "font-size: .75em;"],
-        larger_width_cell: ["padding: .5em 1em;", "font-size: .75em;"],
         cutoff_div: [
           "border: 1px solid black",
           "background-color: white;",
@@ -272,7 +271,7 @@
     };
 
     const self = this;
-    let page_len = 12;
+    let page_len = 18;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
