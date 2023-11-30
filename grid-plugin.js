@@ -118,7 +118,7 @@
           "justify-content: center;",
         ],
         footer_container: ["display: block", "flex-direction: row-reverse;"],
-        larger_width_footer_container: ["padding: 18px;"],
+        larger_width_footer_container: ["padding: 6px 18px;"],
         pager_cont: [
           "display: flex;",
           "align-items: center;",
