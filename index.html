@@ -47,10 +47,8 @@
           });
       },
     },
-    on_row_click: function () {
-      const row_id = this.on_row_click.dom_object.id;
-      const _idx = row_id.indexOf("_");
-      alert("Clicked on row #" + row_id.slice(_idx + 1));
+    on_row_click: function (row_id) {
+      alert("Clicked on row #" + parseInt(row_id));
     },
     // style: { alt_color: ["background-color: red"] },
   };
