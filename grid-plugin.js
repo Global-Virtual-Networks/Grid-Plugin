@@ -635,6 +635,7 @@
         search_bar.value = "";
         default_sf = "All";
         self.search_ddl.value = "All";
+        rows_arr = [];
         pagination_active(1);
       });
       /*           export_butt = append_child("button", container, "export_butt");
@@ -970,8 +971,6 @@
         const desired_idx = headers_ord[i];
         row_arr[i] = row_arr_copy[desired_idx];
       }
-      if (!load_grid_called || headers_arr) {
-      }
 
       rows_arr.push(row_arr);
       const tr = document.createElement("tr");
@@ -988,7 +987,8 @@
         const td = create_cell(i, txt, row_arr, headers_arr, tr);
         tr.appendChild(td);
       }
-      tr.setAttribute("id", rows_arr.length - 1);
+      //tr id is the row number, includes quite a bit calculation because it takes pagination into account
+      tr.setAttribute("id", table.rows.length + (curr_page - 1) * page_len);
       table.appendChild(tr);
       set_row_background_color(tr);
       row_events(tr);
