@@ -80,12 +80,12 @@
           "cursor: pointer;",
           "user-select: none;",
         ],
-        img: [
-          "width: 15px;",
-          "height: auto;",
-          "opacity: 0.5;",
-          "margin-left: 1em;",
-        ],
+        // header_img: [
+        //   "width: 15px;",
+        //   "height: auto;",
+        //   "opacity: 0.5;",
+        //   "margin-left: 1em;",
+        // ],
 
         //css relating to header
         header_container: [
@@ -93,7 +93,7 @@
           "display: flex;",
           "align-items: center;",
           "justify-content: right;",
-          "margin-top: .5em;",
+          "margin: 8px 0;",
         ],
         search_ddl: [
           "cursor: pointer;",
@@ -102,7 +102,7 @@
         ],
         sddl_opt: ["cursor: pointer;"],
         search_container: ["display: flex;", "align-items: center;"],
-        larger_width_search_container: ["margin: 0 1em;"],
+        larger_width_search_container: ["margin: 0 10px;"],
         search_bar: [
           "border: 2px solid black;",
           "border-radius: 0;",
@@ -141,24 +141,24 @@
         reset_butt: ["font-size: 12px;", "padding: 5px"],
         spacing: ["margin: 0 6px;", " cursor: pointer;"],
         cancel_butt: [
-          "font-size: .8em",
-          "border: 1px solid black",
-          "border-radius: .5em;",
-          "padding: .5em;",
-          "margin: 1em .5em;",
-          "width: auto",
-          "text-align: center;",
-          "background-color: white",
+          // "font-size: .8em",
+          // "border: 1px solid black",
+          // "border-radius: .5em;",
+          // "padding: .5em;",
+          // "margin: 1em .5em;",
+          // "width: auto",
+          // "text-align: center;",
+          // "background-color: white",
         ],
         save_butt: [
-          "font-size: .8em",
-          "padding: .5em;",
-          "margin: 1em .5em;",
-          "border-radius: .5em",
-          "width: auto;",
-          "text-align: center;",
-          "border: 1px solid black;",
-          "background-color: white",
+          // "font-size: .8em",
+          // "padding: .5em;",
+          // "margin: 1em .5em;",
+          // "border-radius: .5em",
+          // "width: auto;",
+          // "text-align: center;",
+          // "border: 1px solid black;",
+          // "background-color: white",
         ],
         save_butt_hov: ["background-color: #518cfb"],
         //a = add
@@ -788,11 +788,11 @@
         row = tabledata_rows[idx];
         const row_dobj = add_row(row);
         row_dobj.addEventListener("click", function (event) {
-          // if (!event.ctrlKey && !edit_mode.get_mode()) {
-          //   if (typeof conf.on_row_click === "function") {
-          //     conf.on_row_click(parseInt(this.id));
-          //   }
-          // }
+          if (!event.ctrlKey && !edit_mode.get_mode()) {
+            if (typeof conf.on_row_click === "function") {
+              conf.on_row_click(parseInt(this.id));
+            }
+          }
         });
       });
       bot_row_headers();
@@ -1146,10 +1146,6 @@
               cutoff_div = append_child("div", cell_cont, "cutoff_div");
               cutoff_div.innerText = cell.innerText;
               css(conf.style.cutoff_div, cutoff_div);
-              //if it's a cell in the last column, shift the div to the left
-              if (cell.innerText === row_arr[row_arr.length - 1]) {
-                css(["right: .1em;"], cutoff_div);
-              }
             } else if (cutoff_div !== undefined) {
               cutoff_div.style.display = "";
             }
@@ -1195,7 +1191,7 @@
 
     const add_img_to_header = (cell, id) => {
       const img = append_child("img", cell);
-      css(conf.style.img, img);
+      css(conf.style.header_img, img);
       img.setAttribute("id", id);
       img.setAttribute("src", conf.icons.neutral);
 
@@ -1241,7 +1237,7 @@
         } else {
           header_img.setAttribute("src", conf.icons.neutral);
 
-          css(conf.style.img, header_img);
+          css(conf.style.header_img, header_img);
         }
       }
     };
