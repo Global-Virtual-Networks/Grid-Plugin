@@ -181,7 +181,7 @@
       //       conf.style[key] = value;
       //     }
       //   }
-      $.extend(conf, config);
+      $.extend(true, conf, config);
     }
     //add event listeners that will change the cursor depending on whether the ctrl key is being held or not
     document.addEventListener("keydown", function (event) {
