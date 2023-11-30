@@ -39,9 +39,9 @@
         ],
         scroll_mode: ["overflow-y: scroll"],
         grid_container: [
+          "background`-color: #fff",
           "overflow-x: auto;",
           "width: 100%;",
-          "background-color: #fff",
         ],
         table: [
           "font-family: sans-serif;",
@@ -175,12 +175,6 @@
       },
     };
     if (arguments.length > 0) {
-      //   const entries = Object.entries(config.style);
-      //   for (const [key, value] of entries) {
-      //     if (key in conf.style) {
-      //       conf.style[key] = value;
-      //     }
-      //   }
       $.extend(true, conf, config);
     }
     //add event listeners that will change the cursor depending on whether the ctrl key is being held or not
