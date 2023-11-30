@@ -280,6 +280,7 @@
     let default_sf = "All"; //sf equals search filter
 
     const create_header = () => {
+      //create header
       grid_container = append_child("div", plugin_dom_obj, "grid_container");
       css(conf.style.grid_container, grid_container);
       header_container = append_child(
@@ -287,6 +288,11 @@
         grid_container,
         "header_container"
       );
+
+      //make header_container invisible until data comes back from async call
+      self.header_container = header_container;
+      self.header_container.style.visibility = "hidden";
+
       css(conf.style.header_container, header_container);
       self.search_ddl = append_child("select", header_container, "search_ddl");
       css(conf.style.search_ddl, self.search_ddl);
@@ -301,11 +307,7 @@
       const sddl_option = append_child("option", self.search_ddl, default_sf);
       sddl_option.innerText = default_sf;
 
-      create_search_bar();
-    };
-
-    const create_search_bar = () => {
-      //add search bar
+      //create search bar
       self.search_container = append_child(
         "div",
         header_container,
@@ -1320,6 +1322,7 @@
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
           load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord
+          self.header_container.style.visibility = "visible";
         });
         pag_tb.addEventListener("keydown", function (event) {
           if (event.key === "Enter") {
