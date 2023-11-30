@@ -39,7 +39,7 @@
         ],
         scroll_mode: ["overflow-y: scroll"],
         grid_container: [
-          "background`-color: #fff",
+          "background-color: #fff",
           "overflow-x: auto;",
           "width: 100%;",
         ],
