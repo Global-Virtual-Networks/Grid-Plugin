@@ -13,10 +13,9 @@ A powerful and flexible jQuery grid plugin for displaying and editing tabular da
 ## Features
 
 - Display tabular data in a flexible grid layout.
-- Edit rows inline with built-in editing capabilities(Ctrl + Click on a row)
 - Pagination for handling large datasets
 - Zero external dependencies
-- Connect to a data source using a data adapter
+- Connect a dataset using a data adapter
   
 ## Demo
 
