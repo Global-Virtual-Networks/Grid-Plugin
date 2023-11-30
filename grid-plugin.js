@@ -795,8 +795,7 @@
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
-              conf.on_row_click.dom_object = this;
-              conf.on_row_click();
+              conf.on_row_click(parseInt(this.id));
             }
           }
         });
@@ -989,7 +988,7 @@
         const td = create_cell(i, txt, row_arr, headers_arr, tr);
         tr.appendChild(td);
       }
-      tr.setAttribute("id", "row_" + (rows_arr.length - 1));
+      tr.setAttribute("id", rows_arr.length - 1);
       table.appendChild(tr);
       set_row_background_color(tr);
       row_events(tr);
