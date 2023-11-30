@@ -347,7 +347,6 @@
           let row;
 
           sf_idx = self.headers_arr.indexOf(default_sf); //sf equals search filter
-          sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
 
           for (let i = 0; i < rows.length; i++) {
             row = rows[i];
@@ -746,7 +745,6 @@
     let tot_num_cols;
     let table_cont;
     let tabledata_rows;
-    let headers_ord;
     let ord_ro_obj;
     let ord_bind_obj = {};
     let ord_name_obj = {};
@@ -954,13 +952,6 @@
         row_arr = cells;
       }
 
-      //rearrange cols to match schema ord
-      const row_arr_copy = Array.from(row_arr);
-      for (let i = 0; i < headers_ord.length; i++) {
-        const desired_idx = headers_ord[i];
-        row_arr[i] = row_arr_copy[desired_idx];
-      }
-
       rows_arr.push(row_arr);
       const tr = document.createElement("tr");
 
@@ -1004,9 +995,7 @@
         const index = txt_content.indexOf(typed_text);
 
         if (
-          (index > -1 &&
-            headers_ord[cell_num] === sf_idx &&
-            typed_text !== "") ||
+          (index > -1 && cell_num === sf_idx && typed_text !== "") ||
           (index > -1 && default_sf === "All" && typed_text !== "")
         ) {
           cell.innerHTML =
@@ -1023,17 +1012,17 @@
         );
         td = document.createElement("td");
         //add a click event listener to every cell inside the grid if corresponding schema ro property is false
-        if (!ord_ro_obj[cell_num]) {
-          cell.addEventListener("click", function (event) {
-            const row_num = extract_row_num(this.id);
-            const curr_row = plugin_dom_obj.querySelectorAll("tr")[row_num];
-            edit_mode.set_edit_row(curr_row);
-            if (!edit_mode.get_mode() && event.ctrlKey) {
-              // const row = edit_mode.get_edit_row();
-              // add_inputs_to_row(this, row, row_num);
-            }
-          });
-        }
+        // if (!ord_ro_obj[cell_num]) {
+        //   cell.addEventListener("click", function (event) {
+        //     const row_num = extract_row_num(this.id);
+        //     const curr_row = plugin_dom_obj.querySelectorAll("tr")[row_num];
+        //     edit_mode.set_edit_row(curr_row);
+        //     if (!edit_mode.get_mode() && event.ctrlKey) {
+        //       // const row = edit_mode.get_edit_row();
+        //       // add_inputs_to_row(this, row, row_num);
+        //     }
+        //   });
+        // }
       }
       //set class attribute on td dom object and add right click event listeners to it
       td.setAttribute("class", "column" + cell_num);
@@ -1272,10 +1261,8 @@
     };
 
     const add_headers = (schema) => {
-      headers_ord = [];
       self.headers_arr = [];
       for (const schem of schema) {
-        headers_ord.push(schem.ord);
         const header = conv_to_Title_Case(schem.name);
         self.headers_arr.push(header);
 
@@ -1284,19 +1271,19 @@
         sddl_opt.innerText = header;
       }
 
-      ord_ro_obj = {};
-      for (let i = 0; i < headers_ord.length; i++) {
-        const focus_idx = headers_ord[i];
-        let focus_schem;
-        for (const schem of schema) {
-          if (schem.ord == focus_idx) {
-            ord_ro_obj[focus_idx] = schem.ro;
-            ord_bind_obj[focus_idx] = schem.bind;
-            ord_name_obj[focus_idx] = schem.name;
-            break;
-          }
-        }
-      }
+      // ord_ro_obj = {};
+      // for (let i = 0; i < headers_ord.length; i++) {
+      //   const focus_idx = headers_ord[i];
+      //   let focus_schem;
+      //   for (const schem of schema) {
+      //     if (schem.ord == focus_idx) {
+      //       ord_ro_obj[focus_idx] = schem.ro;
+      //       ord_bind_obj[focus_idx] = schem.bind;
+      //       ord_name_obj[focus_idx] = schem.name;
+      //       break;
+      //     }
+      //   }
+      // }
 
       add_row(self.headers_arr, true);
       tot_num_cols = self.headers_arr.length;
