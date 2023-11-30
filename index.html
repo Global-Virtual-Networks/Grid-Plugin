@@ -13,10 +13,10 @@
       id="grid_container"
       style="
         width: auto;
-        max-width: 1000px;
+        max-width: 720px;
         height: auto;
-        max-height: 750px;
-        margin: 4em 2em;
+        max-height: 510px;
+        margin: 40px 20px;
         border: 2px solid black;
       "
     ></div>
@@ -47,12 +47,12 @@
           });
       },
     },
-    on_row_click: function () {
-      const row_id = this.on_row_click.dom_object.id;
-      const _idx = row_id.indexOf("_");
-      alert("Clicked on row #" + row_id.slice(_idx + 1));
+    on_row_click: function (row_id) {
+      alert("Clicked on row #" + parseInt(row_id));
     },
-    // style: { alt_color: ["background-color: red"] },
+    style: {
+      alt_color: ["background-color: lightblue;"],
+    },
   };
   let local = {
     data_adapter: {
@@ -433,9 +433,7 @@
       },
     },
     on_row_click: function () {
-      const row_id = this.on_row_click.dom_object.id;
-      const _idx = row_id.indexOf("_");
-      alert("Clicked on row #" + row_id.slice(_idx + 1));
+      alert("Clicked on row #" + parseInt(row_id));
     },
   };
   const grid = $("#grid_container").grid_ng(restful_api);

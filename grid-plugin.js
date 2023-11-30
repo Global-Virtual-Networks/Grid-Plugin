@@ -39,9 +39,9 @@
         ],
         scroll_mode: ["overflow-y: scroll"],
         grid_container: [
+          "background-color: #fff",
           "overflow-x: auto;",
           "width: 100%;",
-          "background-color: #fff",
         ],
         table: [
           "font-family: sans-serif;",
@@ -49,30 +49,28 @@
           "width: 100%;",
         ],
         cell: [
-          "padding: .8em;",
-          "height: auto;",
-          "font-size: .8em;",
+          "padding: 5px 10px;",
+          "font-size: 12px;",
           "text-align: left;",
           "overflow: hidden;",
           "white-space: nowrap;",
           "text-overflow: ellipsis;",
         ],
+        larger_width_cell: [],
         context_menu: [
           "background-color: white;",
           "z-index: 999;",
           "border: 1px solid black;",
         ],
-        context_menu_opt: ["padding: .75em;", "font-size: .75em;"],
-        larger_width_cell: ["padding: .5em 1em;", "font-size: .75em;"],
+        // context_menu_opt: ["padding: .75em;", "font-size: .75em;"],
         cutoff_div: [
           "border: 1px solid black",
           "background-color: white;",
-          "padding: .5em;",
-          "font-size: .65em;",
-          "line-height: 1.5em;",
+          "padding: 5px;",
+          "font-size: 10px;",
+          "line-height: 15px;",
           "position: absolute",
           "overflow: visible;",
-          "border-radius: .25em",
           "z-index: 999;",
         ],
         header_cells_ex: [
@@ -82,12 +80,12 @@
           "cursor: pointer;",
           "user-select: none;",
         ],
-        img: [
-          "width: 15px;",
-          "height: auto;",
-          "opacity: 0.5;",
-          "margin-left: 1em;",
-        ],
+        // header_img: [
+        //   "width: 15px;",
+        //   "height: auto;",
+        //   "opacity: 0.5;",
+        //   "margin-left: 1em;",
+        // ],
 
         //css relating to header
         header_container: [
@@ -95,32 +93,24 @@
           "display: flex;",
           "align-items: center;",
           "justify-content: right;",
-          "margin: 1em 0;",
+          "margin: 8px 0;",
         ],
         search_ddl: [
           "cursor: pointer;",
-          "padding: .2em;",
+          "padding: 3px;",
           "border: 2px solid black;",
         ],
         sddl_opt: ["cursor: pointer;"],
         search_container: ["display: flex;", "align-items: center;"],
-        larger_width_search_container: ["margin: 0 1em;"],
+        larger_width_search_container: ["margin: 0 10px;"],
         search_bar: [
           "border: 2px solid black;",
-          "width: 10em;",
-          "height: 1em;",
-          "padding: 1em;",
-          "margin-right: .5em",
-          "font-size: .85em",
           "border-radius: 0;",
+          "padding: 5px",
         ],
-        larger_width_search_bar: [
-          "width: 240px;",
-          "height: 1.5em;",
-          "font-size: 1em",
-        ],
+        larger_width_search_bar: ["width: 240px;"],
         search_icon: [],
-        larger_width_search_icon: ["padding: 4.7px 4.5px;"],
+        larger_width_search_icon: ["padding: 0 5px;", "margin: 0;"],
         //css relating to footer
         center_child_elems: [
           "display: flex;",
@@ -128,56 +118,47 @@
           "justify-content: center;",
         ],
         footer_container: ["display: block", "flex-direction: row-reverse;"],
-        larger_width_footer_container: ["padding: 0.5em"],
+        larger_width_footer_container: ["padding: 6px 18px;"],
         pager_cont: [
           "display: flex;",
           "align-items: center;",
-          "font-size: .7em",
+          "font-size: 12px",
         ],
-        larger_width_pager_cont: ["font-size: .8em"],
-        pager_butts: ["margin-top: .2em;", "width: .75em;", "padding: .1em;"],
-        entries_container: [
-          "padding: 0 .5em;",
-          "text-align: center;",
-          "margin: 0 .75em;",
-          "font-size: .9em",
-        ],
-        larger_width_entries_container: [
-          "text-align: left;",
-          "margin: 0 1em;",
-          "font-size: .9em",
-        ],
+        larger_width_pager_cont: [],
+        pager_butts: ["width: 10px;"],
+        entries_container: ["text-align: center;", "font-size: 12px"],
+        larger_width_entries_container: [],
         pag_tb: [
-          "font-size: 1em",
-          "width: 3em;",
-          "height: .6em;",
-          "padding: .5em;",
-          "margin: 0 .5em;",
+          "font-size: 12px",
+          "width: 30px;",
+          "height: 8px;",
+          "padding: 6px;",
+          "margin: 0 6px;",
           "border: 1.5px solid black;",
-          "border-radius: .5em;",
+          "border-radius: 5px;",
           "text-align: center;",
         ],
-        reset_butt: ["font-size: .75em;", "padding: .5em"],
-        spacing: ["margin: 0 .5em;", " cursor: pointer;"],
+        reset_butt: ["font-size: 12px;", "padding: 5px"],
+        spacing: ["margin: 0 6px;", " cursor: pointer;"],
         cancel_butt: [
-          "font-size: .8em",
-          "border: 1px solid black",
-          "border-radius: .5em;",
-          "padding: .5em;",
-          "margin: 1em .5em;",
-          "width: auto",
-          "text-align: center;",
-          "background-color: white",
+          // "font-size: .8em",
+          // "border: 1px solid black",
+          // "border-radius: .5em;",
+          // "padding: .5em;",
+          // "margin: 1em .5em;",
+          // "width: auto",
+          // "text-align: center;",
+          // "background-color: white",
         ],
         save_butt: [
-          "font-size: .8em",
-          "padding: .5em;",
-          "margin: 1em .5em;",
-          "border-radius: .5em",
-          "width: auto;",
-          "text-align: center;",
-          "border: 1px solid black;",
-          "background-color: white",
+          // "font-size: .8em",
+          // "padding: .5em;",
+          // "margin: 1em .5em;",
+          // "border-radius: .5em",
+          // "width: auto;",
+          // "text-align: center;",
+          // "border: 1px solid black;",
+          // "background-color: white",
         ],
         save_butt_hov: ["background-color: #518cfb"],
         //a = add
@@ -188,19 +169,13 @@
         r_butt_hov_eff: ["background-color: #ffffff;", " color: #000;"],
         bot_row_headers: [
           "text-align: left;",
-          "padding: 1em;",
-          "font-size: .75em;",
+          "padding: 5px 10px;",
+          "font-size: 12px;",
         ],
       },
     };
     if (arguments.length > 0) {
-      //   const entries = Object.entries(config.style);
-      //   for (const [key, value] of entries) {
-      //     if (key in conf.style) {
-      //       conf.style[key] = value;
-      //     }
-      //   }
-      $.extend(conf, config);
+      $.extend(true, conf, config);
     }
     //add event listeners that will change the cursor depending on whether the ctrl key is being held or not
     document.addEventListener("keydown", function (event) {
@@ -233,9 +208,6 @@
           } else if (mode === "pagination") {
             responsive_design();
             set_pagination_nums();
-            //set a defined height on the footer
-            footer_container.style.cssText +=
-              "height: " + footer_container.offsetHeight + "px";
           } else {
             alert(
               "Invalid argument object property: Use 'scroll' or 'pagination' instead of '" +
@@ -280,7 +252,7 @@
     };
 
     const self = this;
-    let page_len = 12;
+    let page_len = 14;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
@@ -301,6 +273,7 @@
     let default_sf = "All"; //sf equals search filter
 
     const create_header = () => {
+      //create header
       grid_container = append_child("div", plugin_dom_obj, "grid_container");
       css(conf.style.grid_container, grid_container);
       header_container = append_child(
@@ -308,6 +281,11 @@
         grid_container,
         "header_container"
       );
+
+      //make header_container invisible until data comes back from async call
+      self.header_container = header_container;
+      self.header_container.style.visibility = "hidden";
+
       css(conf.style.header_container, header_container);
       self.search_ddl = append_child("select", header_container, "search_ddl");
       css(conf.style.search_ddl, self.search_ddl);
@@ -322,11 +300,7 @@
       const sddl_option = append_child("option", self.search_ddl, default_sf);
       sddl_option.innerText = default_sf;
 
-      create_search_bar();
-    };
-
-    const create_search_bar = () => {
-      //add search bar
+      //create search bar
       self.search_container = append_child(
         "div",
         header_container,
@@ -373,7 +347,6 @@
           let row;
 
           sf_idx = self.headers_arr.indexOf(default_sf); //sf equals search filter
-          sf_idx = headers_ord.indexOf(sf_idx); //because the order of columns can be rearranged, the code needs to run by the headers_ord array
 
           for (let i = 0; i < rows.length; i++) {
             row = rows[i];
@@ -509,7 +482,13 @@
         footer_parent_container,
         "footer_container"
       );
-      css(["display: block"], footer_container);
+      css(conf.style.center_child_elems, footer_container);
+
+      //make footer invisible until data comes back from async call
+      self.footer_container = footer_container;
+      self.footer_container.style.visibility = "hidden";
+
+      // css(["display: block"], footer_container); //used for mobile responsive design
       add_pager_divs();
       reset_export();
     };
@@ -634,7 +613,7 @@
         footer_container,
         "butts_container"
       );
-      css(["margin: 0 1em"], container);
+      css(["margin: 0 10px"], container);
       reset_butt = append_child("button", container, "reset_butt");
       css(conf.style.reset_butt, reset_butt);
 
@@ -644,6 +623,7 @@
         search_bar.value = "";
         default_sf = "All";
         self.search_ddl.value = "All";
+        rows_arr = [];
         pagination_active(1);
       });
       /*           export_butt = append_child("button", container, "export_butt");
@@ -765,7 +745,6 @@
     let tot_num_cols;
     let table_cont;
     let tabledata_rows;
-    let headers_ord;
     let ord_ro_obj;
     let ord_bind_obj = {};
     let ord_name_obj = {};
@@ -804,8 +783,7 @@
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
-              conf.on_row_click.dom_object = this;
-              conf.on_row_click();
+              conf.on_row_click(parseInt(this.id));
             }
           }
         });
@@ -974,15 +952,6 @@
         row_arr = cells;
       }
 
-      //rearrange cols to match schema ord
-      const row_arr_copy = Array.from(row_arr);
-      for (let i = 0; i < headers_ord.length; i++) {
-        const desired_idx = headers_ord[i];
-        row_arr[i] = row_arr_copy[desired_idx];
-      }
-      if (!load_grid_called || headers_arr) {
-      }
-
       rows_arr.push(row_arr);
       const tr = document.createElement("tr");
 
@@ -998,7 +967,8 @@
         const td = create_cell(i, txt, row_arr, headers_arr, tr);
         tr.appendChild(td);
       }
-      tr.setAttribute("id", "row_" + (rows_arr.length - 1));
+      //tr id is the row number, includes quite a bit calculation because it takes pagination into account
+      tr.setAttribute("id", table.rows.length + (curr_page - 1) * page_len);
       table.appendChild(tr);
       set_row_background_color(tr);
       row_events(tr);
@@ -1025,9 +995,7 @@
         const index = txt_content.indexOf(typed_text);
 
         if (
-          (index > -1 &&
-            headers_ord[cell_num] === sf_idx &&
-            typed_text !== "") ||
+          (index > -1 && cell_num === sf_idx && typed_text !== "") ||
           (index > -1 && default_sf === "All" && typed_text !== "")
         ) {
           cell.innerHTML =
@@ -1044,17 +1012,17 @@
         );
         td = document.createElement("td");
         //add a click event listener to every cell inside the grid if corresponding schema ro property is false
-        if (!ord_ro_obj[cell_num]) {
-          cell.addEventListener("click", function (event) {
-            const row_num = extract_row_num(this.id);
-            const curr_row = plugin_dom_obj.querySelectorAll("tr")[row_num];
-            edit_mode.set_edit_row(curr_row);
-            if (!edit_mode.get_mode() && event.ctrlKey) {
-              // const row = edit_mode.get_edit_row();
-              // add_inputs_to_row(this, row, row_num);
-            }
-          });
-        }
+        // if (!ord_ro_obj[cell_num]) {
+        //   cell.addEventListener("click", function (event) {
+        //     const row_num = extract_row_num(this.id);
+        //     const curr_row = plugin_dom_obj.querySelectorAll("tr")[row_num];
+        //     edit_mode.set_edit_row(curr_row);
+        //     if (!edit_mode.get_mode() && event.ctrlKey) {
+        //       // const row = edit_mode.get_edit_row();
+        //       // add_inputs_to_row(this, row, row_num);
+        //     }
+        //   });
+        // }
       }
       //set class attribute on td dom object and add right click event listeners to it
       td.setAttribute("class", "column" + cell_num);
@@ -1162,10 +1130,6 @@
               cutoff_div = append_child("div", cell_cont, "cutoff_div");
               cutoff_div.innerText = cell.innerText;
               css(conf.style.cutoff_div, cutoff_div);
-              //if it's a cell in the last column, shift the div to the left
-              if (cell.innerText === row_arr[row_arr.length - 1]) {
-                css(["right: .1em;"], cutoff_div);
-              }
             } else if (cutoff_div !== undefined) {
               cutoff_div.style.display = "";
             }
@@ -1211,7 +1175,7 @@
 
     const add_img_to_header = (cell, id) => {
       const img = append_child("img", cell);
-      css(conf.style.img, img);
+      css(conf.style.header_img, img);
       img.setAttribute("id", id);
       img.setAttribute("src", conf.icons.neutral);
 
@@ -1257,7 +1221,7 @@
         } else {
           header_img.setAttribute("src", conf.icons.neutral);
 
-          css(conf.style.img, header_img);
+          css(conf.style.header_img, header_img);
         }
       }
     };
@@ -1297,10 +1261,8 @@
     };
 
     const add_headers = (schema) => {
-      headers_ord = [];
       self.headers_arr = [];
       for (const schem of schema) {
-        headers_ord.push(schem.ord);
         const header = conv_to_Title_Case(schem.name);
         self.headers_arr.push(header);
 
@@ -1309,19 +1271,19 @@
         sddl_opt.innerText = header;
       }
 
-      ord_ro_obj = {};
-      for (let i = 0; i < headers_ord.length; i++) {
-        const focus_idx = headers_ord[i];
-        let focus_schem;
-        for (const schem of schema) {
-          if (schem.ord == focus_idx) {
-            ord_ro_obj[focus_idx] = schem.ro;
-            ord_bind_obj[focus_idx] = schem.bind;
-            ord_name_obj[focus_idx] = schem.name;
-            break;
-          }
-        }
-      }
+      // ord_ro_obj = {};
+      // for (let i = 0; i < headers_ord.length; i++) {
+      //   const focus_idx = headers_ord[i];
+      //   let focus_schem;
+      //   for (const schem of schema) {
+      //     if (schem.ord == focus_idx) {
+      //       ord_ro_obj[focus_idx] = schem.ro;
+      //       ord_bind_obj[focus_idx] = schem.bind;
+      //       ord_name_obj[focus_idx] = schem.name;
+      //       break;
+      //     }
+      //   }
+      // }
 
       add_row(self.headers_arr, true);
       tot_num_cols = self.headers_arr.length;
@@ -1342,6 +1304,8 @@
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
           load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord
+          self.header_container.style.visibility = "visible";
+          self.footer_container.style.visibility = "visible";
         });
         pag_tb.addEventListener("keydown", function (event) {
           if (event.key === "Enter") {
