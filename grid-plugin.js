@@ -119,37 +119,28 @@
           "justify-content: center;",
         ],
         footer_container: ["display: block", "flex-direction: row-reverse;"],
-        larger_width_footer_container: ["padding: 0.5em"],
+        larger_width_footer_container: ["padding: 18px;"],
         pager_cont: [
           "display: flex;",
           "align-items: center;",
-          "font-size: .7em",
+          "font-size: 12px",
         ],
-        larger_width_pager_cont: ["font-size: .8em"],
-        pager_butts: ["margin-top: .2em;", "width: .75em;", "padding: .1em;"],
-        entries_container: [
-          "padding: 0 .5em;",
-          "text-align: center;",
-          "margin: 0 .75em;",
-          "font-size: .9em",
-        ],
-        larger_width_entries_container: [
-          "text-align: left;",
-          "margin: 0 1em;",
-          "font-size: .9em",
-        ],
+        larger_width_pager_cont: [],
+        pager_butts: ["width: 10px;"],
+        entries_container: ["text-align: center;", "font-size: 12px"],
+        larger_width_entries_container: [],
         pag_tb: [
-          "font-size: 1em",
-          "width: 3em;",
-          "height: .6em;",
-          "padding: .5em;",
-          "margin: 0 .5em;",
+          "font-size: 12px",
+          "width: 30px;",
+          "height: 8px;",
+          "padding: 6px;",
+          "margin: 0 6px;",
           "border: 1.5px solid black;",
-          "border-radius: .5em;",
+          "border-radius: 5px;",
           "text-align: center;",
         ],
-        reset_butt: ["font-size: .75em;", "padding: .5em"],
-        spacing: ["margin: 0 .5em;", " cursor: pointer;"],
+        reset_butt: ["font-size: 12px;", "padding: 5px"],
+        spacing: ["margin: 0 6px;", " cursor: pointer;"],
         cancel_butt: [
           "font-size: .8em",
           "border: 1px solid black",
@@ -224,9 +215,6 @@
           } else if (mode === "pagination") {
             responsive_design();
             set_pagination_nums();
-            //set a defined height on the footer
-            footer_container.style.cssText +=
-              "height: " + footer_container.offsetHeight + "px";
           } else {
             alert(
               "Invalid argument object property: Use 'scroll' or 'pagination' instead of '" +
@@ -625,7 +613,7 @@
         footer_container,
         "butts_container"
       );
-      css(["margin: 0 1em"], container);
+      css(["margin: 0 10px"], container);
       reset_butt = append_child("button", container, "reset_butt");
       css(conf.style.reset_butt, reset_butt);
 
