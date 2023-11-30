@@ -110,7 +110,7 @@
         ],
         larger_width_search_bar: ["width: 240px;"],
         search_icon: [],
-        larger_width_search_icon: ["padding: 5px;"],
+        larger_width_search_icon: ["padding: 0 5px;", "margin: 0;"],
         //css relating to footer
         center_child_elems: [
           "display: flex;",
