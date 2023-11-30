@@ -489,12 +489,13 @@
         footer_parent_container,
         "footer_container"
       );
+      css(conf.style.center_child_elems, footer_container);
 
       //make footer invisible until data comes back from async call
       self.footer_container = footer_container;
       self.footer_container.style.visibility = "hidden";
 
-      css(["display: block"], footer_container);
+      // css(["display: block"], footer_container); //used for mobile responsive design
       add_pager_divs();
       reset_export();
     };
