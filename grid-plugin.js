@@ -62,16 +62,15 @@
           "z-index: 999;",
           "border: 1px solid black;",
         ],
-        context_menu_opt: ["padding: .75em;", "font-size: .75em;"],
+        // context_menu_opt: ["padding: .75em;", "font-size: .75em;"],
         cutoff_div: [
           "border: 1px solid black",
           "background-color: white;",
-          "padding: .5em;",
-          "font-size: .65em;",
-          "line-height: 1.5em;",
+          "padding: 5px;",
+          "font-size: 10px;",
+          "line-height: 15px;",
           "position: absolute",
           "overflow: visible;",
-          "border-radius: .25em",
           "z-index: 999;",
         ],
         header_cells_ex: [
@@ -789,11 +788,11 @@
         row = tabledata_rows[idx];
         const row_dobj = add_row(row);
         row_dobj.addEventListener("click", function (event) {
-          if (!event.ctrlKey && !edit_mode.get_mode()) {
-            if (typeof conf.on_row_click === "function") {
-              conf.on_row_click(parseInt(this.id));
-            }
-          }
+          // if (!event.ctrlKey && !edit_mode.get_mode()) {
+          //   if (typeof conf.on_row_click === "function") {
+          //     conf.on_row_click(parseInt(this.id));
+          //   }
+          // }
         });
       });
       bot_row_headers();
