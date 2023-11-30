@@ -490,6 +490,11 @@
         footer_parent_container,
         "footer_container"
       );
+
+      //make footer invisible until data comes back from async call
+      self.footer_container = footer_container;
+      self.footer_container.style.visibility = "hidden";
+
       css(["display: block"], footer_container);
       add_pager_divs();
       reset_export();
@@ -1323,6 +1328,7 @@
           grid_mode.set(conf.grid_mode);
           load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord
           self.header_container.style.visibility = "visible";
+          self.footer_container.style.visibility = "visible";
         });
         pag_tb.addEventListener("keydown", function (event) {
           if (event.key === "Enter") {
