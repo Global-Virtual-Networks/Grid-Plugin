@@ -394,7 +394,8 @@
       const cells = plugin_dom_obj.querySelectorAll("#cell_cont");
       //grid cells media defaults
       iterate_through_cells(cells, conf.style.cell);
-      cell_max_width();
+      // cell_max_width();
+
       //apply extra css in media query like fashion
       if (plugin_dom_obj.offsetWidth > 414) {
         //footer container media queries
@@ -420,7 +421,7 @@
         //grid cells media defaults
       }
 
-      uncompress_col_headers(cells);
+      // uncompress_col_headers(cells); //causing a break in the app, so commenting out for now
     };
 
     const uncompress_col_headers = (cells) => {
@@ -947,8 +948,9 @@
       rows_arr.push(row_arr);
       const tr = document.createElement("tr");
 
-      //add cells to 'tr'
-      for (let i = 0; i < conf.data_adapter.columns.length; i++) {
+      //add cells to 'tr', if they are included in the listed columns of the 'columns' property in the config object
+      const cols_obj = conf.data_adapter.columns;
+      for (let i = 0; i < cols_obj.length; i++) {
         //create and add cell to table row
         let txt = row_arr[i];
         if (txt) {
@@ -959,15 +961,21 @@
         const td = create_cell(i, txt, row_arr, headers_arr, tr);
         tr.appendChild(td);
       }
-      //tr id is the row number, includes quite a bit calculation because it takes pagination into account
-      tr.setAttribute("id", table.rows.length + (curr_page - 1) * page_len);
+      tr.setAttribute("id", table.rows.length + (curr_page - 1) * page_len); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
       table.appendChild(tr);
       set_row_background_color(tr);
       row_events(tr);
       return tr;
     };
 
-    const create_cell = (cell_num, cell_text, row_arr, header_row, tr) => {
+    const create_cell = (
+      cell_num,
+      cell_text,
+      row_arr,
+      header_row,
+      tr,
+      col_obj
+    ) => {
       const cell = document.createElement("div");
       const row_num = rows_arr.length - 1;
       cell.innerText = cell_text;
@@ -1017,7 +1025,7 @@
         // }
       }
       //set class attribute on td dom object and add right click event listeners to it
-      td.setAttribute("class", "column" + cell_num);
+      // td.setAttribute("class", "column" + cell_num);
       //   td.addEventListener("contextmenu", function (event) {
       //     event.preventDefault();
       //     //make sure edit mode is not on and no other right click context menus exists before creating one
