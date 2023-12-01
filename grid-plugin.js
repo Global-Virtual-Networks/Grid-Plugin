@@ -948,7 +948,7 @@
       const tr = document.createElement("tr");
 
       //add cells to 'tr'
-      for (let i = 0; i < row_arr.length; i++) {
+      for (let i = 0; i < conf.data_adapter.columns.length; i++) {
         //create and add cell to table row
         let txt = row_arr[i];
         if (txt) {
