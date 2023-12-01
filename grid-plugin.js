@@ -355,7 +355,7 @@
                 index = cell.toString().toLowerCase().indexOf(typed_text);
               } catch {}
 
-              if (index > -1 || cell === null) {
+              if (index > -1 || typed_text === "") {
                 search_matches.push(row);
               }
             } else {
@@ -365,7 +365,7 @@
                   index = cell.toString().toLowerCase().indexOf(typed_text);
                 } catch {}
 
-                if (index > -1 || cell === null) {
+                if (index > -1 || typed_text === "") {
                   search_matches.push(row);
                   break;
                 }
@@ -962,8 +962,6 @@
         let txt = row_arr[i];
         if (txt) {
           txt = txt.toString();
-        } else if (txt === null) {
-          txt = "null";
         } else {
           txt = "";
         }
