@@ -38,11 +38,12 @@
         table: [
           "font-family: sans-serif;",
           "border-collapse: collapse;",
-          "width: 100%;",
           "table-layout: fixed;",
+          "width: 100%;",
         ],
         cell: [
           "padding: 5px 0;",
+          "  font-size: 10px;",
           "text-align: left;",
           "overflow: hidden;",
           "white-space: nowrap;",
@@ -109,7 +110,7 @@
           "align-items: center;",
           "justify-content: center;",
         ],
-        footer_container: ["display: block", "flex-direction: row-reverse;"],
+        footer_container: ["display: flex;"],
         larger_width_footer_container: ["padding: 6px 18px;"],
         pager_cont: [
           "display: flex;",
@@ -244,7 +245,7 @@
     };
 
     const self = this;
-    let page_len = 14;
+    let page_len = 17;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
