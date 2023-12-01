@@ -249,7 +249,7 @@
     };
 
     const self = this;
-    let page_len = 17;
+    let page_len = 15;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
