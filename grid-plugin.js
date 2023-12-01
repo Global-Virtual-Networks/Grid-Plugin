@@ -39,6 +39,7 @@
           "font-family: sans-serif;",
           "border-collapse: collapse;",
           "width: 100%;",
+          "table-layout: fixed;",
         ],
         cell: [
           "padding: 5px 0;",
@@ -780,7 +781,7 @@
           }
         });
       });
-      bot_row_headers();
+      // bot_row_headers();
     };
 
     const num_invisible_rows = () => {
@@ -958,7 +959,7 @@
           txt = "null";
         }
         const td = create_cell(i, txt, row_arr, headers_arr, tr);
-        td.children[0].style.width = cols_obj[i].width + "px"; //apply cell width from corresponding column object
+        td.style.width = cols_obj[i].width + "px"; //apply cell width from corresponding column object
         tr.appendChild(td);
       }
       tr.setAttribute("id", table.rows.length + (curr_page - 1) * page_len); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
