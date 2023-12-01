@@ -103,7 +103,11 @@
         ],
         larger_width_search_bar: ["width: 240px;"],
         search_icon: [],
-        larger_width_search_icon: ["padding: 0 5px;", "margin: 0;"],
+        larger_width_search_icon: [
+          "padding: 0 5px;",
+          "margin: 0;",
+          "font-size: 15px;",
+        ],
         //css relating to footer
         center_child_elems: [
           "display: flex;",
@@ -306,7 +310,7 @@
         self.search_container,
         "search_icon"
       );
-      search_icon.innerText = "Search:";
+      self.search_icon.innerText = "Search:";
       // self.search_icon = append_child(
       //   "img",
       //   self.search_container,
@@ -348,9 +352,7 @@
               let index;
               try {
                 index = cell.toString().toLowerCase().indexOf(typed_text);
-              } catch {
-                index = -1;
-              }
+              } catch {}
 
               if (index > -1 || cell === null) {
                 search_matches.push(row);
@@ -360,9 +362,7 @@
                 let index;
                 try {
                   index = cell.toString().toLowerCase().indexOf(typed_text);
-                } catch {
-                  index = -1;
-                }
+                } catch {}
 
                 if (index > -1 || cell === null) {
                   search_matches.push(row);
