@@ -345,9 +345,14 @@
             row = rows[i];
             const cell = row.cell[sf_idx];
             if (sf_idx > -1) {
-              const index = cell.toString().toLowerCase().indexOf(typed_text);
+              let index;
+              try {
+                index = cell.toString().toLowerCase().indexOf(typed_text);
+              } catch {
+                index = -1;
+              }
 
-              if (index > -1) {
+              if (index > -1 || cell === null) {
                 search_matches.push(row);
               }
             } else {
@@ -359,7 +364,7 @@
                   index = -1;
                 }
 
-                if (index > -1) {
+                if (index > -1 || cell === null) {
                   search_matches.push(row);
                   break;
                 }
