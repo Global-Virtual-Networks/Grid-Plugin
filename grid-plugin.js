@@ -956,8 +956,10 @@
         let txt = row_arr[i];
         if (txt) {
           txt = txt.toString();
-        } else {
+        } else if (txt === null) {
           txt = "null";
+        } else {
+          txt = "";
         }
         const td = create_cell(i, txt, row_arr, headers_arr, tr);
         td.style.width = cols_obj[i].width + "px"; //apply cell width from corresponding column object
