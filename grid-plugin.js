@@ -2,6 +2,8 @@
   $.fn.grid_ng = function (config) {
     const plugin_dom_obj = this[0];
     const conf = {
+      //rtd equals rows to display
+      rtd: 15,
       icons: {
         ascending:
           "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAPBJREFUWEftljEOwjAQBCcVf4GWhg4+wQt4GSWfgIqOEj5CRwNaFCPL2HFEzkqE7CqSE+94b++UhpFXM7I+FeBvHZgDe+AB7IBbKmslHJD4AVi0oldgm4JIARyBdUeHnIBNZD8Ud68kISwBfHEJ+g7oOQphVYJQXJZLUEviriRfEFYAZ2AV3PLZAkjDB7wAS1cbKwBlZhYk3geQnuuMu58fK4BYXkOAaKYrwK9t6OxMzQPtDypBbhAVB7D4TRjkgAWAXNSKjezP+SW7oNclKsBkHejbhrk6d82J97dDB1ExgNzBZvuTzYDZDXMHVQeqAy+8ETIhWCfLNQAAAABJRU5ErkJggg==",
@@ -224,8 +226,8 @@
       if (fe_idx != 1) {
         fe_idx = first_entry_index + 1;
       }
-      let last_entry_index = first_entry_index + page_len;
-      if (first_entry_index + page_len > tabledata_len) {
+      let last_entry_index = first_entry_index + conf.rtd;
+      if (first_entry_index + conf.rtd > tabledata_len) {
         last_entry_index = tabledata_len;
       }
       entries_container.innerText =
@@ -249,7 +251,6 @@
     };
 
     const self = this;
-    let page_len = 15;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
@@ -371,7 +372,7 @@
               }
             }
           }
-          num_of_pages = Math.ceil(search_matches.length / page_len);
+          num_of_pages = Math.ceil(search_matches.length / conf.rtd);
           populate_table(search_matches);
           set_pagination_nums();
           responsive_design();
@@ -774,7 +775,7 @@
       tabledata_len = tabledata_rows.length;
       tabledata_rows = tabledata_rows.slice(
         first_entry_index,
-        first_entry_index + page_len
+        first_entry_index + conf.rtd
       );
       tabledata_rows.forEach((row, idx) => {
         row = tabledata_rows[idx];
@@ -836,7 +837,7 @@
         excess_rows.unshift(bott_row);
       }
 
-      page_len = bott_row_count;
+      conf.rtd = bott_row_count;
       //update rows_arr
       rows_arr = [];
       for (const row of table_rows) {
@@ -970,7 +971,7 @@
         td.style.width = cols_obj[i].width + "px"; //apply cell width from corresponding column object
         tr.appendChild(td);
       }
-      tr.setAttribute("id", table.rows.length + (curr_page - 1) * page_len); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
+      tr.setAttribute("id", table.rows.length + (curr_page - 1) * conf.rtd); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
       table.appendChild(tr);
       set_row_background_color(tr);
       row_events(tr);
@@ -1300,7 +1301,7 @@
 
     const pagination_active = (new_page) => {
       curr_page = new_page;
-      first_entry_index = (new_page - 1) * page_len;
+      first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
       highlight_on_search();
     };
@@ -1308,7 +1309,7 @@
     this.api = {
       load_grid: function () {
         conf.data_adapter.load(function (data) {
-          num_of_pages = Math.ceil(data.rows.length / page_len);
+          num_of_pages = Math.ceil(data.rows.length / conf.rtd);
           add_headers(config.data_adapter.columns);
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
