@@ -292,7 +292,7 @@
         default_sf = this.value;
         //if there is a search currently in the textbox, need to call highight_on_search function for an accurate response/filter
         if (search_mode.get()) {
-          grid_args();
+          filter_results();
         }
       });
 
@@ -333,11 +333,11 @@
         } else {
           search_mode.set(false);
         }
-        grid_args();
+        filter_results();
       });
     };
 
-    const grid_args = () => {
+    const filter_results = () => {
       //     function sortTable() {
       //       var table, rows, switching, i, x, y, shouldSwitch;
       //       table = document.getElementById("myTable");
@@ -1330,7 +1330,7 @@
       curr_page = new_page;
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
-      grid_args();
+      filter_results();
     };
 
     this.api = {
