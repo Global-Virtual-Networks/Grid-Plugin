@@ -619,6 +619,7 @@
         pagination_active(1);
       });
 
+      let header_orderBy = { 4: false };
       sort_cols = append_child("button", container, "sort_cols");
       css(conf.style.reset_butt, sort_cols);
 
@@ -626,7 +627,6 @@
       sort_cols.addEventListener("click", function () {
         //filter rows based on ascending or descending order, if an icon is visible
         let switching, i, x, y, shouldSwitch;
-        let header_orderBy = { 4: false };
         switching = true;
 
         while (switching) {
