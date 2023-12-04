@@ -336,7 +336,6 @@
         filter_rows();
       });
     };
-    let header_orderBy = { 4: true };
 
     const filter_rows = () => {
       conf.data_adapter.load(function (data) {
@@ -378,7 +377,7 @@
           num_of_pages = Math.ceil(search_matches.length / conf.rtd);
           populate_table(search_matches);
 
-          //filter rows based on ascending or descending order, if an icon is visible
+          //filter rows based on corresponding header index in header_orderBy object, if an icon is visible
           let switching, i, x, y, shouldSwitch;
           switching = true;
 
@@ -392,7 +391,7 @@
               //4 equals sort by column with index 4
               x = rows[i].getElementsByTagName("TD")[4];
               y = rows[i + 1].getElementsByTagName("TD")[4];
-              let condition = header_orderBy[4]
+              let condition = self.header_orderBy[4]
                 ? parseInt(x.textContent) > parseInt(y.textContent)
                 : parseInt(x.textContent) < parseInt(y.textContent);
               if (condition) {
@@ -407,7 +406,7 @@
               switching = true;
             }
           }
-          header_orderBy[4] = !header_orderBy[4];
+          self.header_orderBy[4] = !self.header_orderBy[4];
 
           set_pagination_nums();
           //responsive_design();
@@ -788,6 +787,7 @@
     const window_size = window_sze();
     const edit_mode = edit_mde();
     this.headers_arr;
+    this.header_orderBy = {};
 
     //elem = element
     const css = (property, elem) => {
@@ -1307,7 +1307,9 @@
 
     const add_headers = (columns) => {
       self.headers_arr = [];
-      for (const column of columns) {
+      for (let i = 0; i < columns.length; i++) {
+        const column = columns[i];
+        self.header_orderBy[i] = true;
         const header = column.display;
         self.headers_arr.push(header);
 
@@ -1338,7 +1340,7 @@
       curr_page = new_page;
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
-      header_orderBy[4] = !header_orderBy[4];
+      self.header_orderBy[4] = !self.header_orderBy[4];
       filter_rows();
     };
 
