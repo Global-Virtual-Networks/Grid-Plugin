@@ -336,6 +336,7 @@
         filter_rows();
       });
     };
+    let header_orderBy = { 4: true };
 
     const filter_rows = () => {
       conf.data_adapter.load(function (data) {
@@ -376,6 +377,38 @@
           }
           num_of_pages = Math.ceil(search_matches.length / conf.rtd);
           populate_table(search_matches);
+
+          //filter rows based on ascending or descending order, if an icon is visible
+          let switching, i, x, y, shouldSwitch;
+          switching = true;
+
+          while (switching) {
+            switching = false;
+            const rows = table.rows;
+
+            for (i = 1; i < rows.length - 1; i++) {
+              shouldSwitch = false;
+
+              //4 equals sort by column with index 4
+              x = rows[i].getElementsByTagName("TD")[4];
+              y = rows[i + 1].getElementsByTagName("TD")[4];
+              let condition = header_orderBy[4]
+                ? parseInt(x.textContent) > parseInt(y.textContent)
+                : parseInt(x.textContent) < parseInt(y.textContent);
+              if (condition) {
+                shouldSwitch = true;
+                break;
+              }
+            }
+            if (shouldSwitch) {
+              rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+              set_row_background_color(rows[i]);
+              set_row_background_color(rows[i + 1]);
+              switching = true;
+            }
+          }
+          header_orderBy[4] = !header_orderBy[4];
+
           set_pagination_nums();
           //responsive_design();
         }
@@ -619,42 +652,12 @@
         pagination_active(1);
       });
 
-      let header_orderBy = { 4: false };
       sort_cols = append_child("button", container, "sort_cols");
       css(conf.style.reset_butt, sort_cols);
 
       sort_cols.innerText = "Sort Columns";
       sort_cols.addEventListener("click", function () {
-        //filter rows based on ascending or descending order, if an icon is visible
-        let switching, i, x, y, shouldSwitch;
-        switching = true;
-
-        while (switching) {
-          switching = false;
-          const rows = table.rows;
-
-          for (i = 1; i < rows.length - 1; i++) {
-            shouldSwitch = false;
-
-            //4 equals sort by column with index 4
-            x = rows[i].getElementsByTagName("TD")[4];
-            y = rows[i + 1].getElementsByTagName("TD")[4];
-            let condition = header_orderBy[4]
-              ? parseInt(x.textContent) > parseInt(y.textContent)
-              : parseInt(x.textContent) < parseInt(y.textContent);
-            if (condition) {
-              shouldSwitch = true;
-              break;
-            }
-          }
-          if (shouldSwitch) {
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            set_row_background_color(rows[i]);
-            set_row_background_color(rows[i + 1]);
-            switching = true;
-          }
-        }
-        header_orderBy[4] = !header_orderBy[4];
+        filter_rows();
       });
       /*           export_butt = append_child("button", container, "export_butt");
                         export_butt.innerText = "Export";*/
@@ -1335,6 +1338,7 @@
       curr_page = new_page;
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
+      header_orderBy[4] = !header_orderBy[4];
       filter_rows();
     };
 
