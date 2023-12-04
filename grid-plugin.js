@@ -104,12 +104,8 @@
           "padding: 5px",
         ],
         larger_width_search_bar: ["width: 240px;"],
-        search_icon: [],
-        larger_width_search_icon: [
-          "padding: 0 5px;",
-          "margin: 0;",
-          "font-size: 15px;",
-        ],
+        search_icon: ["padding: 0 5px;", "margin: 0;", "font-size: 15px;"],
+        larger_width_search_icon: [],
         //css relating to footer
         center_child_elems: [
           "display: flex;",
@@ -312,6 +308,7 @@
         "search_icon"
       );
       self.search_icon.innerText = "Search:";
+      debugger;
       css(conf.style.search_icon, self.search_icon);
       // self.search_icon = append_child(
       //   "img",
