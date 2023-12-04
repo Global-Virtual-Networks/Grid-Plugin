@@ -624,7 +624,37 @@
 
       sort_cols.innerText = "Sort Columns";
       sort_cols.addEventListener("click", function () {
-        filter_rows();
+        //filter rows based on ascending or descending order, if an icon is visible
+        let switching, i, x, y, shouldSwitch;
+        let header_orderBy = { 4: false };
+        switching = true;
+
+        while (switching) {
+          switching = false;
+          const rows = table.rows;
+
+          for (i = 1; i < rows.length - 1; i++) {
+            shouldSwitch = false;
+
+            //4 equals sort by column with index 4
+            x = rows[i].getElementsByTagName("TD")[4];
+            y = rows[i + 1].getElementsByTagName("TD")[4];
+            let condition = header_orderBy[4]
+              ? parseInt(x.textContent) > parseInt(y.textContent)
+              : parseInt(x.textContent) < parseInt(y.textContent);
+            if (condition) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            set_row_background_color(rows[i]);
+            set_row_background_color(rows[i + 1]);
+            switching = true;
+          }
+        }
+        header_orderBy[4] = !header_orderBy[4];
       });
       /*           export_butt = append_child("button", container, "export_butt");
                         export_butt.innerText = "Export";*/
@@ -789,31 +819,6 @@
         });
       });
       // bot_row_headers();
-
-      //filter rows based on ascending or descending order, if an icon is visible
-      let switching, i, x, y, shouldSwitch;
-      switching = true;
-
-      while (switching) {
-        switching = false;
-        const rows = table.rows;
-
-        for (i = 1; i < rows.length - 1; i++) {
-          shouldSwitch = false;
-
-          //4 equals sort by column with index 4
-          x = rows[i].getElementsByTagName("TD")[4];
-          y = rows[i + 1].getElementsByTagName("TD")[4];
-          if (parseInt(x.textContent) > parseInt(y.textContent)) {
-            shouldSwitch = true;
-            break;
-          }
-        }
-        if (shouldSwitch) {
-          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-          switching = true;
-        }
-      }
     };
 
     const num_invisible_rows = () => {
