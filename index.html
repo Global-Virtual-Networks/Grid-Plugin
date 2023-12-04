@@ -24,7 +24,109 @@
 </html>
 <script type="text/javascript">
   let restful_api = {
+    rtd: 13,
     data_adapter: {
+      columns: [
+        {
+          display: "Id",
+          name: "id",
+          width: 25,
+          sortable: true,
+          align: "center",
+        },
+        { display: "Status", name: "", width: 55, align: "left" },
+        {
+          display: "Name",
+          name: "name",
+          sortable: true,
+          width: 125,
+          align: "left",
+        },
+        {
+          display: "Email",
+          name: "email",
+          sortable: true,
+          width: 125,
+          align: "left",
+        },
+        {
+          display: "P",
+          name: "programmer",
+          sortable: true,
+          width: 12,
+          align: "center",
+        },
+        {
+          display: "R",
+          name: "reviewer",
+          sortable: true,
+          width: 12,
+          align: "center",
+        },
+        {
+          display: "J",
+          name: "jurist",
+          sortable: true,
+          width: 12,
+          align: "center",
+        },
+        {
+          display: "NS",
+          name: "narrative_short",
+          sortable: true,
+          width: 12,
+          align: "center",
+        },
+        {
+          display: "NF",
+          name: "narrative_feature",
+          sortable: true,
+          width: 12,
+          align: "center",
+        },
+        {
+          display: "DS",
+          name: "doc_short",
+          sortable: true,
+          width: 12,
+          align: "center",
+        },
+        {
+          display: "DF",
+          name: "doc_feature",
+          sortable: true,
+          width: 12,
+          align: "center",
+        },
+        {
+          display: "Asgn",
+          name: "screening",
+          sortable: true,
+          width: 25,
+          align: "center",
+        },
+        {
+          display: "Scrd",
+          name: "scored",
+          sortable: true,
+          width: 25,
+          align: "center",
+        },
+        {
+          display: "H:M",
+          name: "runtime",
+          sortable: true,
+          width: 35,
+          align: "right",
+        },
+        {
+          display: "Vchr",
+          name: "vouchers",
+          sortable: true,
+          width: 20,
+          align: "center",
+        },
+      ],
       load: function (callback) {
         // Define the URL of the file you want to fetch
         var url = "grid_data.json";
