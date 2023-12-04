@@ -205,7 +205,7 @@
             css(conf.style.scroll_mode, plugin_dom_obj);
             footer_container.style.display = "none";
           } else if (mode === "pagination") {
-            responsive_design();
+            //responsive_design();
             set_pagination_nums();
           } else {
             alert(
@@ -312,12 +312,12 @@
         "search_icon"
       );
       self.search_icon.innerText = "Search:";
+      css(conf.style.search_icon, self.search_icon);
       // self.search_icon = append_child(
       //   "img",
       //   self.search_container,
       //   "search_icon"
       // );
-      // css(conf.style.search_icon, self.search_icon);
       // self.search_icon.setAttribute("src", conf.icons.search);
 
       search_bar = append_child("input", self.search_container, "search_bar");
@@ -375,7 +375,7 @@
           num_of_pages = Math.ceil(search_matches.length / conf.rtd);
           populate_table(search_matches);
           set_pagination_nums();
-          responsive_design();
+          //responsive_design();
         }
       });
     };
@@ -400,7 +400,6 @@
     const responsive_design = () => {
       const cells = plugin_dom_obj.querySelectorAll("#cell_cont");
       //grid cells media defaults
-      iterate_through_cells(cells, conf.style.cell);
       // cell_max_width();
 
       //apply extra css in media query like fashion
@@ -415,19 +414,7 @@
         css(conf.style.larger_width_search_container, self.search_container);
         css(conf.style.larger_width_search_icon, self.search_icon);
         //grid cells media queries
-        iterate_through_cells(cells, conf.style.larger_width_cell);
-      } else {
-        //footer container defaults
-        css(conf.style.entries_container, entries_container);
-        css(conf.style.pager_cont, pager_cont);
-        css(conf.style.footer_container, footer_container);
-        //header container defaults
-        css(conf.style.search_bar, search_bar);
-        css(conf.style.search_container, self.search_container);
-        css(conf.style.search_icon, self.search_icon);
-        //grid cells media defaults
       }
-
       // uncompress_col_headers(cells); //causing a break in the app, so commenting out for now
     };
 
@@ -483,6 +470,7 @@
         "footer_container"
       );
       css(conf.style.center_child_elems, footer_container);
+      css(conf.style.larger_width_footer_container, footer_container);
 
       //make footer invisible until data comes back from async call
       self.footer_container = footer_container;
@@ -507,9 +495,11 @@
         "entries_container"
       );
       css(conf.style.entries_container, entries_container);
+      css(conf.style.larger_width_entries_container, entries_container);
 
       pager_cont = append_child("div", footer_container, "pager_cont");
       css(conf.style.pager_cont, pager_cont);
+      css(conf.style.larger_width_pager_cont, pager_cont);
 
       first_butt = append_child("button", pager_cont, "first_butt");
       const fir_butt_img = append_child("img", first_butt);
@@ -887,7 +877,7 @@
         }
         edit_butts_cont.style.display = "none";
       }
-      responsive_design();
+      //responsive_design();
     };
 
     const change_alignment = function (position, row) {
@@ -985,6 +975,10 @@
       col_obj
     ) => {
       const cell = document.createElement("div");
+      css(conf.style.cell, cell);
+      if (screen.offsetWidth > 414) {
+        css(conf.style.larger_width_cell, cell);
+      }
       const row_num = rows_arr.length - 1;
       cell.innerText = cell_text;
       let td;
