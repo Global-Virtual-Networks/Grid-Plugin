@@ -34,8 +34,8 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
     - Restful API Call
     - Supplying Local Data
       
-2. Grid Data Structure. Must be an object that include these 3 properties(Reference grid_data.json in source code for a visual):
-   - 
+2. Grid Data Structure. Must be an object that include these several properties properties(Reference grid_data.json in source code for syntax):
+   
 
 
 
