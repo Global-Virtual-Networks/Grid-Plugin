@@ -30,100 +30,43 @@
         {
           display: "Id",
           name: "id",
-          width: 25,
+          width: 5,
           sortable: true,
           align: "center",
         },
-        { display: "Status", name: "", width: 55, align: "left" },
         {
           display: "Name",
           name: "name",
           sortable: true,
-          width: 125,
+          width: 20,
+          align: "left",
+        },
+        {
+          display: "Country of Origin",
+          name: "country_of_origin",
+          sortable: true,
+          width: 15,
           align: "left",
         },
         {
           display: "Email",
           name: "email",
           sortable: true,
-          width: 125,
-          align: "left",
-        },
-        {
-          display: "P",
-          name: "programmer",
-          sortable: true,
-          width: 12,
+          width: 30,
           align: "center",
         },
         {
-          display: "R",
-          name: "reviewer",
+          display: "BY",
+          name: "birth_year",
           sortable: true,
-          width: 12,
+          width: 5,
           align: "center",
         },
         {
-          display: "J",
-          name: "jurist",
+          display: "Portfolio",
+          name: "portfolio",
           sortable: true,
-          width: 12,
-          align: "center",
-        },
-        {
-          display: "NS",
-          name: "narrative_short",
-          sortable: true,
-          width: 12,
-          align: "center",
-        },
-        {
-          display: "NF",
-          name: "narrative_feature",
-          sortable: true,
-          width: 12,
-          align: "center",
-        },
-        {
-          display: "DS",
-          name: "doc_short",
-          sortable: true,
-          width: 12,
-          align: "center",
-        },
-        {
-          display: "DF",
-          name: "doc_feature",
-          sortable: true,
-          width: 12,
-          align: "center",
-        },
-        {
-          display: "Asgn",
-          name: "screening",
-          sortable: true,
-          width: 25,
-          align: "center",
-        },
-        {
-          display: "Scrd",
-          name: "scored",
-          sortable: true,
-          width: 25,
-          align: "center",
-        },
-        {
-          display: "H:M",
-          name: "runtime",
-          sortable: true,
-          width: 35,
-          align: "right",
-        },
-        {
-          display: "Vchr",
-          name: "vouchers",
-          sortable: true,
-          width: 20,
+          width: 30,
           align: "center",
         },
       ],
@@ -157,7 +100,52 @@
     },
   };
   let local = {
+    rtd: 13,
     data_adapter: {
+      columns: [
+        {
+          display: "Id",
+          name: "id",
+          width: 5,
+          sortable: true,
+          align: "center",
+        },
+        {
+          display: "Name",
+          name: "name",
+          sortable: true,
+          width: 20,
+          align: "left",
+        },
+        {
+          display: "Country of Origin",
+          name: "country_of_origin",
+          sortable: true,
+          width: 15,
+          align: "left",
+        },
+        {
+          display: "Email",
+          name: "email",
+          sortable: true,
+          width: 30,
+          align: "center",
+        },
+        {
+          display: "BY",
+          name: "birth_year",
+          sortable: true,
+          width: 5,
+          align: "center",
+        },
+        {
+          display: "Portfolio",
+          name: "portfolio",
+          sortable: true,
+          width: 30,
+          align: "center",
+        },
+      ],
       load: function (callback) {
         callback({
           count: 30,
@@ -537,7 +525,10 @@
     on_row_click: function () {
       alert("Clicked on row #" + parseInt(row_id));
     },
+    style: {
+      alt_color: ["background-color: lightgreen;"],
+    },
   };
-  const grid = $("#grid_container").grid_ng(restful_api);
+  const grid = $("#grid_container").grid_ng(local);
   grid.api.load_grid();
 </script>
