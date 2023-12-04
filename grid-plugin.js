@@ -340,31 +340,6 @@
     const filter_rows = () => {
       conf.data_adapter.load(function (data) {
         if (typeof data !== "undefined") {
-          //filter rows based on ascending or descending order, if an icon is visible
-          let switching, i, x, y, shouldSwitch;
-          switching = true;
-
-          while (switching) {
-            switching = false;
-            const rows = table.rows;
-
-            for (i = 1; i < rows.length - 1; i++) {
-              shouldSwitch = false;
-
-              x = rows[i].getElementsByTagName("TD")[0];
-              y = rows[i + 1].getElementsByTagName("TD")[0];
-              debugger;
-              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                shouldSwitch = true;
-                break;
-              }
-            }
-            if (shouldSwitch) {
-              rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-              switching = true;
-            }
-          }
-
           //filter rows based on search bar value
           const typed_text = search_bar.value.toLowerCase();
           const rows = data.rows;
@@ -814,6 +789,31 @@
         });
       });
       // bot_row_headers();
+
+      //filter rows based on ascending or descending order, if an icon is visible
+      let switching, i, x, y, shouldSwitch;
+      switching = true;
+
+      while (switching) {
+        switching = false;
+        const rows = table.rows;
+
+        for (i = 1; i < rows.length - 1; i++) {
+          shouldSwitch = false;
+
+          //4 equals sort by column with index 4
+          x = rows[i].getElementsByTagName("TD")[4];
+          y = rows[i + 1].getElementsByTagName("TD")[4];
+          if (parseInt(x.textContent) > parseInt(y.textContent)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+        }
+      }
     };
 
     const num_invisible_rows = () => {
