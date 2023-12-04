@@ -335,38 +335,26 @@
   "schema": [
     {
       "name": "id",
-      "ord": 0,
-      "ro": true,
       "type": "numeric"
     },
     {
       "name": "name",
-      "ord": 1,
-      "ro": false,
       "type": "string"
     },
     {
       "name": "country_of_origin",
-      "ord": 4,
-      "ro": true,
       "type": "string"
     },
     {
       "name": "email",
-      "ord": 3,
-      "ro": false,
       "type": "string"
     },
     {
       "name": "birth_year",
-      "ord": 2,
-      "ro": false,
       "type": "date"
     },
     {
       "name": "portfolio",
-      "ord": 5,
-      "ro": false,
       "type": "string"
     }
   ]

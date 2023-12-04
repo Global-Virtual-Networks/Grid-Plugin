@@ -24,7 +24,52 @@
 </html>
 <script type="text/javascript">
   let restful_api = {
+    rtd: 13,
     data_adapter: {
+      columns: [
+        {
+          display: "Id",
+          name: "id",
+          width: 5,
+          sortable: true,
+          align: "center",
+        },
+        {
+          display: "Name",
+          name: "name",
+          sortable: true,
+          width: 20,
+          align: "left",
+        },
+        {
+          display: "Country of Origin",
+          name: "country_of_origin",
+          sortable: true,
+          width: 15,
+          align: "left",
+        },
+        {
+          display: "Email",
+          name: "email",
+          sortable: true,
+          width: 30,
+          align: "center",
+        },
+        {
+          display: "BY",
+          name: "birth_year",
+          sortable: true,
+          width: 5,
+          align: "center",
+        },
+        {
+          display: "Portfolio",
+          name: "portfolio",
+          sortable: true,
+          width: 30,
+          align: "center",
+        },
+      ],
       load: function (callback) {
         // Define the URL of the file you want to fetch
         var url = "grid_data.json";
@@ -55,7 +100,52 @@
     },
   };
   let local = {
+    rtd: 13,
     data_adapter: {
+      columns: [
+        {
+          display: "Id",
+          name: "id",
+          width: 5,
+          sortable: true,
+          align: "center",
+        },
+        {
+          display: "Name",
+          name: "name",
+          sortable: true,
+          width: 20,
+          align: "left",
+        },
+        {
+          display: "Country of Origin",
+          name: "country_of_origin",
+          sortable: true,
+          width: 15,
+          align: "left",
+        },
+        {
+          display: "Email",
+          name: "email",
+          sortable: true,
+          width: 30,
+          align: "center",
+        },
+        {
+          display: "BY",
+          name: "birth_year",
+          sortable: true,
+          width: 5,
+          align: "center",
+        },
+        {
+          display: "Portfolio",
+          name: "portfolio",
+          sortable: true,
+          width: 30,
+          align: "center",
+        },
+      ],
       load: function (callback) {
         callback({
           count: 30,
@@ -394,38 +484,26 @@
           schema: [
             {
               name: "id",
-              ord: 0,
-              ro: true,
               type: "numeric",
             },
             {
               name: "name",
-              ord: 1,
-              ro: false,
               type: "string",
             },
             {
               name: "country_of_origin",
-              ord: 4,
-              ro: true,
               type: "string",
             },
             {
               name: "email",
-              ord: 3,
-              ro: false,
               type: "string",
             },
             {
               name: "birth_year",
-              ord: 2,
-              ro: false,
               type: "date",
             },
             {
               name: "portfolio",
-              ord: 5,
-              ro: false,
               type: "string",
             },
           ],
@@ -435,7 +513,10 @@
     on_row_click: function () {
       alert("Clicked on row #" + parseInt(row_id));
     },
+    style: {
+      alt_color: ["background-color: lightgreen;"],
+    },
   };
-  const grid = $("#grid_container").grid_ng(restful_api);
+  const grid = $("#grid_container").grid_ng(local);
   grid.api.load_grid();
 </script>

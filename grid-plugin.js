@@ -1,15 +1,9 @@
 (function ($) {
   $.fn.grid_ng = function (config) {
-    let og_grid_data;
-    let og_schema;
-    let grid_data_obj;
-    let open_grid_data;
-    let save_grid_data;
-    let open_schema;
-    let save_schema;
-
     const plugin_dom_obj = this[0];
     const conf = {
+      //rtd equals rows to display
+      rtd: 15,
       icons: {
         ascending:
           "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAPBJREFUWEftljEOwjAQBCcVf4GWhg4+wQt4GSWfgIqOEj5CRwNaFCPL2HFEzkqE7CqSE+94b++UhpFXM7I+FeBvHZgDe+AB7IBbKmslHJD4AVi0oldgm4JIARyBdUeHnIBNZD8Ud68kISwBfHEJ+g7oOQphVYJQXJZLUEviriRfEFYAZ2AV3PLZAkjDB7wAS1cbKwBlZhYk3geQnuuMu58fK4BYXkOAaKYrwK9t6OxMzQPtDypBbhAVB7D4TRjkgAWAXNSKjezP+SW7oNclKsBkHejbhrk6d82J97dDB1ExgNzBZvuTzYDZDXMHVQeqAy+8ETIhWCfLNQAAAABJRU5ErkJggg==",
@@ -46,11 +40,12 @@
         table: [
           "font-family: sans-serif;",
           "border-collapse: collapse;",
+          "table-layout: fixed;",
           "width: 100%;",
         ],
         cell: [
-          "padding: 5px 10px;",
-          "font-size: 12px;",
+          "padding: 5px 0;",
+          "  font-size: 10px;",
           "text-align: left;",
           "overflow: hidden;",
           "white-space: nowrap;",
@@ -101,24 +96,29 @@
           "border: 2px solid black;",
         ],
         sddl_opt: ["cursor: pointer;"],
-        search_container: ["display: flex;", "align-items: center;"],
-        larger_width_search_container: ["margin: 0 10px;"],
+        search_container: [
+          "display: flex;",
+          "align-items: center;",
+          "margin: 0 10px;",
+        ],
+        larger_width_search_container: [],
         search_bar: [
           "border: 2px solid black;",
           "border-radius: 0;",
           "padding: 5px",
+          "width: 240px;",
         ],
-        larger_width_search_bar: ["width: 240px;"],
-        search_icon: [],
-        larger_width_search_icon: ["padding: 0 5px;", "margin: 0;"],
+        larger_width_search_bar: [],
+        search_icon: ["padding: 0 5px;", "margin: 0;", "font-size: 15px;"],
+        larger_width_search_icon: [],
         //css relating to footer
         center_child_elems: [
           "display: flex;",
           "align-items: center;",
           "justify-content: center;",
         ],
-        footer_container: ["display: block", "flex-direction: row-reverse;"],
-        larger_width_footer_container: ["padding: 6px 18px;"],
+        footer_container: ["display: flex;", "padding: 6px 18px;"],
+        larger_width_footer_container: [],
         pager_cont: [
           "display: flex;",
           "align-items: center;",
@@ -206,7 +206,7 @@
             css(conf.style.scroll_mode, plugin_dom_obj);
             footer_container.style.display = "none";
           } else if (mode === "pagination") {
-            responsive_design();
+            //responsive_design();
             set_pagination_nums();
           } else {
             alert(
@@ -227,8 +227,8 @@
       if (fe_idx != 1) {
         fe_idx = first_entry_index + 1;
       }
-      let last_entry_index = first_entry_index + page_len;
-      if (first_entry_index + page_len > tabledata_len) {
+      let last_entry_index = first_entry_index + conf.rtd;
+      if (first_entry_index + conf.rtd > tabledata_len) {
         last_entry_index = tabledata_len;
       }
       entries_container.innerText =
@@ -252,7 +252,6 @@
     };
 
     const self = this;
-    let page_len = 14;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
@@ -313,13 +312,13 @@
         self.search_container,
         "search_icon"
       );
-      search_icon.innerText = "Search:";
+      self.search_icon.innerText = "Search:";
+      css(conf.style.search_icon, self.search_icon);
       // self.search_icon = append_child(
       //   "img",
       //   self.search_container,
       //   "search_icon"
       // );
-      // css(conf.style.search_icon, self.search_icon);
       // self.search_icon.setAttribute("src", conf.icons.search);
 
       search_bar = append_child("input", self.search_container, "search_bar");
@@ -352,9 +351,12 @@
             row = rows[i];
             const cell = row.cell[sf_idx];
             if (sf_idx > -1) {
-              const index = cell.toString().toLowerCase().indexOf(typed_text);
+              let index;
+              try {
+                index = cell.toString().toLowerCase().indexOf(typed_text);
+              } catch {}
 
-              if (index > -1) {
+              if (index > -1 || typed_text === "") {
                 search_matches.push(row);
               }
             } else {
@@ -362,21 +364,19 @@
                 let index;
                 try {
                   index = cell.toString().toLowerCase().indexOf(typed_text);
-                } catch {
-                  index = -1;
-                }
+                } catch {}
 
-                if (index > -1) {
+                if (index > -1 || typed_text === "") {
                   search_matches.push(row);
                   break;
                 }
               }
             }
           }
-          num_of_pages = Math.ceil(search_matches.length / page_len);
+          num_of_pages = Math.ceil(search_matches.length / conf.rtd);
           populate_table(search_matches);
           set_pagination_nums();
-          responsive_design();
+          //responsive_design();
         }
       });
     };
@@ -401,8 +401,8 @@
     const responsive_design = () => {
       const cells = plugin_dom_obj.querySelectorAll("#cell_cont");
       //grid cells media defaults
-      iterate_through_cells(cells, conf.style.cell);
-      cell_max_width();
+      // cell_max_width();
+
       //apply extra css in media query like fashion
       if (plugin_dom_obj.offsetWidth > 414) {
         //footer container media queries
@@ -415,20 +415,8 @@
         css(conf.style.larger_width_search_container, self.search_container);
         css(conf.style.larger_width_search_icon, self.search_icon);
         //grid cells media queries
-        iterate_through_cells(cells, conf.style.larger_width_cell);
-      } else {
-        //footer container defaults
-        css(conf.style.entries_container, entries_container);
-        css(conf.style.pager_cont, pager_cont);
-        css(conf.style.footer_container, footer_container);
-        //header container defaults
-        css(conf.style.search_bar, search_bar);
-        css(conf.style.search_container, self.search_container);
-        css(conf.style.search_icon, self.search_icon);
-        //grid cells media defaults
       }
-
-      uncompress_col_headers(cells);
+      // uncompress_col_headers(cells); //causing a break in the app, so commenting out for now
     };
 
     const uncompress_col_headers = (cells) => {
@@ -483,6 +471,7 @@
         "footer_container"
       );
       css(conf.style.center_child_elems, footer_container);
+      css(conf.style.larger_width_footer_container, footer_container);
 
       //make footer invisible until data comes back from async call
       self.footer_container = footer_container;
@@ -507,9 +496,11 @@
         "entries_container"
       );
       css(conf.style.entries_container, entries_container);
+      css(conf.style.larger_width_entries_container, entries_container);
 
       pager_cont = append_child("div", footer_container, "pager_cont");
       css(conf.style.pager_cont, pager_cont);
+      css(conf.style.larger_width_pager_cont, pager_cont);
 
       first_butt = append_child("button", pager_cont, "first_butt");
       const fir_butt_img = append_child("img", first_butt);
@@ -775,7 +766,7 @@
       tabledata_len = tabledata_rows.length;
       tabledata_rows = tabledata_rows.slice(
         first_entry_index,
-        first_entry_index + page_len
+        first_entry_index + conf.rtd
       );
       tabledata_rows.forEach((row, idx) => {
         row = tabledata_rows[idx];
@@ -788,7 +779,7 @@
           }
         });
       });
-      bot_row_headers();
+      // bot_row_headers();
     };
 
     const num_invisible_rows = () => {
@@ -837,7 +828,7 @@
         excess_rows.unshift(bott_row);
       }
 
-      page_len = bott_row_count;
+      conf.rtd = bott_row_count;
       //update rows_arr
       rows_arr = [];
       for (const row of table_rows) {
@@ -887,7 +878,7 @@
         }
         edit_butts_cont.style.display = "none";
       }
-      responsive_design();
+      //responsive_design();
     };
 
     const change_alignment = function (position, row) {
@@ -955,28 +946,40 @@
       rows_arr.push(row_arr);
       const tr = document.createElement("tr");
 
-      //add cells to 'tr'
-      for (let i = 0; i < row_arr.length; i++) {
+      //add cells to 'tr', if they are included in the listed columns of the 'columns' property in the config object
+      const cols_obj = conf.data_adapter.columns;
+      for (let i = 0; i < cols_obj.length; i++) {
         //create and add cell to table row
         let txt = row_arr[i];
         if (txt) {
           txt = txt.toString();
         } else {
-          txt = "null";
+          txt = "";
         }
         const td = create_cell(i, txt, row_arr, headers_arr, tr);
+        td.style.width = cols_obj[i].width + "px"; //apply cell width from corresponding column object
         tr.appendChild(td);
       }
-      //tr id is the row number, includes quite a bit calculation because it takes pagination into account
-      tr.setAttribute("id", table.rows.length + (curr_page - 1) * page_len);
+      tr.setAttribute("id", table.rows.length + (curr_page - 1) * conf.rtd); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
       table.appendChild(tr);
       set_row_background_color(tr);
       row_events(tr);
       return tr;
     };
 
-    const create_cell = (cell_num, cell_text, row_arr, header_row, tr) => {
+    const create_cell = (
+      cell_num,
+      cell_text,
+      row_arr,
+      header_row,
+      tr,
+      col_obj
+    ) => {
       const cell = document.createElement("div");
+      css(conf.style.cell, cell);
+      if (screen.offsetWidth > 414) {
+        css(conf.style.larger_width_cell, cell);
+      }
       const row_num = rows_arr.length - 1;
       cell.innerText = cell_text;
       let td;
@@ -1025,7 +1028,7 @@
         // }
       }
       //set class attribute on td dom object and add right click event listeners to it
-      td.setAttribute("class", "column" + cell_num);
+      // td.setAttribute("class", "column" + cell_num);
       //   td.addEventListener("contextmenu", function (event) {
       //     event.preventDefault();
       //     //make sure edit mode is not on and no other right click context menus exists before creating one
@@ -1260,10 +1263,10 @@
       create_footer();
     };
 
-    const add_headers = (schema) => {
+    const add_headers = (columns) => {
       self.headers_arr = [];
-      for (const schem of schema) {
-        const header = conv_to_Title_Case(schem.name);
+      for (const column of columns) {
+        const header = column.display;
         self.headers_arr.push(header);
 
         //add header to search_ddl
@@ -1291,7 +1294,7 @@
 
     const pagination_active = (new_page) => {
       curr_page = new_page;
-      first_entry_index = (new_page - 1) * page_len;
+      first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
       highlight_on_search();
     };
@@ -1299,8 +1302,8 @@
     this.api = {
       load_grid: function () {
         conf.data_adapter.load(function (data) {
-          num_of_pages = Math.ceil(data.rows.length / page_len);
-          add_headers(data.schema);
+          num_of_pages = Math.ceil(data.rows.length / conf.rtd);
+          add_headers(config.data_adapter.columns);
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
           load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord
