@@ -35,13 +35,7 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
     - Supplying Local Data
       
 2. Grid Data Structure. Must be an object that include these 3 properties(Reference grid_data.json in source code for a visual):
-   - count: specifies the # of rows
-   - rows: an array of objects that holds the data for each row
-   - schema: an array of objects that defines the behaviors of the columns, by listing these properties:
-     - name: The name for the column header. Define it using snakecase naming convention, and the plugin will use the Title Case version for the grid(birth_year => Birth Year)
-     - ord: the index position of the column
-     - ro: read-only. If set to true, column is non-editable. If set to false, column is editable
-     - type: the data type that the values in said column must be(int, date, etc.)
+   - 
 
 
 
