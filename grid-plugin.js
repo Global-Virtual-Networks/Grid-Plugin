@@ -96,14 +96,19 @@
           "border: 2px solid black;",
         ],
         sddl_opt: ["cursor: pointer;"],
-        search_container: ["display: flex;", "align-items: center;"],
-        larger_width_search_container: ["margin: 0 10px;"],
+        search_container: [
+          "display: flex;",
+          "align-items: center;",
+          "margin: 0 10px;",
+        ],
+        larger_width_search_container: [],
         search_bar: [
           "border: 2px solid black;",
           "border-radius: 0;",
           "padding: 5px",
+          "width: 240px;",
         ],
-        larger_width_search_bar: ["width: 240px;"],
+        larger_width_search_bar: [],
         search_icon: ["padding: 0 5px;", "margin: 0;", "font-size: 15px;"],
         larger_width_search_icon: [],
         //css relating to footer
@@ -112,8 +117,8 @@
           "align-items: center;",
           "justify-content: center;",
         ],
-        footer_container: ["display: flex;"],
-        larger_width_footer_container: ["padding: 6px 18px;"],
+        footer_container: ["display: flex;", "padding: 6px 18px;"],
+        larger_width_footer_container: [],
         pager_cont: [
           "display: flex;",
           "align-items: center;",
@@ -308,7 +313,6 @@
         "search_icon"
       );
       self.search_icon.innerText = "Search:";
-      debugger;
       css(conf.style.search_icon, self.search_icon);
       // self.search_icon = append_child(
       //   "img",
