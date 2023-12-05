@@ -650,14 +650,6 @@
         rows_arr = [];
         pagination_active(1);
       });
-
-      sort_cols = append_child("button", container, "sort_cols");
-      css(conf.style.reset_butt, sort_cols);
-
-      sort_cols.innerText = "Sort Columns";
-      sort_cols.addEventListener("click", function () {
-        filter_rows();
-      });
       /*           export_butt = append_child("button", container, "export_butt");
                         export_butt.innerText = "Export";*/
     };
@@ -1029,6 +1021,10 @@
       if (header_row) {
         td = document.createElement("th");
         cell.setAttribute("id", cell_text);
+        css(["cursor: pointer;"], cell);
+        cell.addEventListener("click", function () {
+          filter_rows();
+        });
         // const img = add_img_to_header(cell, cell_text);
         // header_cell_effects(cell, img);
         // cell.onclick = handle_click;
