@@ -383,10 +383,10 @@
             let switching, i, x, y, shouldSwitch;
             switching = true;
             const column_info = self.header_info[self.sort_by];
+            const rows = table.rows;
 
             while (switching) {
               switching = false;
-              const rows = table.rows;
 
               for (i = 1; i < rows.length - 1; i++) {
                 shouldSwitch = false;
@@ -411,10 +411,11 @@
               }
               if (shouldSwitch) {
                 rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                set_row_background_color(rows[i]);
-                set_row_background_color(rows[i + 1]);
                 switching = true;
               }
+            }
+            for (const row of rows) {
+              set_row_background_color(row);
             }
             column_info.ascending = !column_info.ascending;
 
