@@ -334,6 +334,10 @@
         } else {
           search_mode.set(false);
         }
+        if (self.sort_by !== null) {
+          self.header_info[self.sort_by].ascending =
+            !self.header_info[self.sort_by].ascending;
+        }
         filter_rows();
       });
     };
