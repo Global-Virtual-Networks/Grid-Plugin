@@ -1021,7 +1021,7 @@
       if (header_row) {
         td = document.createElement("th");
         cell.setAttribute("id", cell_text);
-        css(["cursor: pointer;"], cell);
+        css(["cursor: pointer;", "user-select: none;"], cell);
         cell.addEventListener("click", function () {
           filter_rows();
         });
