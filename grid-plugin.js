@@ -52,8 +52,13 @@
           "text-overflow: ellipsis;",
           "position: relative;",
         ],
-        ascending_icon: ["position: absolute;", "top: 0", "left: 50%;"],
-        descending_icon: ["position: absolute;", "bottom: 0", "left: 50%;"],
+        header_cell_icons: [
+          "position: absolute;",
+          "left: 50%;",
+          "visibility: hidden;",
+        ],
+        ascending_icon: ["top: 0"],
+        descending_icon: ["bottom: 0"],
         larger_width_cell: [],
         context_menu: [
           "background-color: white;",
@@ -1028,18 +1033,30 @@
 
         const ascending_icon = document.createElement("img");
         ascending_icon.setAttribute("src", conf.icons.ascending);
+        css(conf.style.header_cell_icons, ascending_icon);
         css(conf.style.ascending_icon, ascending_icon);
         cell.appendChild(ascending_icon);
+
         const descending_icon = document.createElement("img");
         descending_icon.setAttribute("src", conf.icons.descending);
+        css(conf.style.header_cell_icons, descending_icon);
         css(conf.style.descending_icon, descending_icon);
         cell.appendChild(descending_icon);
+
         cell.addEventListener("click", function () {
           const cols = conf.data_adapter.columns;
           for (let i = 0; i < cols.length; i++) {
             const col = cols[i];
             if (this.id === col.name) {
               self.sort_by = i;
+              const sort_ord_asc = self.header_info[i].ascending;
+              if (sort_ord_asc) {
+                ascending_icon.style.visibility = "hidden";
+                descending_icon.style.visibility = "visible";
+              } else {
+                ascending_icon.style.visibility = "visible";
+                descending_icon.style.visibility = "hidden";
+              }
               self.header_info[i].ascending = !self.header_info[i].ascending;
             } else {
               self.header_info[i].ascending = false;
