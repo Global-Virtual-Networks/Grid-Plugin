@@ -1041,10 +1041,10 @@
         cell.appendChild(descending_icon);
 
         cell.addEventListener("click", function () {
-          const cols = conf.data_adapter.columns;
-          for (let i = 0; i < cols.length; i++) {
-            const col = cols[i];
-            if (this.id === col.name) {
+          const header_row = table.rows[0].cells;
+          for (let i = 0; i < header_row.length; i++) {
+            const header_cell = header_row[i].children[0].children[0];
+            if (this === header_cell) {
               self.sort_by = i;
               const sort_ord_asc = self.header_info[i].ascending;
               if (sort_ord_asc) {
@@ -1057,6 +1057,10 @@
               self.header_info[i].ascending = !self.header_info[i].ascending;
             } else {
               self.header_info[i].ascending = false;
+              //hide icons in other headers when a new header is clicked
+              for (const icon of header_cell.children) {
+                icon.style.visibility = "hidden";
+              }
             }
           }
           filter_rows();
