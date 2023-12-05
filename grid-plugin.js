@@ -45,12 +45,15 @@
         ],
         cell: [
           "padding: 5px 0;",
-          "  font-size: 10px;",
+          "font-size: 10px;",
           "text-align: left;",
           "overflow: hidden;",
           "white-space: nowrap;",
           "text-overflow: ellipsis;",
+          "position: relative;",
         ],
+        ascending_icon: ["position: absolute;", "top: 0", "left: 50%;"],
+        descending_icon: ["position: absolute;", "bottom: 0", "left: 50%;"],
         larger_width_cell: [],
         context_menu: [
           "background-color: white;",
@@ -67,13 +70,6 @@
           "position: absolute",
           "overflow: visible;",
           "z-index: 999;",
-        ],
-        header_cells_ex: [
-          "display: flex;",
-          "align-items: center;",
-          "justify-content: space-between;",
-          "cursor: pointer;",
-          "user-select: none;",
         ],
         // header_img: [
         //   "width: 15px;",
@@ -1030,10 +1026,14 @@
         cell.setAttribute("id", self.header_info[cell_num].name);
         css(["cursor: pointer;", "user-select: none;"], cell);
 
-        // const ascending_icon = document.createElement("img");
-        // img.setAttribute("src", conf.icons.ascending);
-        // // css(conf.style.header_img, img);
-        // cell.appendChild(ascending_icon);
+        const ascending_icon = document.createElement("img");
+        ascending_icon.setAttribute("src", conf.icons.ascending);
+        css(conf.style.ascending_icon, ascending_icon);
+        cell.appendChild(ascending_icon);
+        const descending_icon = document.createElement("img");
+        descending_icon.setAttribute("src", conf.icons.descending);
+        css(conf.style.descending_icon, descending_icon);
+        cell.appendChild(descending_icon);
         cell.addEventListener("click", function () {
           const cols = conf.data_adapter.columns;
           for (let i = 0; i < cols.length; i++) {
