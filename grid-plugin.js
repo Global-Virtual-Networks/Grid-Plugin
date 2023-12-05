@@ -334,10 +334,6 @@
         } else {
           search_mode.set(false);
         }
-        if (self.sort_by !== null) {
-          self.header_info[self.sort_by].ascending =
-            !self.header_info[self.sort_by].ascending;
-        }
         filter_rows();
       });
     };
@@ -618,6 +614,9 @@
         search_bar.value = "";
         default_sf = "All";
         self.search_ddl.value = "All";
+        for (const header in self.header_info) {
+          self.header_info[header].ascending = false;
+        }
         self.sort_by = null;
         rows_arr = [];
         pagination_active(1);
@@ -781,7 +780,7 @@
               y = parseFloat(y);
             }
             //using a conditional operator to determine whether the rows need to be shifted
-            let condition = column_info.ascending ? x < y : x > y;
+            let condition = column_info.ascending ? x > y : x < y;
             if (condition) {
               shouldSwitch = true;
               break;
@@ -793,9 +792,6 @@
             switching = true;
           }
         }
-        column_info.ascending = !column_info.ascending;
-
-        set_pagination_nums();
         //responsive_design();
       }
 
@@ -822,6 +818,8 @@
           }
         });
       });
+      set_pagination_nums();
+
       // bot_row_headers();
     };
 
@@ -1040,6 +1038,10 @@
             } else {
               self.header_info[i].ascending = false;
             }
+          }
+          if (self.sort_by !== null) {
+            self.header_info[self.sort_by].ascending =
+              !self.header_info[self.sort_by].ascending;
           }
           filter_rows();
         });
@@ -1359,10 +1361,6 @@
       curr_page = new_page;
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
-      if (self.sort_by !== null) {
-        self.header_info[self.sort_by].ascending =
-          !self.header_info[self.sort_by].ascending;
-      }
       filter_rows();
     };
 
