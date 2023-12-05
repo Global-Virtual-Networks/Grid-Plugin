@@ -378,8 +378,8 @@
           num_of_pages = Math.ceil(search_matches.length / conf.rtd);
           populate_table(search_matches);
 
-          //filter rows based on corresponding header index in header_orderBy object, if an self.sort_by is not null
-          if (self.sort_by) {
+          //sort rows if self.sort_by is not null(this indicates a header cell was clicked on)
+          if (self.sort_by !== null) {
             let switching, i, x, y, shouldSwitch;
             switching = true;
 
@@ -1030,12 +1030,12 @@
           const cols = conf.data_adapter.columns;
           for (let i = 0; i < cols.length; i++) {
             const col = cols[i];
-            self.header_orderBy[i] = null;
             if (this.id === col.display) {
               self.sort_by = i;
+            } else {
+              self.header_orderBy[i] = false;
             }
           }
-          debugger;
           filter_rows();
         });
         // const img = add_img_to_header(cell, cell_text);
@@ -1318,7 +1318,7 @@
       self.headers_arr = [];
       for (let i = 0; i < columns.length; i++) {
         const column = columns[i];
-        self.header_orderBy[i] = null;
+        self.header_orderBy[i] = false;
         const header = column.display;
         self.headers_arr.push(header);
 
