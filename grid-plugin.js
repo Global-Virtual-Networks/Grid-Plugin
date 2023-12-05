@@ -1023,7 +1023,7 @@
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
         td = document.createElement("th");
-        cell.setAttribute("id", cell_text);
+        cell.setAttribute("id", self.header_info[cell_num].name);
         css(["cursor: pointer;", "user-select: none;"], cell);
         cell.addEventListener("click", function () {
           const cols = conf.data_adapter.columns;
