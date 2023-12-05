@@ -382,6 +382,7 @@
           if (self.sort_by !== null) {
             let switching, i, x, y, shouldSwitch;
             switching = true;
+            const column_info = self.header_info[self.sort_by];
 
             while (switching) {
               switching = false;
@@ -389,12 +390,20 @@
 
               for (i = 1; i < rows.length - 1; i++) {
                 shouldSwitch = false;
-
                 x = rows[i].getElementsByTagName("TD")[self.sort_by];
                 y = rows[i + 1].getElementsByTagName("TD")[self.sort_by];
-                let condition = self.header_info[self.sort_by].ascending
-                  ? parseInt(x.textContent) < parseInt(y.textContent)
-                  : parseInt(x.textContent) > parseInt(y.textContent);
+                x = x.textContent;
+                y = y.textContent;
+                if (
+                  column_info.type === "int" ||
+                  column_info.type === "float"
+                ) {
+                  //parseFloat method returns an integer if there are no decimal points
+                  x = parseFloat(x);
+                  y = parseFloat(y);
+                }
+                //using a conditional operator to determine whether the rows need to be shifted
+                let condition = column_info.ascending ? x < y : x > y;
                 if (condition) {
                   shouldSwitch = true;
                   break;
@@ -407,8 +416,7 @@
                 switching = true;
               }
             }
-            self.header_info[self.sort_by].ascending =
-              !self.header_info[self.sort_by].ascending;
+            column_info.ascending = !column_info.ascending;
 
             set_pagination_nums();
             //responsive_design();
