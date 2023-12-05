@@ -1064,7 +1064,7 @@
           }
           filter_rows();
         });
-        cell.addEventListener("mouseenter", function () {
+        cell.addEventListener("mouseover", function () {
           if (
             ascending_icon.style.visibility === "hidden" &&
             descending_icon.style.visibility === "hidden"
@@ -1072,7 +1072,7 @@
             ascending_icon.style.visibility = "visible";
           }
         });
-        cell.addEventListener("mouseleave", function () {
+        cell.addEventListener("mouseout", function () {
           if (ascending_icon.style.visibility === "visible") {
             ascending_icon.style.visibility = "hidden";
           }
