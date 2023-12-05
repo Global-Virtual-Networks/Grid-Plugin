@@ -54,11 +54,10 @@
         ],
         header_cell_icons: [
           "position: absolute;",
+          "top: 0;",
           "left: 50%;",
           "visibility: hidden;",
         ],
-        ascending_icon: ["top: 0"],
-        descending_icon: ["bottom: 0"],
         larger_width_cell: [],
         context_menu: [
           "background-color: white;",
@@ -1034,13 +1033,11 @@
         const ascending_icon = document.createElement("img");
         ascending_icon.setAttribute("src", conf.icons.ascending);
         css(conf.style.header_cell_icons, ascending_icon);
-        css(conf.style.ascending_icon, ascending_icon);
         cell.appendChild(ascending_icon);
 
         const descending_icon = document.createElement("img");
         descending_icon.setAttribute("src", conf.icons.descending);
         css(conf.style.header_cell_icons, descending_icon);
-        css(conf.style.descending_icon, descending_icon);
         cell.appendChild(descending_icon);
 
         cell.addEventListener("click", function () {
@@ -1065,16 +1062,40 @@
           filter_rows();
         });
         cell.addEventListener("mouseover", function () {
-          if (
-            ascending_icon.style.visibility === "hidden" &&
-            descending_icon.style.visibility === "hidden"
-          ) {
+          if (ascending_icon.style.visibility === "hidden") {
             ascending_icon.style.visibility = "visible";
+            descending_icon.style.visibility = "hidden";
+          } else {
+            descending_icon.style.visibility = "visible";
+            ascending_icon.style.visibility = "hidden";
           }
         });
         cell.addEventListener("mouseout", function () {
-          if (ascending_icon.style.visibility === "visible") {
-            ascending_icon.style.visibility = "hidden";
+          const header_row = table.rows[0].cells;
+          for (let i = 0; i < header_row.length; i++) {
+            const header_cell = header_row[i].children[0].children[0];
+            if (this === header_cell) {
+              if (self.sort_by !== i) {
+                //hide icon if its corresponding header cell has not been clicked
+                ascending_icon.style.visibility = "hidden";
+                descending_icon.style.visibility === "hidden";
+              } else {
+                //if the grid is sorted by the header the cursor just stopped hovering over AND there's a mismatch between the visible icon and the sort order
+                if (
+                  self.header_info[i].ascending &&
+                  descending_icon.style.visibility === "visible"
+                ) {
+                  descending_icon.style.visibility = "hidden";
+                  ascending_icon.style.visibility = "visible";
+                } else if (
+                  !self.header_info[i].ascending &&
+                  ascending_icon.style.visibility === "visible"
+                ) {
+                  descending_icon.style.visibility = "visible";
+                  ascending_icon.style.visibility = "hidden";
+                }
+              }
+            }
           }
         });
       } else {
@@ -1165,27 +1186,6 @@
         css(["background-color: #fff"], this);
       });
       return opt;
-    };
-
-    const header_cell_effects = (icon_cell, icon) => {
-      //only do this hover effect if the icon was neutral to begin with
-      let icon_cell_click;
-      icon_cell.addEventListener("mouseover", function () {
-        if (icon.src.includes(conf.icons.neutral)) {
-          icon.setAttribute("src", conf.icons.ascending);
-          icon_cell_click = header_click.get_count();
-        }
-      });
-      icon_cell.addEventListener("mouseout", function () {
-        //only return the img src to neutral.png if the user has not triggered the header cell click event
-        const h = header_click.get_count();
-        if (header_click.get_count() === icon_cell_click) {
-          icon.setAttribute("src", conf.icons.neutral);
-        }
-      });
-      icon_cell.addEventListener("click", function () {
-        header_click.increment();
-      });
     };
 
     const row_events = (row) => {
