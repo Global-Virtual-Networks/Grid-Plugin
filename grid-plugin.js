@@ -392,8 +392,8 @@
               x = rows[i].getElementsByTagName("TD")[4];
               y = rows[i + 1].getElementsByTagName("TD")[4];
               let condition = self.header_orderBy[4]
-                ? parseInt(x.textContent) > parseInt(y.textContent)
-                : parseInt(x.textContent) < parseInt(y.textContent);
+                ? parseInt(x.textContent) < parseInt(y.textContent)
+                : parseInt(x.textContent) > parseInt(y.textContent);
               if (condition) {
                 shouldSwitch = true;
                 break;
@@ -1309,7 +1309,7 @@
       self.headers_arr = [];
       for (let i = 0; i < columns.length; i++) {
         const column = columns[i];
-        self.header_orderBy[i] = true;
+        self.header_orderBy[i] = null;
         const header = column.display;
         self.headers_arr.push(header);
 
