@@ -1029,26 +1029,24 @@
         td = document.createElement("th");
         cell.setAttribute("id", self.header_info[cell_num].name);
         css(["cursor: pointer;", "user-select: none;"], cell);
+
+        // const ascending_icon = document.createElement("img");
+        // img.setAttribute("src", conf.icons.ascending);
+        // // css(conf.style.header_img, img);
+        // cell.appendChild(ascending_icon);
         cell.addEventListener("click", function () {
           const cols = conf.data_adapter.columns;
           for (let i = 0; i < cols.length; i++) {
             const col = cols[i];
             if (this.id === col.name) {
               self.sort_by = i;
+              self.header_info[i].ascending = !self.header_info[i].ascending;
             } else {
               self.header_info[i].ascending = false;
             }
           }
-          if (self.sort_by !== null) {
-            self.header_info[self.sort_by].ascending =
-              !self.header_info[self.sort_by].ascending;
-          }
           filter_rows();
         });
-        // const img = add_img_to_header(cell, cell_text);
-        // header_cell_effects(cell, img);
-        // cell.onclick = handle_click;
-        // cols_ascending[cell_text] = true;
       } else {
         //add 'highlight' effect by adding <mark> tag around the substring
         const txt_content = cell_text.toLowerCase();
@@ -1232,17 +1230,6 @@
         }
       }
       return true;
-    };
-
-    const add_img_to_header = (cell, id) => {
-      const img = append_child("img", cell);
-      css(conf.style.header_img, img);
-      img.setAttribute("id", id);
-      img.setAttribute("src", conf.icons.neutral);
-
-      //add extra css to header cells
-      css(conf.style.header_cells_ex, cell);
-      return img;
     };
 
     const conv_to_snakecase = (string) => {
