@@ -392,7 +392,7 @@
 
                 x = rows[i].getElementsByTagName("TD")[self.sort_by];
                 y = rows[i + 1].getElementsByTagName("TD")[self.sort_by];
-                let condition = self.header_orderBy[self.sort_by]
+                let condition = self.header_info[self.sort_by]
                   ? parseInt(x.textContent) < parseInt(y.textContent)
                   : parseInt(x.textContent) > parseInt(y.textContent);
                 if (condition) {
@@ -407,8 +407,7 @@
                 switching = true;
               }
             }
-            self.header_orderBy[self.sort_by] =
-              !self.header_orderBy[self.sort_by];
+            self.header_info[self.sort_by] = !self.header_info[self.sort_by];
 
             set_pagination_nums();
             //responsive_design();
@@ -783,7 +782,7 @@
     const window_size = window_sze();
     const edit_mode = edit_mde();
     this.headers_arr;
-    this.header_orderBy = {};
+    this.header_info = {};
 
     //elem = element
     const css = (property, elem) => {
@@ -1033,7 +1032,7 @@
             if (this.id === col.display) {
               self.sort_by = i;
             } else {
-              self.header_orderBy[i] = false;
+              self.header_info[i] = false;
             }
           }
           filter_rows();
@@ -1314,11 +1313,12 @@
       create_footer();
     };
 
-    const add_headers = (columns) => {
+    const add_headers = (columns, schema) => {
       self.headers_arr = [];
       for (let i = 0; i < columns.length; i++) {
         const column = columns[i];
-        self.header_orderBy[i] = false;
+        const schem = schema[i];
+        self.header_info[i] = { name: schem.name, type: schem.type };
         const header = column.display;
         self.headers_arr.push(header);
 
@@ -1349,7 +1349,7 @@
       curr_page = new_page;
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
-      self.header_orderBy[self.sort_by] = !self.header_orderBy[self.sort_by];
+      self.header_info[self.sort_by] = !self.header_info[self.sort_by];
       filter_rows();
     };
 
@@ -1357,7 +1357,7 @@
       load_grid: function () {
         conf.data_adapter.load(function (data) {
           num_of_pages = Math.ceil(data.rows.length / conf.rtd);
-          add_headers(config.data_adapter.columns);
+          add_headers(config.data_adapter.columns, data.schema);
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
           load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord

@@ -379,10 +379,7 @@
       "name": "email",
       "type": "string"
     },
-    {
-      "name": "email",
-      "type": "string"
-    },
+
     {
       "name": "favorite_number",
       "type": "float"
@@ -390,6 +387,10 @@
     {
       "name": "birth_year",
       "type": "datetime"
+    },
+    {
+      "name": "portfolio",
+      "type": "string"
     }
   ]
 }
