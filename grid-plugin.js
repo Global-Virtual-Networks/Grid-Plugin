@@ -1064,6 +1064,19 @@
           }
           filter_rows();
         });
+        cell.addEventListener("mouseenter", function () {
+          if (
+            ascending_icon.style.visibility === "hidden" &&
+            descending_icon.style.visibility === "hidden"
+          ) {
+            ascending_icon.style.visibility = "visible";
+          }
+        });
+        cell.addEventListener("mouseleave", function () {
+          if (ascending_icon.style.visibility === "visible") {
+            ascending_icon.style.visibility = "hidden";
+          }
+        });
       } else {
         //add 'highlight' effect by adding <mark> tag around the substring
         const txt_content = cell_text.toLowerCase();
