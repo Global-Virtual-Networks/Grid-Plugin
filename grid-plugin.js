@@ -392,7 +392,7 @@
 
                 x = rows[i].getElementsByTagName("TD")[self.sort_by];
                 y = rows[i + 1].getElementsByTagName("TD")[self.sort_by];
-                let condition = self.header_info[self.sort_by]
+                let condition = self.header_info[self.sort_by].ascending
                   ? parseInt(x.textContent) < parseInt(y.textContent)
                   : parseInt(x.textContent) > parseInt(y.textContent);
                 if (condition) {
@@ -407,7 +407,8 @@
                 switching = true;
               }
             }
-            self.header_info[self.sort_by] = !self.header_info[self.sort_by];
+            self.header_info[self.sort_by].ascending =
+              !self.header_info[self.sort_by].ascending;
 
             set_pagination_nums();
             //responsive_design();
@@ -1029,10 +1030,10 @@
           const cols = conf.data_adapter.columns;
           for (let i = 0; i < cols.length; i++) {
             const col = cols[i];
-            if (this.id === col.display) {
+            if (this.id === col.name) {
               self.sort_by = i;
             } else {
-              self.header_info[i] = false;
+              self.header_info[i].ascending = false;
             }
           }
           filter_rows();
@@ -1318,7 +1319,11 @@
       for (let i = 0; i < columns.length; i++) {
         const column = columns[i];
         const schem = schema[i];
-        self.header_info[i] = { name: schem.name, type: schem.type };
+        self.header_info[i] = {
+          name: schem.name,
+          type: schem.type,
+          ascending: false,
+        };
         const header = column.display;
         self.headers_arr.push(header);
 
@@ -1349,7 +1354,10 @@
       curr_page = new_page;
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
-      self.header_info[self.sort_by] = !self.header_info[self.sort_by];
+      if (self.sort_by !== null) {
+        self.header_info[self.sort_by].ascending =
+          !self.header_info[self.sort_by].ascending;
+      }
       filter_rows();
     };
 
