@@ -377,51 +377,6 @@
           }
           num_of_pages = Math.ceil(search_matches.length / conf.rtd);
           populate_table(search_matches);
-
-          //sort rows if self.sort_by is not null(this indicates a header cell was clicked on)
-          if (self.sort_by !== null) {
-            let switching, i, x, y, shouldSwitch;
-            switching = true;
-            const column_info = self.header_info[self.sort_by];
-            const rows = table.rows;
-
-            while (switching) {
-              switching = false;
-
-              for (i = 1; i < rows.length - 1; i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName("TD")[self.sort_by];
-                y = rows[i + 1].getElementsByTagName("TD")[self.sort_by];
-                x = x.textContent;
-                y = y.textContent;
-                if (
-                  column_info.type === "int" ||
-                  column_info.type === "float"
-                ) {
-                  //parseFloat method returns an integer if there are no decimal points
-                  x = parseFloat(x);
-                  y = parseFloat(y);
-                }
-                //using a conditional operator to determine whether the rows need to be shifted
-                let condition = column_info.ascending ? x < y : x > y;
-                if (condition) {
-                  shouldSwitch = true;
-                  break;
-                }
-              }
-              if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-              }
-            }
-            for (const row of rows) {
-              set_row_background_color(row);
-            }
-            column_info.ascending = !column_info.ascending;
-
-            set_pagination_nums();
-            //responsive_design();
-          }
         }
       });
     };
@@ -802,6 +757,44 @@
     };
 
     const populate_table = (tabledata_rows) => {
+      //sort rows if self.sort_by is not null(this indicates a header cell was clicked on)
+      if (self.sort_by !== null) {
+        let switching, i, x, y, shouldSwitch;
+        switching = true;
+        const column_info = self.header_info[self.sort_by];
+        const rows = tabledata_rows;
+
+        while (switching) {
+          switching = false;
+
+          for (i = 0; i < rows.length - 1; i++) {
+            shouldSwitch = false;
+            x = rows[i].cell[self.sort_by];
+            y = rows[i + 1].cell[self.sort_by];
+            if (column_info.type === "int" || column_info.type === "float") {
+              //parseFloat method returns an integer if there are no decimal points
+              x = parseFloat(x);
+              y = parseFloat(y);
+            }
+            //using a conditional operator to determine whether the rows need to be shifted
+            let condition = column_info.ascending ? x < y : x > y;
+            if (condition) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+          if (shouldSwitch) {
+            const popped_row = rows.splice(i + 1, 1)[0];
+            rows.splice(i, 0, popped_row);
+            switching = true;
+          }
+        }
+        column_info.ascending = !column_info.ascending;
+
+        set_pagination_nums();
+        //responsive_design();
+      }
+
       //remove all rows from table
       const table_rows = table.rows;
       while (table_rows.length > 1) {
@@ -816,7 +809,6 @@
         first_entry_index + conf.rtd
       );
       tabledata_rows.forEach((row, idx) => {
-        row = tabledata_rows[idx];
         const row_dobj = add_row(row);
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
