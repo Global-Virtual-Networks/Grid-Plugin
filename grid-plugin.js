@@ -252,6 +252,7 @@
     };
 
     const self = this;
+    self.sort_by = null;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
@@ -377,39 +378,41 @@
           num_of_pages = Math.ceil(search_matches.length / conf.rtd);
           populate_table(search_matches);
 
-          //filter rows based on corresponding header index in header_orderBy object, if an icon is visible
-          let switching, i, x, y, shouldSwitch;
-          switching = true;
+          //filter rows based on corresponding header index in header_orderBy object, if an self.sort_by is not null
+          if (self.sort_by) {
+            let switching, i, x, y, shouldSwitch;
+            switching = true;
 
-          while (switching) {
-            switching = false;
-            const rows = table.rows;
+            while (switching) {
+              switching = false;
+              const rows = table.rows;
 
-            for (i = 1; i < rows.length - 1; i++) {
-              shouldSwitch = false;
+              for (i = 1; i < rows.length - 1; i++) {
+                shouldSwitch = false;
 
-              //4 equals sort by column with index 4
-              x = rows[i].getElementsByTagName("TD")[4];
-              y = rows[i + 1].getElementsByTagName("TD")[4];
-              let condition = self.header_orderBy[4]
-                ? parseInt(x.textContent) < parseInt(y.textContent)
-                : parseInt(x.textContent) > parseInt(y.textContent);
-              if (condition) {
-                shouldSwitch = true;
-                break;
+                x = rows[i].getElementsByTagName("TD")[self.sort_by];
+                y = rows[i + 1].getElementsByTagName("TD")[self.sort_by];
+                let condition = self.header_orderBy[self.sort_by]
+                  ? parseInt(x.textContent) < parseInt(y.textContent)
+                  : parseInt(x.textContent) > parseInt(y.textContent);
+                if (condition) {
+                  shouldSwitch = true;
+                  break;
+                }
+              }
+              if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                set_row_background_color(rows[i]);
+                set_row_background_color(rows[i + 1]);
+                switching = true;
               }
             }
-            if (shouldSwitch) {
-              rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-              set_row_background_color(rows[i]);
-              set_row_background_color(rows[i + 1]);
-              switching = true;
-            }
-          }
-          self.header_orderBy[4] = !self.header_orderBy[4];
+            self.header_orderBy[self.sort_by] =
+              !self.header_orderBy[self.sort_by];
 
-          set_pagination_nums();
-          //responsive_design();
+            set_pagination_nums();
+            //responsive_design();
+          }
         }
       });
     };
@@ -647,6 +650,7 @@
         search_bar.value = "";
         default_sf = "All";
         self.search_ddl.value = "All";
+        self.sort_by = null;
         rows_arr = [];
         pagination_active(1);
       });
@@ -1023,6 +1027,15 @@
         cell.setAttribute("id", cell_text);
         css(["cursor: pointer;", "user-select: none;"], cell);
         cell.addEventListener("click", function () {
+          const cols = conf.data_adapter.columns;
+          for (let i = 0; i < cols.length; i++) {
+            const col = cols[i];
+            self.header_orderBy[i] = null;
+            if (this.id === col.display) {
+              self.sort_by = i;
+            }
+          }
+          debugger;
           filter_rows();
         });
         // const img = add_img_to_header(cell, cell_text);
@@ -1336,7 +1349,7 @@
       curr_page = new_page;
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
-      self.header_orderBy[4] = !self.header_orderBy[4];
+      self.header_orderBy[self.sort_by] = !self.header_orderBy[self.sort_by];
       filter_rows();
     };
 
