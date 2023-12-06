@@ -2,7 +2,7 @@
 
 # NimbleGrid
 
-[Features](#featurs) | [Demo](#demo) | [Installation](#installation) 
+[Features](#featurs) | [Demo](https://global-virtual-networks.github.io/Grid-Plugin/) | [Installation](#installation) 
 
 </div>
 
@@ -12,10 +12,6 @@
 3. Column Sorting: Enable column sorting by simply clicking on a header cell, providing users with an intuitive way to organize data.
 4. Flexible Data Connection: Easily connect your data, whether stored internally or externally, through the versatile data adapter.
 5. Overflow Handling: Automatically place ellipses on overflowing cells, allowing users to view the entire content of a cell by hovering over it. This ensures a seamless and user-friendly experience.
-
-## Demo
-
-For a live demonstration, click [here](https://global-virtual-networks.github.io/Grid-Plugin/).
 
 ## Installation
 
