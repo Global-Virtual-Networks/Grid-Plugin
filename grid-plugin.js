@@ -42,7 +42,6 @@
         cell: [
           "padding: 5px 0;",
           "font-size: 10px;",
-          "text-align: left;",
           "overflow: hidden;",
           "white-space: nowrap;",
           "text-overflow: ellipsis;",
@@ -1009,6 +1008,7 @@
         }
         const td = create_cell(i, txt, row_arr, headers_arr, tr);
         td.style.width = cols_obj[i].width + "px"; //apply cell width from corresponding column object
+        td.style.textAlign = cols_obj[i].align; //apply align from corresponding column object
         tr.appendChild(td);
       }
       tr.setAttribute("id", table.rows.length + (curr_page - 1) * conf.rtd); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
