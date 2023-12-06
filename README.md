@@ -2,7 +2,7 @@
 
 # NimbleGrid
 
-[Features](#featurs) | [Demo](https://global-virtual-networks.github.io/Grid-Plugin/) | [Installation](#installation) 
+[Demo](https://global-virtual-networks.github.io/Grid-Plugin/) | [Features](#featurs) | [Installation](#installation) 
 
 </div>
 
