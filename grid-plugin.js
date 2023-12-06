@@ -1046,9 +1046,11 @@
               if (sort_ord_asc) {
                 ascending_icon.style.visibility = "hidden";
                 descending_icon.style.visibility = "visible";
+                self.sortedBy_icon = descending_icon;
               } else {
                 ascending_icon.style.visibility = "visible";
                 descending_icon.style.visibility = "hidden";
+                self.sortedBy_icon = ascending_icon;
               }
               self.header_info[i].ascending = !self.header_info[i].ascending;
             } else {
@@ -1062,6 +1064,21 @@
           filter_rows();
         });
         cell.addEventListener("mouseover", function () {
+          //hide icons in active headers when a new header is hovered over
+          self.sortedBy_icon;
+          const header_row = table.rows[0].cells;
+          for (let i = 0; i < header_row.length; i++) {
+            const header_cell = header_row[i].children[0].children[0];
+            for (const icon of header_cell.children) {
+              if (icon.style.visibility === "visible") {
+                self.sortedBy_icon = icon;
+              }
+              //if the cell the cursor is hovering over does NOT contain the currently visible icon
+              if (!cell.contains(self.sortedBy_icon)) {
+                icon.style.visibility = "hidden";
+              }
+            }
+          }
           if (ascending_icon.style.visibility === "hidden") {
             ascending_icon.style.visibility = "visible";
             descending_icon.style.visibility = "hidden";
@@ -1096,6 +1113,9 @@
                 }
               }
             }
+          }
+          if (typeof self.sortedBy_icon !== "undefined") {
+            self.sortedBy_icon.style.visibility = "visible";
           }
         });
       } else {
