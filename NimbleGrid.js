@@ -1,14 +1,14 @@
 (function ($) {
-  $.fn.grid_ng = function (config) {
+  $.fn.NimbleGrid = function (config) {
     const plugin_dom_obj = this[0];
     const conf = {
       //rtd equals rows to display
       rtd: 15,
       icons: {
         ascending:
-          "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAPBJREFUWEftljEOwjAQBCcVf4GWhg4+wQt4GSWfgIqOEj5CRwNaFCPL2HFEzkqE7CqSE+94b++UhpFXM7I+FeBvHZgDe+AB7IBbKmslHJD4AVi0oldgm4JIARyBdUeHnIBNZD8Ud68kISwBfHEJ+g7oOQphVYJQXJZLUEviriRfEFYAZ2AV3PLZAkjDB7wAS1cbKwBlZhYk3geQnuuMu58fK4BYXkOAaKYrwK9t6OxMzQPtDypBbhAVB7D4TRjkgAWAXNSKjezP+SW7oNclKsBkHejbhrk6d82J97dDB1ExgNzBZvuTzYDZDXMHVQeqAy+8ETIhWCfLNQAAAABJRU5ErkJggg==",
+          "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAcAAAAECAMAAAB1GNVPAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADNQTFRF1NTUfX190dHRtLS0l5eXQEBAR0dH1dXVREREr6+v2dnZn5+fbGxseXl5RkZGzMzM////BUSGAAAAABF0Uk5T/////////////////////wAlrZliAAAAJklEQVR42mIQEBBgA2IGAQEORh4QzcrLycwtwMDHwsTPwMUOEGAAFi0BOZt2IEwAAAAASUVORK5CYII=",
         descending:
-          "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAONJREFUWEftlDEOwjAQBCcVf4GWhg4+wQt4GSWfgIqOEj5CRwNaFEsnJ7GScMgB+ZpEsnM73ty6InNVmfUpAMWByTpwBNYOCTkBm1SfLgeyAzgcvl+Lyc5AP3yHXX/tgAZZNSoFDubyrJskXf40hqmc/zZA9l9QAIY6oMjNgB1wqz+Oh3AO7IG7jabXRXQGVsAV2NYQFkDiB2ABXIBlOKEXgBUIEHqqJBrELeB7cew90Jb/GELCKonqvSHuDaB+FsLOUat4CmDoENr9MUSn+LcAghOa+EeUjMbBvIZwtGMFoDjwAvUAMiFB9k7bAAAAAElFTkSuQmCC",
+          "data:image/png;base64,  iVBORw0KGgoAAAANSUhEUgAAAAcAAAAECAMAAAB1GNVPAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADBQTFRFfX19xMTEbW1ttLS0jo6OREREr6+vycnJj4+Pubm5jIyMlpaWsLCwoKCg1NTU////gVMa/AAAABB0Uk5T////////////////////AOAjXRkAAAAmSURBVHjaYmBl4GLhZeNh4Gfi5mTn42fg5+dg5OMH0fzMQAwQYAAQZgEsd9uAdAAAAABJRU5ErkJggg==",
         neutral:
           "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAFJJREFUWEft08EVABAMBNHRGZVTmqtDrqzDKCA2/2Ub4dfC/2MABb4UmEC/1I4FjHN2JRAPcGn5euyXN6CAAvEaxgN4AwooEK9hPIA3oIACTwU2v58MIZifSLoAAAAASUVORK5CYII=",
         next: "data:image/png;base64, R0lGODlhEAAQAMQRACRIkChNli1TnjNZpjhgrz9otx1m9S9kzy9l0zBiyD5z2yRq8ixx7jRy6ERvwEp1yE970P///1OA1lOE3VWF3liH30+K9k+J/VeH4F+M4Wec+2ic+YWu/4iu/6K9/6W//yH5BAEAABEALAAAAAAQABAAAAU2YCSOZGmeqIilppSxJPS9cPRoX1U7F/dRsMJF0/FMWASGRaOADRaNQ01gSNQiAcQ1Ath6v7UQADs=",
@@ -16,10 +16,6 @@
         last: "data:image/png;base64, R0lGODlhEAAQAMQNACRIkC1TnjNZpj9otyxm2Dhu3D913Sxx7kRvwEJt1Ep1yEh630574f///1OA1lGD4VaE6V+L4GCM5GiU5W+W7G2Z5mec+3Ga536f7oKg542r8Iiu/5a076G+8KK9/6rE7yH5BAEAAA0ALAAAAAAQABAAAAVZYCOOZGme52Ve2WRWUVl9jzl58Th1jil5m8RIwumVIhyLRdiIaBSmh8ZyIAgaDwzCtLhUAaIFZWAyPAhgkYFyLRUSaVFB0iahSwRIwETgM+IoInCAgYWGDSEAOw==",
         first:
           "data:image/png;base64, R0lGODlhEAAQAMQNACRIkC1TnjNZpj9otyxm2Dhu3D913Sxx7kRvwEJt1Ep1yEh630574f///1OA1lGD4VaE6V+L4GCM5GiU5W+W7G2Z5mec+3Ga536f7oKg542r8Iiu/5a076G+8KK9/6rE7yH5BAEAAA0ALAAAAAAQABAAAAVWYCOOZGme55RdJls+X1VGcul0Exl5uc1Jo8TGAywpNBFRwmLhJEsIzKMhIBwsmmlpQFmIANaLtySgGEbgx5ksKZAACXcpACGUwCYAw17iv+EogYKDJCEAOw==",
-        search:
-          "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAhNJREFUWEfV103oDVEYx/HPfyErC3YIiQ3KisIKC8oKIWVlgbzsWKGwkAVKiVIWklI2siFSVl4WWAgrSsjLhsKKRI/O1DTdO2fm3nH/nDo1t3nOc773Ob/zPM+MGecxNs77+68ANmIlFqb5Ax/wEedxA5/aRrRJBA5jAxZknH/FJexqA5EDOIftyeEtPMEj3MVPLC7NVcnuM9bgQROQOoBfJQe7cTbj8AT2lmym4X0Ooh/AHSxPi+fiZc5Rer8U99LzdaxFaKXv6AUQZ34orViG+w03L8zm4EX6cQThrxXA0yS4k9jXcvPCPIR4Bu+wqO4oqhGIq3YFIbjVA25eLLuJEGZtFKoAp7EHR3FwSIDjKYJXsb6frypAIb4Qz7UhATbjchJwCLnnqAJ8wSRMT+c3DMMMvMZ3TGwKEKl0cscAbzCzKcBzzEv3t6sjeJiyZaMjKDTQpQgvYGvTCGxJBaXLaxibB0SjCEzBqyTELhJRbDo7+WwEEEZRdHZ2lIqPYX/bVBz2xW2I50GL0W2sw7dBAJZUitAg5fgZNiFuVqtiVBhPTa1WNBcxmjYkUYZnpYKWhch1RBNwANsQDUZuRP04lQCiqEUbVwuRAyhHY0epIY00G81ozMeI846+4W2JcH6qrLUQTQFy/7zf+yzE3wYIsFqIUQBUIaKrji7pzxgVQAFxEfH9sGI8AHrqZJQR+DcBfgOzr3YhBsQOIwAAAABJRU5ErkJggg==",
-        restore_defaults:
-          "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAmdJREFUWEft1knITlEYB/CfpZkNijKUBTYKKTOZkmKhDCHTgiJDMi3MyVBkiEhkKKVICREJEaGULEhJpChFxEKGHp1Pr7f3vfe+H/VtvlO3czvnGf7PfJpo4NWkgfVrBFCrB/pjLGLvho789uIbPMMZnMXHoqEtCqAD9mJSAcFfcRBb8TaPvgiAITiHtknYeTzEA9zHT/RB37RPTHSfMAUXs0DkAZiFo0lAKJ2HRzlWRXhOoWuiW4Vt6f8GfmB4nYwsAOMR1sZahH157iy5b449mJPONmFt8lYc/dFbDUAnPEUzlFpQjiEs+o4RVcAtxc50N7vEm7kAjmEmbmNQhuUR/78sqkC7DuvLzjMBRLK9xxf0wKt/BBDshzG3RE4mgPk4gBPJC1mhz/JAhCcqqNLKBHAtxXQJduckXhaA6xhWgf8qRmVVwQe0xlDc/AcAhYqmUhXUWdUSnwsC6JcaUyGlpUSVAETyNUV7vMuReBmjE81+rKllDlQrnxfogjG4UsCk6diBmBfR+5fjZAG+qvUbfX8CVmJ7QUGtsBGLE30k8sgivJVCsDBNviJlWK6jFw4hWnHv+gJol5rPN4TAl0UE1Zem2iyIRhQNKVrx4JIhUl89VfmqAeiMJ8mVy7Drv2tOArPG8ThcSHQxTDbUCGJz8uIKHKnGm/cgmYHjifkepiLKNGsNTGO3eyKajNP1BRB8A9JDMxpTrLu4hRg2sbdIQycGT7TvniXKpqXXUc05UM7QBluwoGAYInSr8TiPPi8E5fyRnPHQjPyI//hiXrzGc9zBpQLvxj9yawWQZ1DN940AGtwDvwBf2G0hSZYeNgAAAABJRU5ErkJggg==",
       },
       grid_mode: "pagination",
       style: {
@@ -45,11 +41,17 @@
         ],
         cell: [
           "padding: 5px 0;",
-          "  font-size: 10px;",
-          "text-align: left;",
+          "font-size: 10px;",
           "overflow: hidden;",
           "white-space: nowrap;",
           "text-overflow: ellipsis;",
+          "position: relative;",
+        ],
+        header_cell_icons: [
+          "position: absolute;",
+          "top: 0;",
+          "left: 50%;",
+          "visibility: hidden;",
         ],
         larger_width_cell: [],
         context_menu: [
@@ -67,13 +69,6 @@
           "position: absolute",
           "overflow: visible;",
           "z-index: 999;",
-        ],
-        header_cells_ex: [
-          "display: flex;",
-          "align-items: center;",
-          "justify-content: space-between;",
-          "cursor: pointer;",
-          "user-select: none;",
         ],
         // header_img: [
         //   "width: 15px;",
@@ -252,6 +247,7 @@
     };
 
     const self = this;
+    self.sort_by = null;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
@@ -292,7 +288,7 @@
         default_sf = this.value;
         //if there is a search currently in the textbox, need to call highight_on_search function for an accurate response/filter
         if (search_mode.get()) {
-          highlight_on_search();
+          filter_rows();
         }
       });
 
@@ -333,13 +329,14 @@
         } else {
           search_mode.set(false);
         }
-        highlight_on_search();
+        filter_rows();
       });
     };
 
-    const highlight_on_search = () => {
+    const filter_rows = () => {
       conf.data_adapter.load(function (data) {
         if (typeof data !== "undefined") {
+          //filter rows based on search bar value
           const typed_text = search_bar.value.toLowerCase();
           const rows = data.rows;
           let search_matches = [];
@@ -375,8 +372,6 @@
           }
           num_of_pages = Math.ceil(search_matches.length / conf.rtd);
           populate_table(search_matches);
-          set_pagination_nums();
-          //responsive_design();
         }
       });
     };
@@ -614,6 +609,12 @@
         search_bar.value = "";
         default_sf = "All";
         self.search_ddl.value = "All";
+        for (const header in self.header_info) {
+          self.header_info[header].ascending = false;
+        }
+        self.sortedBy_icon.style.visibility = "hidden";
+        self.sortedBy_icon = undefined;
+        self.sort_by = null;
         rows_arr = [];
         pagination_active(1);
       });
@@ -746,6 +747,7 @@
     const window_size = window_sze();
     const edit_mode = edit_mde();
     this.headers_arr;
+    this.header_info = {};
 
     //elem = element
     const css = (property, elem) => {
@@ -754,7 +756,59 @@
       }
     };
 
+    const float = function (arg) {
+      arg = int(arg);
+      return parseFloat(arg.toFixed(2));
+    };
+
+    const int = function (arg) {
+      arg = parseInt(arg);
+      if (isNaN(arg)) {
+        return 0;
+      }
+      return parseInt(arg);
+    };
+
     const populate_table = (tabledata_rows) => {
+      //sort rows if self.sort_by is not null(this indicates a header cell was clicked on)
+      if (self.sort_by !== null) {
+        let switching, i, x, y, shouldSwitch;
+        switching = true;
+        const column_info = self.header_info[self.sort_by];
+        const rows = tabledata_rows;
+
+        while (switching) {
+          switching = false;
+
+          for (i = 0; i < rows.length - 1; i++) {
+            shouldSwitch = false;
+            x = rows[i].cell[self.sort_by];
+            y = rows[i + 1].cell[self.sort_by];
+            if (column_info.type === "int") {
+              //int method includes precautions in case x or y is NaN(not a number)
+              x = int(x);
+              y = int(y);
+            } else if (column_info.type === "float") {
+              //float method includes precautions in case x or y is a whole number
+              x = float(x);
+              y = float(y);
+            }
+            //using a conditional operator to determine whether the rows need to be shifted
+            let condition = column_info.ascending ? x > y : x < y;
+            if (condition) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+          if (shouldSwitch) {
+            const popped_row = rows.splice(i + 1, 1)[0];
+            rows.splice(i, 0, popped_row);
+            switching = true;
+          }
+        }
+        //responsive_design();
+      }
+
       //remove all rows from table
       const table_rows = table.rows;
       while (table_rows.length > 1) {
@@ -769,7 +823,6 @@
         first_entry_index + conf.rtd
       );
       tabledata_rows.forEach((row, idx) => {
-        row = tabledata_rows[idx];
         const row_dobj = add_row(row);
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
@@ -779,6 +832,8 @@
           }
         });
       });
+      set_pagination_nums();
+
       // bot_row_headers();
     };
 
@@ -958,6 +1013,7 @@
         }
         const td = create_cell(i, txt, row_arr, headers_arr, tr);
         td.style.width = cols_obj[i].width + "px"; //apply cell width from corresponding column object
+        td.style.textAlign = cols_obj[i].align; //apply align from corresponding column object
         tr.appendChild(td);
       }
       tr.setAttribute("id", table.rows.length + (curr_page - 1) * conf.rtd); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
@@ -986,11 +1042,101 @@
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
         td = document.createElement("th");
-        cell.setAttribute("id", cell_text);
-        // const img = add_img_to_header(cell, cell_text);
-        // header_cell_effects(cell, img);
-        // cell.onclick = handle_click;
-        // cols_ascending[cell_text] = true;
+        cell.setAttribute("id", self.header_info[cell_num].name);
+        css(["cursor: pointer;", "user-select: none;"], cell);
+
+        const ascending_icon = document.createElement("img");
+        ascending_icon.setAttribute("src", conf.icons.ascending);
+        css(conf.style.header_cell_icons, ascending_icon);
+        cell.appendChild(ascending_icon);
+
+        const descending_icon = document.createElement("img");
+        descending_icon.setAttribute("src", conf.icons.descending);
+        css(conf.style.header_cell_icons, descending_icon);
+        cell.appendChild(descending_icon);
+
+        cell.addEventListener("click", function () {
+          const header_row = table.rows[0].cells;
+          for (let i = 0; i < header_row.length; i++) {
+            const header_cell = header_row[i].children[0].children[0];
+            if (this === header_cell) {
+              self.sort_by = i;
+              const sort_ord_asc = self.header_info[i].ascending;
+              if (sort_ord_asc) {
+                ascending_icon.style.visibility = "hidden";
+                descending_icon.style.visibility = "visible";
+                self.sortedBy_icon = descending_icon;
+              } else {
+                ascending_icon.style.visibility = "visible";
+                descending_icon.style.visibility = "hidden";
+                self.sortedBy_icon = ascending_icon;
+              }
+              self.header_info[i].ascending = !self.header_info[i].ascending;
+            } else {
+              self.header_info[i].ascending = false;
+              //hide icons in other headers when a new header is clicked
+              for (const icon of header_cell.children) {
+                icon.style.visibility = "hidden";
+              }
+            }
+          }
+          filter_rows();
+        });
+        cell.addEventListener("mouseover", function () {
+          //hide icons in active headers when a new header is hovered over
+          self.sortedBy_icon;
+          const header_row = table.rows[0].cells;
+          for (let i = 0; i < header_row.length; i++) {
+            const header_cell = header_row[i].children[0].children[0];
+            for (const icon of header_cell.children) {
+              if (icon.style.visibility === "visible") {
+                self.sortedBy_icon = icon;
+              }
+              //if the cell the cursor is hovering over does NOT contain the currently visible icon
+              if (!cell.contains(self.sortedBy_icon)) {
+                icon.style.visibility = "hidden";
+              }
+            }
+          }
+          if (ascending_icon.style.visibility === "hidden") {
+            ascending_icon.style.visibility = "visible";
+            descending_icon.style.visibility = "hidden";
+          } else {
+            descending_icon.style.visibility = "visible";
+            ascending_icon.style.visibility = "hidden";
+          }
+        });
+        cell.addEventListener("mouseout", function () {
+          const header_row = table.rows[0].cells;
+          for (let i = 0; i < header_row.length; i++) {
+            const header_cell = header_row[i].children[0].children[0];
+            if (this === header_cell) {
+              if (self.sort_by !== i) {
+                //hide icon if its corresponding header cell has not been clicked
+                ascending_icon.style.visibility = "hidden";
+                descending_icon.style.visibility === "hidden";
+              } else {
+                //if the grid is sorted by the header the cursor just stopped hovering over AND there's a mismatch between the visible icon and the sort order
+                if (
+                  self.header_info[i].ascending &&
+                  descending_icon.style.visibility === "visible"
+                ) {
+                  descending_icon.style.visibility = "hidden";
+                  ascending_icon.style.visibility = "visible";
+                } else if (
+                  !self.header_info[i].ascending &&
+                  ascending_icon.style.visibility === "visible"
+                ) {
+                  descending_icon.style.visibility = "visible";
+                  ascending_icon.style.visibility = "hidden";
+                }
+              }
+            }
+          }
+          if (typeof self.sortedBy_icon !== "undefined") {
+            self.sortedBy_icon.style.visibility = "visible";
+          }
+        });
       } else {
         //add 'highlight' effect by adding <mark> tag around the substring
         const txt_content = cell_text.toLowerCase();
@@ -1009,10 +1155,7 @@
             cell_text.substring(index + typed_text.length);
         }
 
-        cell.setAttribute(
-          "id",
-          row_num + "_" + conv_to_snakecase(cell_text.toString())
-        );
+        cell.setAttribute("id", conv_to_snakecase(cell_text.toString()));
         td = document.createElement("td");
         //add a click event listener to every cell inside the grid if corresponding schema ro property is false
         // if (!ord_ro_obj[cell_num]) {
@@ -1079,27 +1222,6 @@
         css(["background-color: #fff"], this);
       });
       return opt;
-    };
-
-    const header_cell_effects = (icon_cell, icon) => {
-      //only do this hover effect if the icon was neutral to begin with
-      let icon_cell_click;
-      icon_cell.addEventListener("mouseover", function () {
-        if (icon.src.includes(conf.icons.neutral)) {
-          icon.setAttribute("src", conf.icons.ascending);
-          icon_cell_click = header_click.get_count();
-        }
-      });
-      icon_cell.addEventListener("mouseout", function () {
-        //only return the img src to neutral.png if the user has not triggered the header cell click event
-        const h = header_click.get_count();
-        if (header_click.get_count() === icon_cell_click) {
-          icon.setAttribute("src", conf.icons.neutral);
-        }
-      });
-      icon_cell.addEventListener("click", function () {
-        header_click.increment();
-      });
     };
 
     const row_events = (row) => {
@@ -1174,17 +1296,6 @@
         }
       }
       return true;
-    };
-
-    const add_img_to_header = (cell, id) => {
-      const img = append_child("img", cell);
-      css(conf.style.header_img, img);
-      img.setAttribute("id", id);
-      img.setAttribute("src", conf.icons.neutral);
-
-      //add extra css to header cells
-      css(conf.style.header_cells_ex, cell);
-      return img;
     };
 
     const conv_to_snakecase = (string) => {
@@ -1263,9 +1374,16 @@
       create_footer();
     };
 
-    const add_headers = (columns) => {
+    const add_headers = (columns, schema) => {
       self.headers_arr = [];
-      for (const column of columns) {
+      for (let i = 0; i < columns.length; i++) {
+        const column = columns[i];
+        const schem = schema[i];
+        self.header_info[i] = {
+          name: schem.name,
+          type: schem.type,
+          ascending: false,
+        };
         const header = column.display;
         self.headers_arr.push(header);
 
@@ -1296,14 +1414,14 @@
       curr_page = new_page;
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
-      highlight_on_search();
+      filter_rows();
     };
 
     this.api = {
       load_grid: function () {
         conf.data_adapter.load(function (data) {
           num_of_pages = Math.ceil(data.rows.length / conf.rtd);
-          add_headers(config.data_adapter.columns);
+          add_headers(config.data_adapter.columns, data.schema);
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
           load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord

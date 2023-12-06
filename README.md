@@ -1,25 +1,31 @@
-# Grid-Plugin
+<div align="center">
 
-A powerful and flexible jQuery grid plugin for displaying and editing tabular data.
+# NimbleGrid
 
-## Table of Contents
+[Demo](https://global-virtual-networks.github.io/Grid-Plugin/) | [Features](#featurs) | [Installation](#installation) 
 
-- [Features](#features)
-- [Demo](#demo)
-- [Installation](#installation)
-- [Components](#components)
+</div>
 
 ## Features
+1. Optimized Encapsulation: Dynamically create icons, render HTML, and apply CSS styles for optimized encapsulation. The plugin seamlessly adapts to various environments without requiring manual adjustments.
+2. Pagination: Effortlessly handle large datasets with built-in pagination functionality.
+3. Column Sorting: Enable column sorting by simply clicking on a header cell, providing users with an intuitive way to organize data.
+4. Flexible Data Connection: Easily connect your data, whether stored internally or externally, through the versatile data adapter.
+5. Overflow Handling: Automatically place ellipses on overflowing cells, allowing users to view the entire content of a cell by hovering over it. This ensures a seamless and user-friendly experience.
 
-- Display tabular data in a flexible grid layout
-- Pagination for handling large datasets
-- Easily tailor the CSS to suit your styling choices
-- Zero external dependencies
-- Connect a dataset using a data adapter
+## Installation
   
-## Demo
+1. Link JavaScript File To Your Project:
 
-For a live demonstration, visit our [Demo Page](https://global-virtual-networks.github.io/Grid-Plugin/).
+   ```<script src="path/to/NimbleGrid.js"></script>```
+
+2. Create an object that instructs NimbleGrid how to get and display your data(View index.html file for object syntax)
+
+3. Initialize your NimbleGrid:
+
+   ```const grid = $("#someId").NimbleGrid(object);```
+   
+4. Render your NimbleGrid on the browser:
 
 ## Installation
 
@@ -27,15 +33,5 @@ For a live demonstration, visit our [Demo Page](https://global-virtual-networks.
 2. Create a data adapter
 3. Customize the row click event listener and CSS according to your preferences
 4. You're all set!
-
-## Components
-
-1. Data adapter is the property that instructs the plugin how to get the grid data. There are two ways to do this(check index.html for the syntax):
-    - Restful API Call
-    - Supplying Local Data
-      
-2. Grid Data Structure. Must be an object that include these several properties properties(Reference grid_data.json in source code for syntax)
-   
-
 
 
