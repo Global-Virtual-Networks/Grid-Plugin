@@ -756,11 +756,9 @@
       }
     };
 
-    const int_to_float = function (int) {
-      if (Number.isInteger(int)) {
-        return parseFloat(int.toFixed(2));
-      }
-      return int;
+    const float = function (arg) {
+      arg = int(arg);
+      return parseFloat(arg.toFixed(2));
     };
 
     const int = function (arg) {
@@ -792,11 +790,8 @@
               y = int(y);
             } else if (column_info.type === "float") {
               //float method includes precautions in case x or y is a whole number
-              x = parseFloat(x);
-              y = parseFloat(y);
-              //add decimals if x or y are integers after parseFloat method
-              x = int_to_float(x);
-              y = int_to_float(y);
+              x = float(x);
+              y = float(y);
             }
             //using a conditional operator to determine whether the rows need to be shifted
             let condition = column_info.ascending ? x > y : x < y;
