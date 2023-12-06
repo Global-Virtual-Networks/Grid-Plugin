@@ -763,6 +763,14 @@
       return int;
     };
 
+    const int = function (arg) {
+      arg = parseInt(arg);
+      if (isNaN(arg)) {
+        return 0;
+      }
+      return parseInt(arg);
+    };
+
     const populate_table = (tabledata_rows) => {
       //sort rows if self.sort_by is not null(this indicates a header cell was clicked on)
       if (self.sort_by !== null) {
@@ -779,9 +787,11 @@
             x = rows[i].cell[self.sort_by];
             y = rows[i + 1].cell[self.sort_by];
             if (column_info.type === "int") {
-              x = parseInt(x);
-              y = parseInt(y);
+              //int method includes precautions in case x or y is NaN(not a number)
+              x = int(x);
+              y = int(y);
             } else if (column_info.type === "float") {
+              //float method includes precautions in case x or y is a whole number
               x = parseFloat(x);
               y = parseFloat(y);
               //add decimals if x or y are integers after parseFloat method
