@@ -7,6 +7,8 @@
 </div>
 
 ## Features
+1. dklj
+2. dsd
 
 1. Optimized Encapsulation: Dynamically create icons, render HTML, and apply CSS styles for optimized encapsulation. The plugin seamlessly adapts to various environments without requiring manual adjustments.
 2. Pagination: Effortlessly handle large datasets with built-in pagination functionality.
