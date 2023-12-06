@@ -1150,10 +1150,7 @@
             cell_text.substring(index + typed_text.length);
         }
 
-        cell.setAttribute(
-          "id",
-          row_num + "_" + conv_to_snakecase(cell_text.toString())
-        );
+        cell.setAttribute("id", conv_to_snakecase(cell_text.toString()));
         td = document.createElement("td");
         //add a click event listener to every cell inside the grid if corresponding schema ro property is false
         // if (!ord_ro_obj[cell_num]) {
