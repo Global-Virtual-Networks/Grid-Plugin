@@ -2,7 +2,7 @@
 
 # NimbleGrid
 
-[Features](#featurs) | [Demo](#demo) | [Installation](#installation) | [API](#api)
+[Features](#featurs) | [Demo](#demo) | [Installation](#installation) 
 
 </div>
 
@@ -152,9 +152,9 @@ Syntax Breakdown:
 3. Initialize your NimbleGrid:
 
    ```const grid = $("#someId").NimbleGrid(object);```
-
-## API
-
-1. Render your NimbleGrid on the browser:
+   
+4. Render your NimbleGrid on the browser:
 
    ```grid.api.load_grid();```
+
+
