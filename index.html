@@ -23,7 +23,7 @@
   </body>
 </html>
 <script type="text/javascript">
-  let restful_api = {
+  let api = {
     rtd: 13,
     data_adapter: {
       columns: [
@@ -552,6 +552,6 @@
       alt_color: ["background-color: lightblue;"],
     },
   };
-  const grid = $("#grid_container").grid_ng(local);
+  const grid = $("#grid_container").grid_ng(api);
   grid.api.load_grid();
 </script>
