@@ -19,7 +19,7 @@ For a live demonstration, click [here](https://global-virtual-networks.github.io
 
 ## Installation
 
-1. Include JavaScript Source:
+1. Link JavaScript File To Your Project:
 
    ```<script src="path/to/NimbleGrid.js"></script>```
 
