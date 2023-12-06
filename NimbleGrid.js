@@ -1,5 +1,5 @@
 (function ($) {
-  $.fn.grid_ng = function (config) {
+  $.fn.NimbleGrid = function (config) {
     const plugin_dom_obj = this[0];
     const conf = {
       //rtd equals rows to display

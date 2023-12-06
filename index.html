@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="grid-plugin.js"></script>
+    <script src="NimbleGrid.js"></script>
     <title>Grid Plugin Demo</title>
   </head>
   <body>
@@ -23,7 +23,7 @@
   </body>
 </html>
 <script type="text/javascript">
-  let api = {
+  let ajax = {
     rtd: 13,
     data_adapter: {
       columns: [
@@ -91,9 +91,40 @@
             console.error("API call failed:", error);
           });
       },
+      schema: [
+        {
+          name: "id",
+          type: "int",
+        },
+        {
+          name: "name",
+          type: "string",
+        },
+        {
+          name: "country_of_origin",
+          type: "string",
+        },
+        {
+          name: "email",
+          type: "string",
+        },
+
+        {
+          name: "favorite_number",
+          type: "float",
+        },
+        {
+          name: "birth_year",
+          type: "datetime",
+        },
+        {
+          name: "portfolio",
+          type: "string",
+        },
+      ],
     },
-    on_row_click: function (row_id) {
-      alert("Clicked on row #" + parseInt(row_id));
+    on_row_click: function (row_num) {
+      alert("Clicked on row #" + parseInt(row_num));
     },
     style: {
       alt_color: ["background-color: lightblue;"],
@@ -545,13 +576,13 @@
         });
       },
     },
-    on_row_click: function (row_id) {
-      alert("Clicked on row #" + parseInt(row_id));
+    on_row_click: function (row_num) {
+      alert("Clicked on row #" + parseInt(row_num));
     },
     style: {
       alt_color: ["background-color: lightblue;"],
     },
   };
-  const grid = $("#grid_container").grid_ng(api);
+  const grid = $("#grid_container").NimbleGrid(local);
   grid.api.load_grid();
 </script>
