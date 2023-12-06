@@ -14,7 +14,7 @@
 5. Overflow Handling: Automatically place ellipses on overflowing cells, allowing users to view the entire content of a cell by hovering over it. This ensures a seamless and user-friendly experience.
 
 ## Installation
-
+  
 1. Link JavaScript File To Your Project:
 
    ```<script src="path/to/NimbleGrid.js"></script>```
@@ -27,6 +27,11 @@
    
 4. Render your NimbleGrid on the browser:
 
-   ```grid.api.load_grid();```
+## Installation
+
+1. Clone or Download the project
+2. Create a data adapter
+3. Customize the row click event listener and CSS according to your preferences
+4. You're all set!
 
 
