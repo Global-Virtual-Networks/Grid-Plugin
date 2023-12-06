@@ -7,11 +7,11 @@
 </div>
 
 ## Features
-- Optimized Encapsulation: Dynamically create icons, render HTML, and apply CSS styles for optimized encapsulation. The plugin seamlessly adapts to various environments without requiring manual adjustments.
-- Pagination: Effortlessly handle large datasets with built-in pagination functionality.
-- Column Sorting: Enable column sorting by simply clicking on a header cell, providing users with an intuitive way to organize data.
-- Flexible Data Connection: Easily connect your data, whether stored internally or externally, through the versatile data adapter.
-- Overflow Handling: Automatically place ellipses on overflowing cells, allowing users to view the entire content of a cell by hovering over it. This ensures a seamless and user-friendly experience.
+1. Optimized Encapsulation: Dynamically create icons, render HTML, and apply CSS styles for optimized encapsulation. The plugin seamlessly adapts to various environments without requiring manual adjustments.
+2. Pagination: Effortlessly handle large datasets with built-in pagination functionality.
+3. Column Sorting: Enable column sorting by simply clicking on a header cell, providing users with an intuitive way to organize data.
+4. Flexible Data Connection: Easily connect your data, whether stored internally or externally, through the versatile data adapter.
+5. Overflow Handling: Automatically place ellipses on overflowing cells, allowing users to view the entire content of a cell by hovering over it. This ensures a seamless and user-friendly experience.
 
 ## Demo
 
