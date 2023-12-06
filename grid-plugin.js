@@ -757,6 +757,13 @@
       }
     };
 
+    const int_to_float = function (int) {
+      if (Number.isInteger(int)) {
+        return parseFloat(int.toFixed(2));
+      }
+      return int;
+    };
+
     const populate_table = (tabledata_rows) => {
       //sort rows if self.sort_by is not null(this indicates a header cell was clicked on)
       if (self.sort_by !== null) {
@@ -772,10 +779,15 @@
             shouldSwitch = false;
             x = rows[i].cell[self.sort_by];
             y = rows[i + 1].cell[self.sort_by];
-            if (column_info.type === "int" || column_info.type === "float") {
-              //parseFloat method returns an integer if there are no decimal points
+            if (column_info.type === "int") {
+              x = parseInt(x);
+              y = parseInt(y);
+            } else if (column_info.type === "float") {
               x = parseFloat(x);
               y = parseFloat(y);
+              //add decimals if x or y are integers after parseFloat method
+              x = int_to_float(x);
+              y = int_to_float(y);
             }
             //using a conditional operator to determine whether the rows need to be shifted
             let condition = column_info.ascending ? x > y : x < y;
