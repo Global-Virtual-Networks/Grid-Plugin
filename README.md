@@ -6,6 +6,10 @@
 
 </div>
 
+## Demo
+
+For a live demonstration, click [here](https://global-virtual-networks.github.io/Grid-Plugin/).
+
 ## Features
 1. Optimized Encapsulation: Dynamically create icons, render HTML, and apply CSS styles for optimized encapsulation. The plugin seamlessly adapts to various environments without requiring manual adjustments.
 2. Pagination: Effortlessly handle large datasets with built-in pagination functionality.
@@ -27,11 +31,5 @@
    
 4. Render your NimbleGrid on the browser:
 
-## Installation
-
-1. Clone or Download the project
-2. Create a data adapter
-3. Customize the row click event listener and CSS according to your preferences
-4. You're all set!
-
+   ```grid.api.load_grid();```
 
