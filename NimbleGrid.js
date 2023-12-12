@@ -780,8 +780,10 @@
         for (const header in self.header_info) {
           self.header_info[header].ascending = false;
         }
-        self.sortedBy_icon.style.visibility = "hidden";
-        self.sortedBy_icon = undefined;
+        if (self.sortedBy_icon) {
+          self.sortedBy_icon.style.visibility = "hidden";
+          self.sortedBy_icon = undefined;
+        }
         self.sort_by = null;
         rows_arr = [];
         pagination_active(1);
