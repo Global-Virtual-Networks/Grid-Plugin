@@ -91,11 +91,6 @@
           "border: 2px solid black;",
         ],
         sddl_opt: ["cursor: pointer;"],
-        search_container: [
-          "display: flex;",
-          "align-items: center;",
-          "margin: 0 10px;",
-        ],
         larger_width_search_container: [],
         search_bar: [
           "border: 2px solid black;",
@@ -104,7 +99,8 @@
           "width: 240px;",
         ],
         larger_width_search_bar: [],
-        search_icon: ["padding: 0 5px;", "margin: 0;", "font-size: 15px;"],
+        label: ["margin: 0;", "font-size: 12px;"],
+        container: ["margin: 0 10px;"],
         larger_width_search_icon: [],
         //css relating to footer
         center_child_elems: [
@@ -444,14 +440,23 @@
         grid_container,
         "header_container"
       );
+      css(conf.style.header_container, header_container);
 
       //make header_container invisible until data comes back from async call
       self.header_container = header_container;
       self.header_container.style.visibility = "hidden";
 
-      css(conf.style.header_container, header_container);
-      self.search_ddl = append_child("select", header_container, "search_ddl");
+      //create default ddl
+      const ddl_container = append_child("div", header_container);
+      css(conf.style.container, ddl_container);
+
+      const ddl_label = append_child("h3", ddl_container);
+      ddl_label.innerHTML = "Column:";
+      css(conf.style.label, ddl_label);
+
+      self.search_ddl = append_child("select", ddl_container, "search_ddl");
       css(conf.style.search_ddl, self.search_ddl);
+
       self.search_ddl.addEventListener("change", function () {
         default_sf = this.value;
         //if there is a search currently in the textbox, need to call highight_on_search function for an accurate response/filter
@@ -469,7 +474,7 @@
         header_container,
         "search_container"
       );
-      css(conf.style.search_container, self.search_container);
+      css(conf.style.container, self.search_container);
 
       self.search_icon = append_child(
         "h3",
@@ -477,7 +482,7 @@
         "search_icon"
       );
       self.search_icon.innerText = "Search:";
-      css(conf.style.search_icon, self.search_icon);
+      css(conf.style.label, self.search_icon);
       // self.search_icon = append_child(
       //   "img",
       //   self.search_container,
