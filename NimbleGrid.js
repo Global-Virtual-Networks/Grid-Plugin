@@ -452,7 +452,7 @@
         default_sf = this.value;
         //if there is a search currently in the textbox, need to call highight_on_search function for an accurate response/filter
         if (search_mode.get()) {
-          filter_rows();
+          self.filter_rows();
         }
       });
 
@@ -493,11 +493,11 @@
         } else {
           search_mode.set(false);
         }
-        filter_rows();
+        self.filter_rows();
       });
     };
 
-    const filter_rows = () => {
+    this.filter_rows = () => {
       conf.data_adapter.load(function (data) {
         if (typeof data !== "undefined") {
           //filter rows based on search bar value
@@ -1246,7 +1246,7 @@
               }
             }
           }
-          filter_rows();
+          self.filter_rows();
         });
         cell.addEventListener("mouseover", function () {
           //hide icons in active headers when a new header is hovered over
@@ -1580,7 +1580,7 @@
       curr_page = new_page;
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
-      filter_rows();
+      self.filter_rows();
     };
 
     this.api = {
