@@ -267,6 +267,174 @@
     let sf_idx;
     let default_sf = "All"; //sf equals search filter
 
+    function Search(grid_container, headers_arr) {
+      var self = this; //have to use 'var' as variable type because it wasn't available in the public methods otherwise
+      this.ddls = [];
+      const container_div = grid_container;
+
+      let raw_data = [];
+      //get a copy of raw data from data adapter
+      conf.data_adapter.load(function (data) {
+        raw_data = data.rows;
+      });
+      let ddl_filtrations = raw_data;
+
+      //create all components of header EXCEPT ddl(s)
+      const header_container = document.createElement("div");
+      header_container.setAttribute("id", "header_container");
+      grid_container.prepend(header_container);
+      css(conf.style.header_container, header_container);
+
+      //make header_container invisible until data comes back from async call
+      header_container.style.visibility = "hidden";
+
+      //create search bar
+      const search_container = append_child(
+        "div",
+        header_container,
+        "search_container"
+      );
+      css(conf.style.label_container, search_container);
+
+      const search_label = append_child("h3", search_container, "search_label");
+      search_label.innerText = "Search:";
+      css(conf.style.header_container_labels, search_label);
+
+      search_bar = append_child("input", search_container, "search_bar");
+      css(conf.style.search_bar, search_bar);
+      //eliminate highlight on focus
+      search_bar.addEventListener("focus", function () {
+        search_bar.style.outline = "none";
+      });
+      search_bar.addEventListener("input", function () {
+        if (this.value.length > 0) {
+          search_mode.set(true);
+        } else {
+          search_mode.set(false);
+        }
+        ddl_filtration(ddl_filtrations);
+      });
+
+      function deepEqual(obj1, obj2) {
+        if (obj1 === obj2) return true;
+
+        if (!(obj1 instanceof Object) || !(obj2 instanceof Object))
+          return false;
+
+        const keys1 = Object.keys(obj1);
+        const keys2 = Object.keys(obj2);
+
+        if (keys1.length !== keys2.length) return false;
+
+        return keys1.every((key) => deepEqual(obj1[key], obj2[key]));
+      }
+
+      const find_matching_elements = function (array1, array2) {
+        let smaller_array, larger_array;
+        let res = [];
+        if (array1.length < array2.length) {
+          smaller_array = array1;
+          larger_array = array2;
+        } else {
+          smaller_array = array2;
+          larger_array = array1;
+        }
+
+        for (const element of smaller_array) {
+          if (
+            larger_array.find((obj) => deepEqual(obj, element)) !== undefined
+          ) {
+            res.push(element);
+          }
+        }
+        return res;
+      };
+
+      const ddl_options = function (ddl, unique_data) {
+        if (!Array.isArray(unique_data)) {
+          unique_data = Object.keys(unique_data);
+        }
+
+        for (const option of unique_data) {
+          const sddl_option = append_child("option", ddl, option + "_option");
+          sddl_option.innerText = option;
+        }
+
+        //add 'all' option to ddl
+        // const all_option = document.createElement("option");
+        // all_option.setAttribute("id", "all_option");
+        // all_option.innerText = "All";
+        // ddl.insertBefore(all_option, ddl[0]);
+        // ddl.selectedIndex = 0;
+      };
+
+      const ddl = function (unique_data, ddl_label) {
+        const ddl_container = append_child("div", header_container);
+        css(conf.style.label_container, ddl_container);
+
+        const label = append_child("h3", ddl_container);
+        css(conf.style.header_container_labels, label);
+        label.innerHTML = ddl_label + ": ";
+        const ddl = append_child("select", ddl_container);
+        css(conf.style.search_ddl, ddl);
+        ddl.addEventListener("change", function () {
+          if ((ddl.value = "All")) {
+          }
+
+          ddl_filtrations = find_matching_elements(
+            ddl_filtrations,
+            unique_data[ddl.value]
+          );
+          ddl_filtration(ddl_filtrations);
+        });
+        ddl_options(ddl, unique_data);
+
+        self.ddls.push(ddl);
+        return ddl;
+      };
+
+      this.ddl = function (header_index, ddl_label) {
+        conf.data_adapter.load(function (data) {
+          let unique_data = { All: raw_data };
+          const rows = data.rows;
+
+          for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const cell = row.cell[header_index];
+
+            // if (!unique_data.includes(cell)) {
+            //   unique_data.push(cell);
+            // }
+
+            if (!unique_data.hasOwnProperty(cell)) {
+              unique_data[cell] = [];
+            }
+            unique_data[cell].push(row);
+          }
+
+          const new_ddl = ddl(unique_data, ddl_label);
+          new_ddl.selectedIndex = 0;
+        });
+      };
+
+      this.header_on = function () {
+        header_container.style.visibility = "visible";
+      };
+
+      this.header_off = function () {
+        header_container.style.visibility = "hidden";
+      };
+
+      //create default ddl
+      let headers_obj = { All: raw_data };
+      for (const header of headers_arr) {
+        headers_obj[header] = raw_data;
+      }
+      const default_ddl = ddl(headers_obj, "Column");
+
+      return this;
+    }
+
     const create_header = () => {
       //create header
       grid_container = append_child("div", plugin_dom_obj, "grid_container");
