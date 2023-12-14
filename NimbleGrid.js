@@ -234,7 +234,7 @@
     };
 
     const self = this;
-    self.sort_by = null;
+    let sort_by = null;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
@@ -434,8 +434,8 @@
       css(conf.style.header_container, header_container);
 
       //make header_container invisible until data comes back from async call
-      self.header_container = header_container;
-      self.header_container.style.visibility = "hidden";
+      header_container = header_container;
+      header_container.style.visibility = "hidden";
 
       //create default ddl
       const ddl_container = append_child("div", header_container);
@@ -445,10 +445,10 @@
       ddl_label.innerHTML = "Column:";
       css(conf.style.label, ddl_label);
 
-      self.search_ddl = append_child("select", ddl_container, "search_ddl");
-      css(conf.style.search_ddl, self.search_ddl);
+      search_ddl = append_child("select", ddl_container, "search_ddl");
+      css(conf.style.search_ddl, search_ddl);
 
-      self.search_ddl.addEventListener("change", function () {
+      search_ddl.addEventListener("change", function () {
         default_sf = this.value;
         //if there is a search currently in the textbox, need to call highight_on_search function for an accurate response/filter
         if (search_mode.get()) {
@@ -456,32 +456,28 @@
         }
       });
 
-      const sddl_option = append_child("option", self.search_ddl, default_sf);
+      const sddl_option = append_child("option", search_ddl, default_sf);
       sddl_option.innerText = default_sf;
 
       //create search bar
-      self.search_container = append_child(
+      search_container = append_child(
         "div",
         header_container,
         "search_container"
       );
-      css(conf.style.container, self.search_container);
+      css(conf.style.container, search_container);
 
-      self.search_icon = append_child(
-        "h3",
-        self.search_container,
-        "search_icon"
-      );
-      self.search_icon.innerText = "Search:";
-      css(conf.style.label, self.search_icon);
-      // self.search_icon = append_child(
+      search_icon = append_child("h3", search_container, "search_icon");
+      search_icon.innerText = "Search:";
+      css(conf.style.label, search_icon);
+      // search_icon = append_child(
       //   "img",
-      //   self.search_container,
+      //   search_container,
       //   "search_icon"
       // );
-      // self.search_icon.setAttribute("src", conf.icons.search);
+      // search_icon.setAttribute("src", conf.icons.search);
 
-      search_bar = append_child("input", self.search_container, "search_bar");
+      search_bar = append_child("input", search_container, "search_bar");
       css(conf.style.search_bar, search_bar);
       //eliminate highlight on focus
       search_bar.addEventListener("focus", function () {
@@ -506,7 +502,7 @@
           let search_matches = [];
           let row;
 
-          sf_idx = self.headers_arr.indexOf(default_sf); //sf equals search filter
+          sf_idx = headers_arr.indexOf(default_sf); //sf equals search filter
 
           for (let i = 0; i < rows.length; i++) {
             row = rows[i];
@@ -571,8 +567,8 @@
         css(conf.style.larger_width_footer_container, footer_container);
         //header container media queries
         css(conf.style.larger_width_search_bar, search_bar);
-        css(conf.style.larger_width_search_container, self.search_container);
-        css(conf.style.larger_width_search_icon, self.search_icon);
+        css(conf.style.larger_width_search_container, search_container);
+        css(conf.style.larger_width_search_icon, search_icon);
         //grid cells media queries
       }
       // uncompress_col_headers(cells); //causing a break in the app, so commenting out for now
@@ -633,8 +629,8 @@
       css(conf.style.larger_width_footer_container, footer_container);
 
       //make footer invisible until data comes back from async call
-      self.footer_container = footer_container;
-      self.footer_container.style.visibility = "hidden";
+      footer_container = footer_container;
+      footer_container.style.visibility = "hidden";
 
       // css(["display: block"], footer_container); //used for mobile responsive design
       add_pager_divs();
@@ -772,15 +768,15 @@
         search_mode.set(false);
         search_bar.value = "";
         default_sf = "All";
-        self.search_ddl.value = "All";
-        for (const header in self.header_info) {
-          self.header_info[header].ascending = false;
+        search_ddl.value = "All";
+        for (const header in header_info) {
+          header_info[header].ascending = false;
         }
         if (self.sortedBy_icon) {
           self.sortedBy_icon.style.visibility = "hidden";
           self.sortedBy_icon = undefined;
         }
-        self.sort_by = null;
+        sort_by = null;
         rows_arr = [];
         pagination_active(1);
       });
@@ -858,7 +854,7 @@
           } else {
             css(conf.style.row_hov_color, grid_container);
             css(["background-color: #fff;"], bott_row_headers);
-            css(["background-color: #fff;"], self.search_icon);
+            css(["background-color: #fff;"], search_icon);
           }
           edit();
         },
@@ -912,8 +908,8 @@
     const header_click = counter();
     const window_size = window_sze();
     const edit_mode = edit_mde();
-    this.headers_arr;
-    this.header_info = {};
+    let headers_arr;
+    header_info = {};
 
     //elem = element
     const css = (property, elem) => {
@@ -936,11 +932,11 @@
     };
 
     const populate_table = (tabledata_rows) => {
-      //sort rows if self.sort_by is not null(this indicates a header cell was clicked on)
-      if (self.sort_by !== null) {
+      //sort rows if sort_by is not null(this indicates a header cell was clicked on)
+      if (sort_by !== null) {
         let switching, i, x, y, shouldSwitch;
         switching = true;
-        const column_info = self.header_info[self.sort_by];
+        const column_info = header_info[sort_by];
         const rows = tabledata_rows;
 
         while (switching) {
@@ -948,8 +944,8 @@
 
           for (i = 0; i < rows.length - 1; i++) {
             shouldSwitch = false;
-            x = rows[i].cell[self.sort_by];
-            y = rows[i + 1].cell[self.sort_by];
+            x = rows[i].cell[sort_by];
+            y = rows[i + 1].cell[sort_by];
             if (column_info.type === "int") {
               //int method includes precautions in case x or y is NaN(not a number)
               x = int(x);
@@ -982,12 +978,17 @@
       }
 
       background_count.set_count(1);
-      //break the incoming json down into its seperate parts
       tabledata_len = tabledata_rows.length;
+      //in case current page doesn't exist after filters are applied
+      if (first_entry_index > tabledata_len) {
+        pagination_active(1);
+      }
+      //slice data to dynamically create rows in current page
       tabledata_rows = tabledata_rows.slice(
         first_entry_index,
         first_entry_index + conf.rtd
       );
+
       tabledata_rows.forEach((row, idx) => {
         const row_dobj = add_row(row);
         row_dobj.addEventListener("click", function (event) {
@@ -1208,7 +1209,7 @@
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
         td = document.createElement("th");
-        cell.setAttribute("id", self.header_info[cell_num].name);
+        cell.setAttribute("id", header_info[cell_num].name);
         css(["cursor: pointer;", "user-select: none;"], cell);
 
         const ascending_icon = document.createElement("img");
@@ -1226,8 +1227,8 @@
           for (let i = 0; i < header_row.length; i++) {
             const header_cell = header_row[i].children[0].children[0];
             if (this === header_cell) {
-              self.sort_by = i;
-              const sort_ord_asc = self.header_info[i].ascending;
+              sort_by = i;
+              const sort_ord_asc = header_info[i].ascending;
               if (sort_ord_asc) {
                 ascending_icon.style.visibility = "hidden";
                 descending_icon.style.visibility = "visible";
@@ -1237,9 +1238,9 @@
                 descending_icon.style.visibility = "hidden";
                 self.sortedBy_icon = ascending_icon;
               }
-              self.header_info[i].ascending = !self.header_info[i].ascending;
+              header_info[i].ascending = !header_info[i].ascending;
             } else {
-              self.header_info[i].ascending = false;
+              header_info[i].ascending = false;
               //hide icons in other headers when a new header is clicked
               for (const icon of header_cell.children) {
                 icon.style.visibility = "hidden";
@@ -1277,20 +1278,20 @@
           for (let i = 0; i < header_row.length; i++) {
             const header_cell = header_row[i].children[0].children[0];
             if (this === header_cell) {
-              if (self.sort_by !== i) {
+              if (sort_by !== i) {
                 //hide icon if its corresponding header cell has not been clicked
                 ascending_icon.style.visibility = "hidden";
                 descending_icon.style.visibility === "hidden";
               } else {
                 //if the grid is sorted by the header the cursor just stopped hovering over AND there's a mismatch between the visible icon and the sort order
                 if (
-                  self.header_info[i].ascending &&
+                  header_info[i].ascending &&
                   descending_icon.style.visibility === "visible"
                 ) {
                   descending_icon.style.visibility = "hidden";
                   ascending_icon.style.visibility = "visible";
                 } else if (
-                  !self.header_info[i].ascending &&
+                  !header_info[i].ascending &&
                   ascending_icon.style.visibility === "visible"
                 ) {
                   descending_icon.style.visibility = "visible";
@@ -1541,20 +1542,20 @@
     };
 
     const add_headers = (columns, schema) => {
-      self.headers_arr = [];
+      headers_arr = [];
       for (let i = 0; i < columns.length; i++) {
         const column = columns[i];
         const schem = schema[i];
-        self.header_info[i] = {
+        header_info[i] = {
           name: schem.name,
           type: schem.type,
           ascending: false,
         };
         const header = column.display;
-        self.headers_arr.push(header);
+        headers_arr.push(header);
 
         //add header to search_ddl
-        const sddl_opt = append_child("option", self.search_ddl, header);
+        const sddl_opt = append_child("option", search_ddl, header);
         sddl_opt.innerText = header;
       }
 
@@ -1572,8 +1573,8 @@
       //   }
       // }
 
-      add_row(self.headers_arr, true);
-      tot_num_cols = self.headers_arr.length;
+      add_row(headers_arr, true);
+      tot_num_cols = headers_arr.length;
     };
 
     const pagination_active = (new_page) => {
@@ -1591,8 +1592,8 @@
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
           load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord
-          self.header_container.style.visibility = "visible";
-          self.footer_container.style.visibility = "visible";
+          header_container.style.visibility = "visible";
+          footer_container.style.visibility = "visible";
         });
         pag_tb.addEventListener("keydown", function (event) {
           if (event.key === "Enter") {
