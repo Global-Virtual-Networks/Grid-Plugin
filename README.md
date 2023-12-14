@@ -24,7 +24,7 @@ For a live demonstration, click [here](https://global-virtual-networks.github.io
 
    `<script src="path/to/NimbleGrid.js"></script>`
 
-2. Create an object that instructs NimbleGrid how to get and display your data(View index.html file for object syntax)
+2. Create an object that communicates to NimbleGrid the columns to display, how to get the data, and the variable types of each column(View index.html file for object syntax)
 
 3. Initialize your NimbleGrid:
 
