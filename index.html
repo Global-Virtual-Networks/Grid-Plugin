@@ -24,8 +24,11 @@
 </html>
 <script type="text/javascript">
   let ajax = {
+    //rtd equals rows to display
     rtd: 13,
+    //data_adapter property communicates to NimbleGrid the columns to display, how to get the data, and the variable types inside each row
     data_adapter: {
+      //columns to display
       columns: [
         {
           display: "Id",
@@ -70,6 +73,7 @@
           align: "left",
         },
       ],
+      //how to get the data(ajax call to a local file over VSCode LiveServer extension is used below)
       load: function (callback) {
         // Define the URL of the file you want to fetch
         var url = "dummy_dataset.json";
@@ -91,6 +95,7 @@
             console.error("API call failed:", error);
           });
       },
+      //column variable types
       schema: [
         {
           name: "id",
@@ -123,9 +128,11 @@
         },
       ],
     },
+    //(Optional)on_row_click returns the row number
     on_row_click: function (row_num) {
       alert("Clicked on row #" + parseInt(row_num));
     },
+    //(Optional)modify default styles this way
     style: {
       alt_color: ["background-color: lightblue;"],
     },
