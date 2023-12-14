@@ -15,7 +15,7 @@
         width: auto;
         max-width: 720px;
         height: auto;
-        max-height: 510px;
+        max-height: 1000px;
         margin: 40px 20px;
         border: 2px solid black;
       "
@@ -24,8 +24,11 @@
 </html>
 <script type="text/javascript">
   let ajax = {
-    rtd: 13,
+    //rtd equals rows to display
+    rtd: 25,
+    //data_adapter property communicates to NimbleGrid the columns to display, how to get the data, and the variable types of each column
     data_adapter: {
+      //columns to display
       columns: [
         {
           display: "Id",
@@ -40,21 +43,21 @@
           align: "left",
         },
         {
-          display: "Country of Origin",
-          name: "country_of_origin",
-          width: 15,
+          display: "Email",
+          name: "email",
+          width: 18,
           align: "left",
         },
         {
-          display: "Email",
-          name: "email",
-          width: 15,
-          align: "left",
+          display: "Country of Origin",
+          name: "country_of_origin",
+          width: 12,
+          align: "center",
         },
         {
           display: "Fav Num",
           name: "favorite_number",
-          width: 8,
+          width: 12,
           align: "center",
         },
         {
@@ -70,9 +73,10 @@
           align: "left",
         },
       ],
+      //how to get the data(ajax call to a local file over VSCode LiveServer extension is used below)
       load: function (callback) {
         // Define the URL of the file you want to fetch
-        var url = "grid_data.json";
+        var url = "dummy_dataset.json";
 
         // Make the API call using the fetch API
         fetch(url)
@@ -91,6 +95,7 @@
             console.error("API call failed:", error);
           });
       },
+      //column variable types
       schema: [
         {
           name: "id",
@@ -123,466 +128,15 @@
         },
       ],
     },
+    //(Optional)on_row_click returns the row number
     on_row_click: function (row_num) {
       alert("Clicked on row #" + parseInt(row_num));
     },
+    //(Optional)modify default styles this way
     style: {
       alt_color: ["background-color: lightblue;"],
     },
   };
-  let local = {
-    rtd: 13,
-    data_adapter: {
-      columns: [
-        {
-          display: "Id",
-          name: "id",
-          width: 5,
-          align: "center",
-        },
-        {
-          display: "Name",
-          name: "name",
-          width: 12,
-          align: "left",
-        },
-        {
-          display: "Country of Origin",
-          name: "country_of_origin",
-          width: 15,
-          align: "left",
-        },
-        {
-          display: "Email",
-          name: "email",
-          width: 15,
-          align: "left",
-        },
-        {
-          display: "Fav Num",
-          name: "favorite_number",
-          width: 8,
-          align: "center",
-        },
-        {
-          display: "BY",
-          name: "birth_year",
-          width: 8,
-          align: "center",
-        },
-        {
-          display: "Portfolio",
-          name: "portfolio",
-          width: 30,
-          align: "left",
-        },
-      ],
-      load: function (callback) {
-        callback({
-          count: 30,
-          rows: [
-            {
-              id: "0",
-              cell: [
-                "1",
-                "Mariah Lee",
-                "Sao Tome and Principe",
-                "alexis72@example.com",
-                "85.11",
-                "2011-01-08",
-                "http://vasquez.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "2",
-                "Brianna Nguyen",
-                "",
-                "mgregory@example.net",
-                "22.57",
-                "2006-12-07",
-                "http://wright.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "3",
-                "James Bryant",
-                "Guatemala",
-                "",
-                "74.32",
-                "1970-05-04",
-                "https://www.soto.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "4",
-                "Joanna Blevins",
-                "Latvia",
-                "jeffreyhill@example.com",
-                "26.44",
-                "2021-12-03",
-                "http://www.dawson.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "5",
-                "Clinton Anderson",
-                "",
-                "mary34@example.net",
-                "",
-                "1975-04-04",
-                "https://bennett.org/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "6",
-                "Samuel Castillo",
-                "South Africa",
-                "patrick31@example.org",
-                "97.97",
-                "1974-04-07",
-                "",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "7",
-                "Steven Wallace",
-                "Brazil",
-                "",
-                "62.08",
-                "2019-07-01",
-                "http://www.duncan.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "8",
-                "Rachel Haney",
-                "Monaco",
-                "rlane@example.org",
-                "78.64",
-                "2021-02-17",
-                "http://www.morgan.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "9",
-                "Valerie Williams",
-                "Togo",
-                "tflores@example.com",
-                "5.14",
-                "",
-                "https://lambert-jones.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "10",
-                "Bruce Mckee",
-                "Antarctica (the territory South of 60 deg S)",
-                "robinsanford@example.org",
-                "",
-                "2020-06-26",
-                "https://russell.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "11",
-                "Jason Kirby",
-                "Australia",
-                "gina59@example.org",
-                "57.23",
-                "2007-09-03",
-                "http://www.reynolds-murphy.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "12",
-                "Michelle Carroll",
-                "Israel",
-                "heatherroberts@example.org",
-                "24.4",
-                "1972-11-12",
-                "",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "13",
-                "Allen Moran",
-                "Vietnam",
-                "mvasquez@example.com",
-                "59.3",
-                "1998-07-06",
-                "https://dean-petty.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "14",
-                "Richard White",
-                "Pitcairn Islands",
-                "edgar22@example.net",
-                "82.19",
-                "2016-01-29",
-                "http://gilmore-baldwin.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "15",
-                "Brian Garcia",
-                "Cape Verde",
-                "dcooper@example.com",
-                "9.38",
-                "1999-08-21",
-                "",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "16",
-                "Allison Lozano",
-                "",
-                "barbara05@example.net",
-                "3",
-                "2020-05-25",
-                "http://www.wilson.org/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "17",
-                "Linda Collins",
-                "Belize",
-                "christopherschmitt@example.com",
-                "38.58",
-                "1999-12-02",
-                "https://butler-rodriguez.info/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "18",
-                "Linda Randall",
-                "Spain",
-                "zguzman@example.net",
-                "52.54",
-                "2000-08-08",
-                "http://www.thomas.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "19",
-                "Gerald Brooks",
-                "Palau",
-                "turnerryan@example.net",
-                "79.7",
-                "1970-06-25",
-                "https://torres-lopez.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "20",
-                "Marc Bray",
-                "Barbados",
-                "devin98@example.net",
-                "37.76",
-                "1982-09-11",
-                "http://hood-dunlap.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "21",
-                "David Mckee",
-                "Namibia",
-                "marilyn30@example.com",
-                "94.18",
-                "2004-08-11",
-                "https://www.roberts.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "22",
-                "Darren Carter",
-                "Vanuatu",
-                "campbellkristina@example.net",
-                "71.02",
-                "1978-11-28",
-                "",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "23",
-                "Alexander Fleming",
-                "Spain",
-                "dlopez@example.com",
-                "48.5",
-                "1995-09-25",
-                "https://www.branch-warren.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "24",
-                "Jessica Porter PhD",
-                "Myanmar",
-                "flee@example.net",
-                "46",
-                "1973-11-10",
-                "http://www.martinez.org/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "25",
-                "James Lucero",
-                "Bermuda",
-                "cherylbell@example.net",
-                "82.97",
-                "2014-05-05",
-                "http://santos-sanders.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "26",
-                "Raymond Morgan",
-                "Canada",
-                "ubrowning@example.org",
-                "77.07",
-                "1980-06-04",
-                "https://rodriguez.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "27",
-                "Jessica Bailey",
-                "Gibraltar",
-                "webertiffany@example.org",
-                "93",
-                "1987-12-03",
-                "https://turner.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "28",
-                "Andrew Fischer",
-                "Sweden",
-                "phillipsjenna@example.net",
-                "87.44",
-                "2022-06-10",
-                "http://hooper.com/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "29",
-                "Jack Ferguson",
-                "Antigua and Barbuda",
-                "michael87@example.org",
-                "24.21",
-                "",
-                "http://smith.biz/",
-              ],
-            },
-            {
-              id: "0",
-              cell: [
-                "30",
-                "Katrina Colon",
-                "Myanmar",
-                "wwilliams@example.org",
-                "40.22",
-                "1980-03-06",
-                "https://www.burke-ortega.com/",
-              ],
-            },
-          ],
-          schema: [
-            {
-              name: "id",
-              type: "int",
-            },
-            {
-              name: "name",
-              type: "string",
-            },
-            {
-              name: "country_of_origin",
-              type: "string",
-            },
-            {
-              name: "email",
-              type: "string",
-            },
-
-            {
-              name: "favorite_number",
-              type: "float",
-            },
-            {
-              name: "birth_year",
-              type: "datetime",
-            },
-            {
-              name: "portfolio",
-              type: "string",
-            },
-          ],
-        });
-      },
-    },
-    on_row_click: function (row_num) {
-      alert("Clicked on row #" + parseInt(row_num));
-    },
-    style: {
-      alt_color: ["background-color: lightblue;"],
-    },
-  };
-  const grid = $("#grid_container").NimbleGrid(local);
+  const grid = $("#grid_container").NimbleGrid(ajax);
   grid.api.load_grid();
 </script>
