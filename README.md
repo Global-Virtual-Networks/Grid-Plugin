@@ -2,34 +2,34 @@
 
 # NimbleGrid
 
-[Demo](https://global-virtual-networks.github.io/Grid-Plugin/) | [Features](#featurs) | [Installation](#installation) 
+[Demo](https://global-virtual-networks.github.io/NimbleGrid/) | [Features](#features) | [Installation](#installation)
 
 </div>
 
 ## Demo
 
-For a live demonstration, click [here](https://global-virtual-networks.github.io/Grid-Plugin/).
+For a live demonstration, click [here](https://global-virtual-networks.github.io/NimbleGrid/).
 
 ## Features
-1. Optimized Encapsulation: Dynamically create icons, render HTML, and apply CSS styles for optimized encapsulation. The plugin seamlessly adapts to various environments without requiring manual adjustments.
-2. Pagination: Effortlessly handle large datasets with built-in pagination functionality.
-3. Column Sorting: Enable column sorting by simply clicking on a header cell, providing users with an intuitive way to organize data.
+
+1. Encapsulation: The plugin is containerized, encompassing dynamic icon creation, HTML rendering, and application of CSS styles. This ensures that NimbleGrid seamlessly adjusts to diverse environments without the need for manual adjustments.
+2. Pagination: Efficiently manage extensive datasets through integrated pagination features.
+3. Column Sorting: The capability to organize data is facilitated through client-side handling, empowering users with an instinctive method to arrange information.
 4. Flexible Data Connection: Easily connect your data, whether stored internally or externally, through the versatile data adapter.
-5. Overflow Handling: Automatically place ellipses on overflowing cells, allowing users to view the entire content of a cell by hovering over it. This ensures a seamless and user-friendly experience.
+5. Overflow Handling: Ellipses are automatically placed on overflowing cells, allowing users to view the entire content of a cell by hovering over it. This ensures a seamless and user-friendly experience.
 
 ## Installation
-  
+
 1. Link JavaScript File To Your Project:
 
-   ```<script src="path/to/NimbleGrid.js"></script>```
+   `<script src="path/to/NimbleGrid.js"></script>`
 
 2. Create an object that instructs NimbleGrid how to get and display your data(View index.html file for object syntax)
 
 3. Initialize your NimbleGrid:
 
-   ```const grid = $("#someId").NimbleGrid(object);```
-   
+   `const grid = $("#someId").NimbleGrid(object);`
+
 4. Render your NimbleGrid on the browser:
 
-   ```grid.api.load_grid();```
-
+   `grid.api.load_grid();`
