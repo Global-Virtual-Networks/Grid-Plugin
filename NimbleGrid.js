@@ -766,21 +766,49 @@
       reset_butt.innerText = "Reset";
       reset_butt.addEventListener("click", function () {
         search_mode.set(false);
-        search_bar.value = "";
         default_sf = "All";
-        search_ddl.value = "All";
+
+        var checkboxes = header_container.querySelectorAll(
+          'input[type="checkbox"]'
+        );
+        // Uncheck all checkboxes except the first one
+        checkboxes.forEach(function (checkbox, index) {
+          if (index !== 0) {
+            checkbox.checked = false;
+          } else {
+            checkbox.checked = true;
+          }
+        });
+
+        //set all ddls in header_container to 'All' option
+        const ddls = header_container.querySelectorAll("select");
+        for (const ddl of ddls) {
+          ddl.selectedIndex = 0;
+        }
+        //trigger change event listener for one ddl
+        const changeEvent = new Event("change", { bubbles: true });
+        ddls[0].dispatchEvent(changeEvent);
+
+        //set textbox in header_container to blank value
+        const textboxs = header_container.querySelectorAll("input");
+        for (const tb of textboxs) {
+          tb.value = "";
+        }
+        //trigger input event listener for one textbox
+        const inputEvent = new Event("input", { bubbles: true });
+        textboxs[0].dispatchEvent(inputEvent);
+
         for (const header in header_info) {
           header_info[header].ascending = false;
         }
-        if (self.sortedBy_icon) {
-          self.sortedBy_icon.style.visibility = "hidden";
-          self.sortedBy_icon = undefined;
+        if (sortedBy_icon) {
+          sortedBy_icon.style.visibility = "hidden";
+          sortedBy_icon = undefined;
         }
         sort_by = null;
         rows_arr = [];
         pagination_active(1);
-      });
-      /*           export_butt = append_child("button", container, "export_butt");
+      }); /*           export_butt = append_child("button", container, "export_butt");
                         export_butt.innerText = "Export";*/
     };
 
@@ -908,6 +936,7 @@
     const header_click = counter();
     const window_size = window_sze();
     const edit_mode = edit_mde();
+    let sortedBy_icon;
     let headers_arr;
     header_info = {};
 
@@ -1232,11 +1261,11 @@
               if (sort_ord_asc) {
                 ascending_icon.style.visibility = "hidden";
                 descending_icon.style.visibility = "visible";
-                self.sortedBy_icon = descending_icon;
+                sortedBy_icon = descending_icon;
               } else {
                 ascending_icon.style.visibility = "visible";
                 descending_icon.style.visibility = "hidden";
-                self.sortedBy_icon = ascending_icon;
+                sortedBy_icon = ascending_icon;
               }
               header_info[i].ascending = !header_info[i].ascending;
             } else {
@@ -1251,16 +1280,15 @@
         });
         cell.addEventListener("mouseover", function () {
           //hide icons in active headers when a new header is hovered over
-          self.sortedBy_icon;
           const header_row = table.rows[0].cells;
           for (let i = 0; i < header_row.length; i++) {
             const header_cell = header_row[i].children[0].children[0];
             for (const icon of header_cell.children) {
               if (icon.style.visibility === "visible") {
-                self.sortedBy_icon = icon;
+                sortedBy_icon = icon;
               }
               //if the cell the cursor is hovering over does NOT contain the currently visible icon
-              if (!cell.contains(self.sortedBy_icon)) {
+              if (!cell.contains(sortedBy_icon)) {
                 icon.style.visibility = "hidden";
               }
             }
@@ -1300,8 +1328,8 @@
               }
             }
           }
-          if (typeof self.sortedBy_icon !== "undefined") {
-            self.sortedBy_icon.style.visibility = "visible";
+          if (typeof sortedBy_icon !== "undefined") {
+            sortedBy_icon.style.visibility = "visible";
           }
         });
       } else {
