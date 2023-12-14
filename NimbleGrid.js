@@ -983,6 +983,9 @@
               //float method includes precautions in case x or y is a whole number
               x = float(x);
               y = float(y);
+            } else {
+              x = x.toLowerCase();
+              y = y.toLowerCase();
             }
             //using a conditional operator to determine whether the rows need to be shifted
             let condition = column_info.ascending ? x > y : x < y;
