@@ -938,7 +938,7 @@
     const edit_mode = edit_mde();
     let sortedBy_icon;
     let headers_arr;
-    header_info = {};
+    let header_info = {};
 
     //elem = element
     const css = (property, elem) => {
@@ -1026,7 +1026,7 @@
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
-              conf.on_row_click(parseInt(this.id));
+              conf.on_row_click(parseInt(this.id) - 1);
             }
           }
         });
