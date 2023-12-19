@@ -1215,7 +1215,12 @@
         td.style.textAlign = cols_obj[i].align; //apply align from corresponding column object
         tr.appendChild(td);
       }
-      tr.setAttribute("id", table.rows.length + (curr_page - 1) * conf.rtd); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
+      if (!headers_arr) {
+        tr.setAttribute(
+          "id",
+          table.rows.length + (curr_page - 1) * conf.rtd - 1
+        ); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
+      }
       table.appendChild(tr);
       set_row_background_color(tr);
       row_events(tr);
