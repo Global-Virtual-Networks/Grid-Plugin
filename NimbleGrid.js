@@ -497,7 +497,10 @@
       conf.data_adapter.load(function (data) {
         if (typeof data !== "undefined") {
             if (!table.querySelector("th")) {
+                //here if a null dataset came back when first call on NimbleGrid function occurred
                 add_headers(conf.data_adapter.columns, data.schema);
+                header_container.style.visibility = "visible";
+                footer_container.style.visibility = "visible";
             }
 
           //filter rows based on search bar value
