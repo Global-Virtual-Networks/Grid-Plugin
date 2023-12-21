@@ -496,6 +496,10 @@
     this.filter_rows = () => {
       conf.data_adapter.load(function (data) {
         if (typeof data !== "undefined") {
+            if (!table.querySelector("th")) {
+                add_headers(conf.data_adapter.columns, data.schema);
+            }
+
           //filter rows based on search bar value
           const typed_text = search_bar.value.toLowerCase();
           const rows = data.rows;
@@ -1026,7 +1030,7 @@
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
-              conf.on_row_click(parseInt(this.id) - 1);
+              conf.on_row_click(parseInt(this.id));
             }
           }
         });
