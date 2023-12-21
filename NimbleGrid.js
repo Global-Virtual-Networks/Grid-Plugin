@@ -1232,7 +1232,12 @@
       set_row_background_color(tr);
       row_events(tr);
       return tr;
-    };
+      };
+
+      function containsHTML(str) {
+          var htmlRegex = /<\/?[a-z][\s\S]*>/i;
+          return htmlRegex.test(str);
+      }
 
     const create_cell = (
       cell_num,
@@ -1248,7 +1253,14 @@
         css(conf.style.larger_width_cell, cell);
       }
       const row_num = rows_arr.length - 1;
-      cell.innerText = cell_text;
+
+        if (containsHTML(cell_text)) {
+            cell.innerHTML = cell_text;
+        }
+        else {
+            cell.innerText = cell_text;
+        }
+
       let td;
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
