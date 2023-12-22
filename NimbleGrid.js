@@ -1239,6 +1239,12 @@
           return htmlRegex.test(str);
       }
 
+      function hasNonBreakingSpaces(inputString) {
+          // Use a regular expression to test for the presence of &nbsp;
+          var nbspRegex = /&nbsp;/;
+          return nbspRegex.test(inputString);
+      }
+
     const create_cell = (
       cell_num,
       cell_text,
@@ -1253,14 +1259,7 @@
         css(conf.style.larger_width_cell, cell);
       }
       const row_num = rows_arr.length - 1;
-
-        if (containsHTML(cell_text)) {
-            cell.innerHTML = cell_text;
-        }
-        else {
-            cell.innerText = cell_text;
-        }
-
+      cell.innerHTML = cell_text;
       let td;
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
