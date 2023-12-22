@@ -968,18 +968,14 @@
         };
 
         function extractTime(str) {
-            // Regular expression to match "HH:MM" or "H:M" format
-            const timeRegex = /^(\d{1,2}):(\d{1,2})$/;
+            // Regular expression to match "HH:MM", "H:M", "HH:MM:SS", or "H:M:S" format
+            const timeRegex = /^(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?$/;
 
             // Check if the input string matches the time format
             const match = str.match(timeRegex);
 
             if (match) {
-                // Extract hours and minutes, remove leading zeros, and concatenate
-                const hours = parseInt(match[1], 10);
-                const minutes = parseInt(match[2], 10);
-                const timeInt = hours * 100 + minutes;
-                return timeInt;
+                return parseInt(match[0].replace(/:/g, ''))
             } else {
                 // Return null or another meaningful value for invalid input
                 return null;
@@ -1019,9 +1015,6 @@
                             if (x_time && y_time) {
                                 x = x_time;
                                 y = y_time;
-                            }
-                            if (x == "6:05" || y == "6:05") {
-                                var sdf = 2;
                             }
                         }
                         //using a conditional operator to determine whether the rows need to be shifted
