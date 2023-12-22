@@ -967,12 +967,6 @@
       return parseInt(arg);
       };
 
-      function excludeHtml(inputString) {
-          // Use a regular expression to remove HTML tags
-          var withoutHtml = inputString.replace(/<\/?[^>]+(>|$)/g, "");
-          return withoutHtml.toLowerCase();
-      }
-
     const populate_table = (tabledata_rows) => {
       //sort rows if sort_by is not null(this indicates a header cell was clicked on)
       if (sort_by !== null) {
@@ -997,8 +991,9 @@
               x = float(x);
               y = float(y);
             } else {
-              x = excludeHtml(x);
-              y = excludeHtml(y);
+              // Use a regular expression to remove HTML tags
+              x = x.replace(/<\/?[^>]+(>|$)/g, "").toLowerCase();
+              y = y.replace(/<\/?[^>]+(>|$)/g, "").toLowerCase();
             }
             //using a conditional operator to determine whether the rows need to be shifted
             let condition = column_info.ascending ? x > y : x < y;
@@ -1239,17 +1234,6 @@
       row_events(tr);
       return tr;
       };
-
-      function containsHTML(str) {
-          var htmlRegex = /<\/?[a-z][\s\S]*>/i;
-          return htmlRegex.test(str);
-      }
-
-      function hasNonBreakingSpaces(inputString) {
-          // Use a regular expression to test for the presence of &nbsp;
-          var nbspRegex = /&nbsp;/;
-          return nbspRegex.test(inputString);
-      }
 
     const create_cell = (
       cell_num,
