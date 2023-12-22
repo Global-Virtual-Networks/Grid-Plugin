@@ -793,8 +793,10 @@
                     ddl.selectedIndex = 0;
                 }
                 //trigger change event listener for one ddl
-                const changeEvent = new Event("change", { bubbles: true });
-                ddls[0].dispatchEvent(changeEvent);
+                const changeEvent = new Event("change", { bubbles: true }); 
+                if (ddls.length > 0) {
+                    ddls[0].dispatchEvent(changeEvent);
+                }
 
                 //set textbox in header_container to blank value
                 const textboxs = header_container.querySelectorAll("input");
@@ -803,7 +805,9 @@
                 }
                 //trigger input event listener for one textbox
                 const inputEvent = new Event("input", { bubbles: true });
-                textboxs[0].dispatchEvent(inputEvent);
+                if (textboxs.length > 0) {
+                    textboxs[0].dispatchEvent(inputEvent);
+                }
 
                 for (const header in header_info) {
                     header_info[header].ascending = false;
