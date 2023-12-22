@@ -965,7 +965,13 @@
         return 0;
       }
       return parseInt(arg);
-    };
+      };
+
+      function excludeHtml(inputString) {
+          // Use a regular expression to remove HTML tags
+          var withoutHtml = inputString.replace(/<\/?[^>]+(>|$)/g, "");
+          return withoutHtml.toLowerCase();
+      }
 
     const populate_table = (tabledata_rows) => {
       //sort rows if sort_by is not null(this indicates a header cell was clicked on)
@@ -991,8 +997,8 @@
               x = float(x);
               y = float(y);
             } else {
-              x = x.toLowerCase();
-              y = y.toLowerCase();
+              x = excludeHtml(x);
+              y = excludeHtml(y);
             }
             //using a conditional operator to determine whether the rows need to be shifted
             let condition = column_info.ascending ? x > y : x < y;
