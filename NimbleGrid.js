@@ -1255,10 +1255,10 @@
                     "id",
                     table.rows.length + (curr_page - 1) * conf.rtd - 1
                 ); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
+                row_events(tr);
             }
             table.appendChild(tr);
             set_row_background_color(tr);
-            row_events(tr);
             return tr;
         };
 
