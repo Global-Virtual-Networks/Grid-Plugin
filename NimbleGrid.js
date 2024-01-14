@@ -40,8 +40,8 @@
                     "width: 100%;",
                 ],
                 cell: [
-                    "padding: 5px 0;",
-                    "font-size: 10px;",
+                    "padding: 3.5px 0;",
+                    "font-size: 12px;",
                     "overflow: hidden;",
                     "white-space: nowrap;",
                     "text-overflow: ellipsis;",
