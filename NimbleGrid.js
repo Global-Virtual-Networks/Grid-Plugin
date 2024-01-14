@@ -22,7 +22,7 @@
                 //css relating to table
                 row_color: ["background-color: #ffffff"],
                 alt_color: ["background-color: #dddddd"],
-                row_hov_color: ["background-color: #679CFB"],
+                row_hov_color: ["background-color: #c7dafe"],
                 ultimate_parent_container: [
                     "display: flex;",
                     "justify-content: center;",
