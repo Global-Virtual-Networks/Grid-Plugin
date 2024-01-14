@@ -83,7 +83,8 @@
                     "display: flex;",
                     "align-items: center;",
                     "justify-content: right;",
-                    "margin: 8px 0;",
+                    "padding: 8px 0;",
+                    "background-color: #ddd"
                 ],
                 search_ddl: ["cursor: pointer;", "border: 2px solid black;"],
                 sddl_opt: ["cursor: pointer;"],
