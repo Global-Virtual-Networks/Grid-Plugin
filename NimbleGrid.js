@@ -539,7 +539,7 @@
             }
           }
           num_of_pages = Math.ceil(search_matches.length / conf.rtd);
-          populate_table(search_matches);
+          populate_tble(search_matches);
         }
       });
     };
