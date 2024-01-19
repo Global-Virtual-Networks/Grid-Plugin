@@ -1062,7 +1062,15 @@
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
-              conf.on_row_click.call(this, { json: "whaddup" });
+              let json = {};
+              const row = this.cells;
+              for (let i = 0; i < row.length; i++) {
+                const key = conv_to_snakecase(headers_arr[i]).toLowerCase();
+                let value = row[i].textContent;
+                //if (parseFloat(value)) value = parseFloat(value);
+                json[key] = value;
+              }
+              conf.on_row_click.call(this, json);
             }
           }
         });
