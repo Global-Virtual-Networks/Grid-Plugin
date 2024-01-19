@@ -1062,7 +1062,7 @@
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
-              conf.on_row_click.call(this, { json: "whaddup" });
+              conf.on_row_click(parseInt(this.id));
             }
           }
         });
