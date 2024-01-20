@@ -1256,10 +1256,9 @@
         tr.appendChild(td);
       }
       if (!headers_arr) {
-        tr.setAttribute(
-          "id",
-          table.rows.length + (curr_page - 1) * conf.rtd - 1
-        ); //tr id is the row number, includes quite a bit calculation because it takes pagination into account
+        const id = table.rows.length + (curr_page - 1) * conf.rtd - 1;
+        tr.setAttribute("id", id); //tr id is the row number, includes quite a bit of calculation because it takes pagination into account
+        tr.__row_nbr = id;
         row_events(tr);
       }
       table.appendChild(tr);
