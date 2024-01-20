@@ -1262,7 +1262,6 @@
         row_events(tr);
       }
       table.appendChild(tr);
-      set_row_background_color(tr);
       return tr;
     };
 
