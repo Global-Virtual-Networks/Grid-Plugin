@@ -539,7 +539,7 @@
             }
           }
           num_of_pages = Math.ceil(search_matches.length / conf.rtd);
-          populate_tble(search_matches);
+          populate_table(search_matches);
         }
       });
     };
@@ -988,57 +988,6 @@
     }
 
     const populate_table = (tabledata_rows) => {
-      //sort rows if sort_by is not null(this indicates a header cell was clicked on)
-      if (sort_by !== null) {
-        let switching, i, x, y, shouldSwitch;
-        switching = true;
-        const column_info = header_info[sort_by];
-        const rows = tabledata_rows;
-
-        while (switching) {
-          switching = false;
-
-          for (i = 0; i < rows.length - 1; i++) {
-            shouldSwitch = false;
-            x = rows[i].cell[sort_by];
-            y = rows[i + 1].cell[sort_by];
-            if (column_info.type === "int") {
-              //int method includes precautions in case x or y is NaN(not a number)
-              x = int(x);
-              y = int(y);
-            } else if (column_info.type === "float") {
-              //float method includes precautions in case x or y is a whole number
-              x = float(x);
-              y = float(y);
-            } else {
-              // Use a regular expression to remove HTML tags
-              x = x.replace(/<\/?[^>]+(>|$)/g, "").toLowerCase();
-              y = y.replace(/<\/?[^>]+(>|$)/g, "").toLowerCase();
-
-              let x_time = extractTime(x);
-              let y_time = extractTime(y);
-              if (x_time && y_time) {
-                x = x_time;
-                y = y_time;
-              }
-            }
-            //using a conditional operator to determine whether the rows need to be shifted
-
-            let condition = column_info.ascending ? x > y : x < y;
-            if (condition) {
-              shouldSwitch = true;
-              break;
-            }
-          }
-          if (shouldSwitch) {
-            const popped_row = rows.splice(i + 1, 1)[0];
-            rows.splice(i, 0, popped_row);
-            switching = true;
-          }
-        }
-        //responsive_design();
-      }
-
       //remove all rows from table
       const table_rows = table.rows;
       while (table_rows.length > 1) {
@@ -1077,7 +1026,54 @@
       });
       set_pagination_nums();
 
-      // bot_row_headers();
+      //sort rows if sort_by is not null(this indicates a header cell was clicked on)
+      if (sort_by !== null) {
+        let switching, i, x, y, shouldSwitch;
+        switching = true;
+        const column_info = header_info[sort_by];
+        const rows = table.rows;
+
+        while (switching) {
+          switching = false;
+
+          for (i = 1; i < rows.length - 1; i++) {
+            shouldSwitch = false;
+            x = rows[i].cells[sort_by].textContent;
+            y = rows[i + 1].cells[sort_by].textContent;
+            if (column_info.type === "int") {
+              //int method includes precautions in case x or y is NaN(not a number)
+              x = int(x);
+              y = int(y);
+            } else if (column_info.type === "float") {
+              //float method includes precautions in case x or y is a whole number
+              x = float(x);
+              y = float(y);
+            } else {
+              // Use a regular expression to remove HTML tags(if they exist)
+              x = x.replace(/<\/?[^>]+(>|$)/g, "").toLowerCase();
+              y = y.replace(/<\/?[^>]+(>|$)/g, "").toLowerCase();
+
+              let x_time = extractTime(x);
+              let y_time = extractTime(y);
+              if (x_time && y_time) {
+                x = x_time;
+                y = y_time;
+              }
+            }
+            //using a conditional operator to determine whether the rows need to be shifted
+
+            let condition = column_info.ascending ? x > y : x < y;
+            if (condition) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+          }
+        }
+      }
     };
 
     const num_invisible_rows = () => {
