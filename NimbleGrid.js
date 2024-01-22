@@ -1008,6 +1008,7 @@
 
       tabledata_rows.forEach((row, idx) => {
         const row_dobj = add_row(row);
+        set_row_background_color(row_dobj);
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
@@ -1072,6 +1073,11 @@
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
             switching = true;
           }
+        }
+
+        //iterate through table and set background colors on rows
+        for (const row of table.rows) {
+          set_row_background_color(row);
         }
       }
     };
