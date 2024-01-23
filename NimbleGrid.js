@@ -496,7 +496,7 @@
 
     this.filter_rows = () => {
       conf.data_adapter.load(
-        // { orderBy: "title", sortOrder: "ASC" },
+        { orderBy: "title", sortOrder: "ASC" },
         function (data) {
           if (typeof data !== "undefined") {
             if (!table.querySelector("th")) {
@@ -1015,15 +1015,16 @@
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
-              let json = {};
+              let obj = {};
               const row = this.cells;
+              const cols = conf.data_adapter.columns;
               for (let i = 0; i < row.length; i++) {
-                const key = conv_to_snakecase(headers_arr[i]).toLowerCase();
+                const key = cols[i].name;
                 let value = row[i].textContent;
                 //if (parseFloat(value)) value = parseFloat(value);
-                json[key] = value;
+                obj[key] = value;
               }
-              conf.on_row_click.call(this, json);
+              conf.on_row_click.call(this, obj);
             }
           }
         });
@@ -1079,6 +1080,7 @@
         }
 
         //iterate through table and set background colors on rows
+        background_count.reset();
         for (const row of table.rows) {
           set_row_background_color(row);
         }
@@ -1670,7 +1672,7 @@
     this.api = {
       load_grid: function () {
         conf.data_adapter.load(
-          //{ orderBy: "title", sortOrder: "ASC" },
+          { orderBy: "title", sortOrder: "ASC" },
           function (data) {
             num_of_pages = Math.ceil(data.rows.length / conf.rtd);
             add_headers(config.data_adapter.columns, data.schema);
