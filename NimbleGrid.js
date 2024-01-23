@@ -495,37 +495,29 @@
     };
 
     this.filter_rows = () => {
-      conf.data_adapter.load(function (data) {
-        if (typeof data !== "undefined") {
-          if (!table.querySelector("th")) {
-            //here if a null dataset came back when first call on NimbleGrid function occurred
-            add_headers(conf.data_adapter.columns, data.schema);
-            header_container.style.visibility = "visible";
-            footer_container.style.visibility = "visible";
-          }
+      conf.data_adapter.load(
+        // { orderBy: "title", sortOrder: "ASC" },
+        function (data) {
+          if (typeof data !== "undefined") {
+            if (!table.querySelector("th")) {
+              //here if a null dataset came back when first call on NimbleGrid function occurred
+              add_headers(conf.data_adapter.columns, data.schema);
+              header_container.style.visibility = "visible";
+              footer_container.style.visibility = "visible";
+            }
 
-          //filter rows based on search bar value
-          const typed_text = search_bar.value.toLowerCase();
-          const rows = data.rows;
-          let search_matches = [];
-          let row;
+            //filter rows based on search bar value
+            const typed_text = search_bar.value.toLowerCase();
+            const rows = data.rows;
+            let search_matches = [];
+            let row;
 
-          sf_idx = headers_arr.indexOf(default_sf); //sf equals search filter
+            sf_idx = headers_arr.indexOf(default_sf); //sf equals search filter
 
-          for (let i = 0; i < rows.length; i++) {
-            row = rows[i];
-            const cell = row.cell[sf_idx];
-            if (sf_idx > -1) {
-              let index;
-              try {
-                index = cell.toString().toLowerCase().indexOf(typed_text);
-              } catch {}
-
-              if (index > -1 || typed_text === "") {
-                search_matches.push(row);
-              }
-            } else {
-              for (let cell of row.cell) {
+            for (let i = 0; i < rows.length; i++) {
+              row = rows[i];
+              const cell = row.cell[sf_idx];
+              if (sf_idx > -1) {
                 let index;
                 try {
                   index = cell.toString().toLowerCase().indexOf(typed_text);
@@ -533,15 +525,26 @@
 
                 if (index > -1 || typed_text === "") {
                   search_matches.push(row);
-                  break;
+                }
+              } else {
+                for (let cell of row.cell) {
+                  let index;
+                  try {
+                    index = cell.toString().toLowerCase().indexOf(typed_text);
+                  } catch {}
+
+                  if (index > -1 || typed_text === "") {
+                    search_matches.push(row);
+                    break;
+                  }
                 }
               }
             }
+            num_of_pages = Math.ceil(search_matches.length / conf.rtd);
+            populate_table(search_matches);
           }
-          num_of_pages = Math.ceil(search_matches.length / conf.rtd);
-          populate_table(search_matches);
         }
-      });
+      );
     };
 
     const is_integer = (str) => {
@@ -1666,15 +1669,18 @@
 
     this.api = {
       load_grid: function () {
-        conf.data_adapter.load(function (data) {
-          num_of_pages = Math.ceil(data.rows.length / conf.rtd);
-          add_headers(config.data_adapter.columns, data.schema);
-          populate_table(data.rows);
-          grid_mode.set(conf.grid_mode);
-          load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord
-          header_container.style.visibility = "visible";
-          footer_container.style.visibility = "visible";
-        });
+        conf.data_adapter.load(
+          //{ orderBy: "title", sortOrder: "ASC" },
+          function (data) {
+            num_of_pages = Math.ceil(data.rows.length / conf.rtd);
+            add_headers(config.data_adapter.columns, data.schema);
+            populate_table(data.rows);
+            grid_mode.set(conf.grid_mode);
+            load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord
+            header_container.style.visibility = "visible";
+            footer_container.style.visibility = "visible";
+          }
+        );
         pag_tb.addEventListener("keydown", function (event) {
           if (event.key === "Enter") {
             error_handling();
