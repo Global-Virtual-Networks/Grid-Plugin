@@ -1019,9 +1019,8 @@
               const row = this.cells;
               const cols = conf.data_adapter.columns;
               for (let i = 0; i < row.length; i++) {
-                const key = cols[i].name;
+                const key = cols[i].name.toLowerCase();
                 let value = row[i].textContent;
-                //if (parseFloat(value)) value = parseFloat(value);
                 obj[key] = value;
               }
               conf.on_row_click.call(this, obj);
