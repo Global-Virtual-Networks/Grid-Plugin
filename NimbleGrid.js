@@ -495,29 +495,45 @@
     };
 
     this.filter_rows = () => {
-      conf.data_adapter.load(
-        { orderBy: "title", sortOrder: "ASC" },
-        function (data) {
-          if (typeof data !== "undefined") {
-            if (!table.querySelector("th")) {
-              //here if a null dataset came back when first call on NimbleGrid function occurred
-              add_headers(conf.data_adapter.columns, data.schema);
-              header_container.style.visibility = "visible";
-              footer_container.style.visibility = "visible";
-            }
+      const col = header_info[sort_by];
+      let p = {};
+      if (col) {
+        p = {
+          orderBy: col.name,
+          sortOrder: col.ascending ? "ASC" : "DESC",
+        };
+      }
+      conf.data_adapter.load(p, function (data) {
+        if (typeof data !== "undefined") {
+          if (!table.querySelector("th")) {
+            //here if a null dataset came back when first call on NimbleGrid function occurred
+            add_headers(conf.data_adapter.columns, data.schema);
+            header_container.style.visibility = "visible";
+            footer_container.style.visibility = "visible";
+          }
 
-            //filter rows based on search bar value
-            const typed_text = search_bar.value.toLowerCase();
-            const rows = data.rows;
-            let search_matches = [];
-            let row;
+          //filter rows based on search bar value
+          const typed_text = search_bar.value.toLowerCase();
+          const rows = data.rows;
+          let search_matches = [];
+          let row;
 
-            sf_idx = headers_arr.indexOf(default_sf); //sf equals search filter
+          sf_idx = headers_arr.indexOf(default_sf); //sf equals search filter
 
-            for (let i = 0; i < rows.length; i++) {
-              row = rows[i];
-              const cell = row.cell[sf_idx];
-              if (sf_idx > -1) {
+          for (let i = 0; i < rows.length; i++) {
+            row = rows[i];
+            const cell = row.cell[sf_idx];
+            if (sf_idx > -1) {
+              let index;
+              try {
+                index = cell.toString().toLowerCase().indexOf(typed_text);
+              } catch {}
+
+              if (index > -1 || typed_text === "") {
+                search_matches.push(row);
+              }
+            } else {
+              for (let cell of row.cell) {
                 let index;
                 try {
                   index = cell.toString().toLowerCase().indexOf(typed_text);
@@ -525,26 +541,15 @@
 
                 if (index > -1 || typed_text === "") {
                   search_matches.push(row);
-                }
-              } else {
-                for (let cell of row.cell) {
-                  let index;
-                  try {
-                    index = cell.toString().toLowerCase().indexOf(typed_text);
-                  } catch {}
-
-                  if (index > -1 || typed_text === "") {
-                    search_matches.push(row);
-                    break;
-                  }
+                  break;
                 }
               }
             }
-            num_of_pages = Math.ceil(search_matches.length / conf.rtd);
-            populate_table(search_matches);
           }
+          num_of_pages = Math.ceil(search_matches.length / conf.rtd);
+          populate_table(search_matches);
         }
-      );
+      });
     };
 
     const is_integer = (str) => {
@@ -1003,6 +1008,10 @@
       if (first_entry_index > tabledata_len) {
         pagination_active(1);
       }
+      tabledata_rows = tabledata_rows.slice(
+        first_entry_index,
+        first_entry_index + conf.rtd
+      );
 
       tabledata_rows.forEach((row, idx) => {
         const row_dobj = add_row(row);
@@ -1025,8 +1034,9 @@
       });
       set_pagination_nums();
 
-      //sort rows if sort_by is not null(this indicates a header cell was clicked on)
-      if (sort_by !== null) {
+      //client side sorting algorithm below
+      if (false) {
+        //sort_by !== null) {
         let switching, i, x, y, shouldSwitch;
         switching = true;
         const column_info = header_info[sort_by];
@@ -1074,19 +1084,19 @@
         }
       }
 
-      //set display to none for any rows outside the index calculated below
-      const low = first_entry_index;
-      const high = first_entry_index + conf.rtd;
-      const rows = table.rows;
-      for (let i = 1; i < rows.length; i++) {
-        if (i < low || i > high) {
-          rows[i].style.display = "none";
-        }
-      }
+      // //set display to none for any rows outside the index calculated below
+      // const low = first_entry_index;
+      // const high = first_entry_index + conf.rtd;
+      // const rows = table.rows;
+      // for (let i = 1; i < rows.length; i++) {
+      //   if (i < low || i > high) {
+      //     rows[i].style.display = "none";
+      //   }
+      // }
 
       //iterate through table and set background colors on rows
       background_count.reset();
-      for (const row of rows) {
+      for (const row of table.rows) {
         set_row_background_color(row);
       }
     };
@@ -1675,18 +1685,15 @@
 
     this.api = {
       load_grid: function () {
-        conf.data_adapter.load(
-          { orderBy: "title", sortOrder: "ASC" },
-          function (data) {
-            num_of_pages = Math.ceil(data.rows.length / conf.rtd);
-            add_headers(config.data_adapter.columns, data.schema);
-            populate_table(data.rows);
-            grid_mode.set(conf.grid_mode);
-            load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord
-            header_container.style.visibility = "visible";
-            footer_container.style.visibility = "visible";
-          }
-        );
+        conf.data_adapter.load({}, function (data) {
+          num_of_pages = Math.ceil(data.rows.length / conf.rtd);
+          add_headers(config.data_adapter.columns, data.schema);
+          populate_table(data.rows);
+          grid_mode.set(conf.grid_mode);
+          load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord
+          header_container.style.visibility = "visible";
+          footer_container.style.visibility = "visible";
+        });
         pag_tb.addEventListener("keydown", function (event) {
           if (event.key === "Enter") {
             error_handling();
