@@ -1646,7 +1646,7 @@
         const column = columns[i];
         const schem = schema[i];
         header_info[i] = {
-          name: schem.name,
+          name: column.name,
           type: schem.type,
           ascending: false,
         };
