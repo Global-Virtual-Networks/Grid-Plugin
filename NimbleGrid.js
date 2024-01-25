@@ -1003,11 +1003,6 @@
       if (first_entry_index > tabledata_len) {
         pagination_active(1);
       }
-      //slice data to dynamically create rows in current page
-      tabledata_rows = tabledata_rows.slice(
-        first_entry_index,
-        first_entry_index + conf.rtd
-      );
 
       tabledata_rows.forEach((row, idx) => {
         const row_dobj = add_row(row);
@@ -1077,12 +1072,22 @@
             switching = true;
           }
         }
+      }
 
-        //iterate through table and set background colors on rows
-        background_count.reset();
-        for (const row of table.rows) {
-          set_row_background_color(row);
+      //set display to none for any rows outside the index calculated below
+      const low = first_entry_index;
+      const high = first_entry_index + conf.rtd;
+      const rows = table.rows;
+      for (let i = 1; i < rows.length; i++) {
+        if (i < low || i > high) {
+          rows[i].style.display = "none";
         }
+      }
+
+      //iterate through table and set background colors on rows
+      background_count.reset();
+      for (const row of rows) {
+        set_row_background_color(row);
       }
     };
 
