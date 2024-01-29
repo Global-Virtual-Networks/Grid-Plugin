@@ -504,7 +504,7 @@
         };
       }
       conf.data_adapter.load(p, function (data) {
-        if (typeof data !== "undefined") {
+        if (data.count > 0) {
           if (!table.querySelector("th")) {
             //here if a null dataset came back when first call on NimbleGrid function occurred
             add_headers(conf.data_adapter.columns, data.schema);
