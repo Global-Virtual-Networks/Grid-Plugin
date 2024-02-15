@@ -1642,10 +1642,10 @@
       headers_arr = [];
       for (let i = 0; i < columns.length; i++) {
         const column = columns[i];
-        const schem = schema[i];
+        let schem = schema ? schema[i] : null;
         header_info[i] = {
           name: column.name,
-          type: schem.type,
+          type: schem ? schem.type : null,
           ascending: false,
         };
         const header = column.display;
