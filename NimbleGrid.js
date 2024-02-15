@@ -782,6 +782,17 @@
         search_mode.set(false);
         default_sf = "All";
 
+        //set textbox in header_container to blank value
+        const textboxs = header_container.querySelectorAll("input");
+        for (const tb of textboxs) {
+          tb.value = "";
+        }
+        //trigger input event listener for one textbox
+        const inputEvent = new Event("input", { bubbles: true });
+        if (textboxs.length > 0) {
+          textboxs[0].dispatchEvent(inputEvent);
+        }
+
         var checkboxes = header_container.querySelectorAll(
           'input[type="checkbox"]'
         );
@@ -803,17 +814,6 @@
         const changeEvent = new Event("change", { bubbles: true });
         if (ddls.length > 0) {
           ddls[0].dispatchEvent(changeEvent);
-        }
-
-        //set textbox in header_container to blank value
-        const textboxs = header_container.querySelectorAll("input");
-        for (const tb of textboxs) {
-          tb.value = "";
-        }
-        //trigger input event listener for one textbox
-        const inputEvent = new Event("input", { bubbles: true });
-        if (textboxs.length > 0) {
-          textboxs[0].dispatchEvent(inputEvent);
         }
 
         for (const header in header_info) {
