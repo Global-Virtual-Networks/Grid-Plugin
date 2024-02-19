@@ -21,7 +21,7 @@
       style: {
         //css relating to table
         row_color: ["background-color: #ffffff"],
-          alt_color: ["background-color: #ededed"],
+        alt_color: ["background-color: #ededed"],
         row_hov_color: ["background-color: #c7dafe"],
         ultimate_parent_container: [
           "display: flex;",
@@ -32,6 +32,8 @@
           "background-color: #fff",
           "overflow-x: auto;",
           "width: 100%;",
+          "height: 100%;",
+          "position: relative",
         ],
         table: [
           "font-family: sans-serif;",
@@ -100,6 +102,13 @@
           "align-items: center;",
           "justify-content: center;",
         ],
+        footer_parent_container: [
+          "background-color: #b6b6b6",
+          "padding : 3px 0",
+          "position: absolute",
+          "bottom: 0",
+          "width: 100%",
+        ],
         footer_container: ["display: flex;", "padding: 6px 18px;"],
         larger_width_footer_container: [],
         pager_cont: [
@@ -122,7 +131,12 @@
           "text-align: center;",
         ],
         reset_butt: ["font-size: 12px;"],
-        spacing: ["margin: 0 6px;", " cursor: pointer;", "border: none", "background: none"],
+        spacing: [
+          "margin: 0 6px;",
+          " cursor: pointer;",
+          "border: none",
+          "background: none",
+        ],
         cancel_butt: [
           // "font-size: .8em",
           // "border: 1px solid black",
@@ -633,9 +647,8 @@
         grid_container,
         "footer_parent_container"
       );
-        css(conf.style.center_child_elems, footer_parent_container);
-        footer_parent_container.style.backgroundColor = "#b6b6b6";
-        footer_parent_container.style.padding = "3px 0";
+      css(conf.style.center_child_elems, footer_parent_container);
+      css(conf.style.footer_parent_container, footer_parent_container);
       footer_container = append_child(
         "div",
         footer_parent_container,
@@ -677,25 +690,25 @@
       const fir_butt_img = append_child("img", first_butt);
       fir_butt_img.setAttribute("src", conf.icons.first);
       css(conf.style.pager_butts, fir_butt_img);
-        css(conf.style.spacing, first_butt);
-        first_butt.addEventListener("mouseover", function () {
-            this.style.background = "";
-        })
-        first_butt.addEventListener("mouseout", function () {
-            this.style.background = "none";
-        })
+      css(conf.style.spacing, first_butt);
+      first_butt.addEventListener("mouseover", function () {
+        this.style.background = "";
+      });
+      first_butt.addEventListener("mouseout", function () {
+        this.style.background = "none";
+      });
 
       prev_butt = append_child("button", pager_cont, "prev_butt");
       const prev_butt_img = append_child("img", prev_butt);
       prev_butt_img.setAttribute("src", conf.icons.prev);
       css(conf.style.pager_butts, prev_butt_img);
-        css(conf.style.spacing, prev_butt);
-        prev_butt.addEventListener("mouseover", function () {
-            this.style.background = "";
-        })
-        prev_butt.addEventListener("mouseout", function () {
-            this.style.background = "none";
-        })
+      css(conf.style.spacing, prev_butt);
+      prev_butt.addEventListener("mouseover", function () {
+        this.style.background = "";
+      });
+      prev_butt.addEventListener("mouseout", function () {
+        this.style.background = "none";
+      });
 
       const txt = append_child("p", pager_cont);
       txt.innerText = " Page ";
@@ -711,25 +724,24 @@
       next_butt_img.setAttribute("src", conf.icons.next);
       css(conf.style.pager_butts, next_butt_img);
       css(conf.style.spacing, next_butt);
-        next_butt.addEventListener("mouseover", function () {
-            this.style.background = "";
-        })
-        next_butt.addEventListener("mouseout", function () {
-            this.style.background = "none";
-        })
+      next_butt.addEventListener("mouseover", function () {
+        this.style.background = "";
+      });
+      next_butt.addEventListener("mouseout", function () {
+        this.style.background = "none";
+      });
 
       last_butt = append_child("button", pager_cont, "last_butt");
       const last_butt_img = append_child("img", last_butt);
       last_butt_img.setAttribute("src", conf.icons.last);
       css(conf.style.pager_butts, last_butt_img);
-        css(conf.style.spacing, last_butt);
-        last_butt.addEventListener("mouseover", function () {
-            this.style.background = "";
-        })
-        last_butt.addEventListener("mouseout", function () {
-            this.style.background = "none";
-        })
-
+      css(conf.style.spacing, last_butt);
+      last_butt.addEventListener("mouseover", function () {
+        this.style.background = "";
+      });
+      last_butt.addEventListener("mouseout", function () {
+        this.style.background = "none";
+      });
 
       pag_tb.value = curr_page;
 
