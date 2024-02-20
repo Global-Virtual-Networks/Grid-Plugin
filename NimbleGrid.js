@@ -1,6 +1,7 @@
 (function ($) {
   $.fn.NimbleGrid = function (config) {
-    const plugin_dom_obj = this[0];
+    const NimbleGrid_container = this[0];
+    let rtd;
     const conf = {
       //rtd equals rows to display
       rtd: 15,
@@ -177,12 +178,12 @@
     //add event listeners that will change the cursor depending on whether the ctrl key is being held or not
     document.addEventListener("keydown", function (event) {
       if (event.key === "Control") {
-        css(["cursor: pointer;"], plugin_dom_obj);
+        css(["cursor: pointer;"], NimbleGrid_container);
       }
     });
     document.addEventListener("keyup", function (event) {
       if (event.key === "Control") {
-        css(["cursor: auto;"], plugin_dom_obj);
+        css(["cursor: auto;"], NimbleGrid_container);
       }
     });
 
@@ -200,7 +201,7 @@
       return {
         set: function (mode) {
           if (mode === "scroll") {
-            css(conf.style.scroll_mode, plugin_dom_obj);
+            css(conf.style.scroll_mode, NimbleGrid_container);
             footer_container.style.display = "none";
           } else if (mode === "pagination") {
             //responsive_design();
@@ -211,7 +212,7 @@
                 mode +
                 "' for grid_mode property."
             );
-            plugin_dom_obj.removeChild(grid_parent_container);
+            NimbleGrid_container.removeChild(grid_parent_container);
           }
         },
       };
@@ -224,8 +225,8 @@
       if (fe_idx != 1) {
         fe_idx = first_entry_index + 1;
       }
-      let last_entry_index = first_entry_index + conf.rtd;
-      if (first_entry_index + conf.rtd > tabledata_len) {
+      let last_entry_index = first_entry_index + rtd;
+      if (first_entry_index + rtd > tabledata_len) {
         last_entry_index = tabledata_len;
       }
       entries_container.innerText =
@@ -439,7 +440,11 @@
 
     const create_header = () => {
       //create header
-      grid_container = append_child("div", plugin_dom_obj, "grid_container");
+      grid_container = append_child(
+        "div",
+        NimbleGrid_container,
+        "grid_container"
+      );
       css(conf.style.grid_container, grid_container);
       header_container = append_child(
         "div",
@@ -559,7 +564,7 @@
             }
           }
         }
-        num_of_pages = Math.ceil(search_matches.length / conf.rtd);
+        num_of_pages = calc_rtd(search_matches);
         populate_table(search_matches);
       });
     };
@@ -582,12 +587,12 @@
     };
 
     const responsive_design = () => {
-      const cells = plugin_dom_obj.querySelectorAll("#cell_cont");
+      const cells = NimbleGrid_container.querySelectorAll("#cell_cont");
       //grid cells media defaults
       // cell_max_width();
 
       //apply extra css in media query like fashion
-      if (plugin_dom_obj.offsetWidth > 414) {
+      if (NimbleGrid_container.offsetWidth > 414) {
         //footer container media queries
         css(conf.style.larger_width_entries_container, entries_container);
         css(conf.style.larger_width_pager_cont, pager_cont);
@@ -1047,7 +1052,7 @@
       }
       tabledata_rows = tabledata_rows.slice(
         first_entry_index,
-        first_entry_index + conf.rtd
+        first_entry_index + rtd
       );
 
       tabledata_rows.forEach((row, idx) => {
@@ -1123,7 +1128,7 @@
 
       // //set display to none for any rows outside the index calculated below
       // const low = first_entry_index;
-      // const high = first_entry_index + conf.rtd;
+      // const high = first_entry_index + rtd;
       // const rows = table.rows;
       // for (let i = 1; i < rows.length; i++) {
       //   if (i < low || i > high) {
@@ -1165,7 +1170,7 @@
 
       //for whatever reason, cannot apply a % width to cells, it has to be in 'vw'. So have to calculate vw based off of the width of the plugin parent container
       const plugin_to_window_width =
-        (plugin_dom_obj.offsetWidth / document.body.offsetWidth) * 100;
+        (NimbleGrid_container.offsetWidth / document.body.offsetWidth) * 100;
       const max_cell_width = plugin_to_window_width / num_vis_cols;
 
       conf.style.cell.push("max-width:" + max_cell_width + "vw");
@@ -1176,7 +1181,7 @@
       excess_rows = [];
       const table_rows = table.rows;
       let bott_row_count = table_rows.length - 2;
-      while (grid_container.offsetHeight > plugin_dom_obj.offsetHeight) {
+      while (grid_container.offsetHeight > NimbleGrid_container.offsetHeight) {
         //make the bottom most row invisible
         const bott_row = table_rows[bott_row_count];
         bott_row.style.display = "none";
@@ -1184,7 +1189,7 @@
         excess_rows.unshift(bott_row);
       }
 
-      conf.rtd = bott_row_count;
+      rtd = bott_row_count;
       //update rows_arr
       rows_arr = [];
       for (const row of table_rows) {
@@ -1318,7 +1323,7 @@
         tr.appendChild(td);
       }
       if (!headers_arr) {
-        const id = table.rows.length + (curr_page - 1) * conf.rtd - 1;
+        const id = table.rows.length + (curr_page - 1) * rtd - 1;
         tr.setAttribute("id", id); //tr id is the row number, includes quite a bit of calculation because it takes pagination into account
         tr.__row_nbr = id;
         row_events(tr);
@@ -1464,7 +1469,7 @@
         // if (!ord_ro_obj[cell_num]) {
         //   cell.addEventListener("click", function (event) {
         //     const row_num = extract_row_num(this.id);
-        //     const curr_row = plugin_dom_obj.querySelectorAll("tr")[row_num];
+        //     const curr_row = NimbleGrid_container.querySelectorAll("tr")[row_num];
         //     edit_mode.set_edit_row(curr_row);
         //     if (!edit_mode.get_mode() && event.ctrlKey) {
         //       // const row = edit_mode.get_edit_row();
@@ -1480,11 +1485,11 @@
       //     //make sure edit mode is not on and no other right click context menus exists before creating one
       //     if (
       //       !edit_mode.get_mode() &&
-      //       plugin_dom_obj.querySelectorAll("#context_menu").length === 0
+      //       NimbleGrid_container.querySelectorAll("#context_menu").length === 0
       //     ) {
       //       const context_menu = append_child(
       //         "div",
-      //         plugin_dom_obj,
+      //         NimbleGrid_container,
       //         "context_menu"
       //       );
       //       css(conf.style.context_menu, context_menu);
@@ -1500,11 +1505,11 @@
       //       // Remove the context menu when user clicks anywhere else
       //       window.addEventListener("click", function (e) {
       //         if (e.target !== context_menu) {
-      //           plugin_dom_obj.removeChild(context_menu);
+      //           NimbleGrid_container.removeChild(context_menu);
       //         }
       //       });
       //     }
-      //     const col_cells = plugin_dom_obj.querySelectorAll("." + this.className);
+      //     const col_cells = NimbleGrid_container.querySelectorAll("." + this.className);
       //   });
 
       //add more event listeners to cells
@@ -1577,7 +1582,7 @@
 
     const reset_row_backgrounds = (tr) => {
       //find out whether you should apply row color or alt color to row
-      const all_TRs = plugin_dom_obj.querySelectorAll("table tr");
+      const all_TRs = NimbleGrid_container.querySelectorAll("table tr");
       let count = 0;
       for (let i = 0; i < all_TRs.length; i++) {
         if (tr === all_TRs[i] && i % 2 === 0) {
@@ -1715,15 +1720,26 @@
 
     const pagination_active = (new_page) => {
       curr_page = new_page;
-      first_entry_index = (new_page - 1) * conf.rtd;
+      first_entry_index = (new_page - 1) * rtd;
       pag_tb.value = curr_page;
       self.filter_rows();
+    };
+
+    //calculate rows to display
+    const calc_rtd = function (arr) {
+      let grid_space =
+        NimbleGrid_container.parentElement.offsetHeight -
+        header_container.offsetHeight -
+        footer_container.offsetHeight;
+      let row_height = 23;
+      rtd = Math.floor(grid_space / row_height) - 2; //subtracting by 2 to account for header row and padding between bottom row and footer
+      num_of_pages = Math.ceil(arr.rows.length / rtd);
     };
 
     this.api = {
       load_grid: function () {
         conf.data_adapter.load({}, function (data) {
-          num_of_pages = Math.ceil(data.rows.length / conf.rtd);
+          num_of_pages = calc_rtd(data);
           add_headers(config.data_adapter.columns, data.schema);
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
