@@ -564,7 +564,7 @@
             }
           }
         }
-        num_of_pages = calc_rtd(search_matches);
+        num_of_pages = calc_rtd(search_matches.length);
         populate_table(search_matches);
       });
     };
@@ -1725,21 +1725,20 @@
       self.filter_rows();
     };
 
-    //calculate rows to display
-    const calc_rtd = function (arr) {
+    const calc_rtd = function (length) {
       let grid_space =
         NimbleGrid_container.parentElement.offsetHeight -
         header_container.offsetHeight -
         footer_container.offsetHeight;
       let row_height = 23;
       rtd = Math.floor(grid_space / row_height) - 2; //subtracting by 2 to account for header row and padding between bottom row and footer
-      num_of_pages = Math.ceil(arr.rows.length / rtd);
+      return Math.ceil(length / rtd);
     };
 
     this.api = {
       load_grid: function () {
         conf.data_adapter.load({}, function (data) {
-          num_of_pages = calc_rtd(data);
+          num_of_pages = calc_rtd(data.count);
           add_headers(config.data_adapter.columns, data.schema);
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
