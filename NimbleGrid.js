@@ -225,8 +225,8 @@
       if (fe_idx != 1) {
         fe_idx = first_entry_index + 1;
       }
-      let last_entry_index = first_entry_index + rtd;
-      if (first_entry_index + rtd > tabledata_len) {
+      let last_entry_index = first_entry_index + conf.rtd;
+      if (first_entry_index + conf.rtd > tabledata_len) {
         last_entry_index = tabledata_len;
       }
       entries_container.innerText =
@@ -564,10 +564,12 @@
             }
           }
         }
-        num_of_pages = calc_rtd(search_matches.length);
+        num_of_pages = Math.ceil(search_matches.length / conf.rtd);
         populate_table(search_matches);
       });
     };
+
+    window.addEventListener("resize", this.filter_rows);
 
     const is_integer = (str) => {
       // Check if the string contains only numeric characters
@@ -1052,7 +1054,7 @@
       }
       tabledata_rows = tabledata_rows.slice(
         first_entry_index,
-        first_entry_index + rtd
+        first_entry_index + conf.rtd
       );
 
       tabledata_rows.forEach((row, idx) => {
@@ -1128,7 +1130,7 @@
 
       // //set display to none for any rows outside the index calculated below
       // const low = first_entry_index;
-      // const high = first_entry_index + rtd;
+      // const high = first_entry_index + conf.rtd;
       // const rows = table.rows;
       // for (let i = 1; i < rows.length; i++) {
       //   if (i < low || i > high) {
@@ -1189,7 +1191,7 @@
         excess_rows.unshift(bott_row);
       }
 
-      rtd = bott_row_count;
+      conf.rtd = bott_row_count;
       //update rows_arr
       rows_arr = [];
       for (const row of table_rows) {
@@ -1323,7 +1325,7 @@
         tr.appendChild(td);
       }
       if (!headers_arr) {
-        const id = table.rows.length + (curr_page - 1) * rtd - 1;
+        const id = table.rows.length + (curr_page - 1) * conf.rtd - 1;
         tr.setAttribute("id", id); //tr id is the row number, includes quite a bit of calculation because it takes pagination into account
         tr.__row_nbr = id;
         row_events(tr);
@@ -1720,17 +1722,29 @@
 
     const pagination_active = (new_page) => {
       curr_page = new_page;
-      first_entry_index = (new_page - 1) * rtd;
+      first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
       self.filter_rows();
     };
 
     const calc_rtd = function (length) {
+      let row_height;
+      const screenWidth = window.innerWidth;
+
+      if (screenWidth <= 1024) {
+        //phone & tablet
+        conf.style.cell.push("padding: 10px 0;");
+        row_height = 36;
+      } else {
+        //laptop+
+        conf.style.cell.push("padding: 3.5px 0;");
+        row_height = 23;
+      }
+
       let grid_space =
         NimbleGrid_container.parentElement.offsetHeight -
         header_container.offsetHeight -
         footer_container.offsetHeight;
-      let row_height = 23;
       rtd = Math.floor(grid_space / row_height) - 2; //subtracting by 2 to account for header row and padding between bottom row and footer
       return Math.ceil(length / rtd);
     };
@@ -1738,7 +1752,7 @@
     this.api = {
       load_grid: function () {
         conf.data_adapter.load({}, function (data) {
-          num_of_pages = calc_rtd(data.count);
+          num_of_pages = Math.ceil(data.count / conf.rtd);
           add_headers(config.data_adapter.columns, data.schema);
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
