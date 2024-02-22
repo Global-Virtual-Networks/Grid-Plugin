@@ -86,7 +86,7 @@
           "display: flex;",
           "align-items: center;",
           "justify-content: right;",
-          "padding: 8px;",
+          "padding: 0 8px 4px 8px;",
           "background-color: #b6b6b6",
         ],
         search_ddl: ["cursor: pointer;", "border: 2px solid black;"],
