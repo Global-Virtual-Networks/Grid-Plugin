@@ -125,7 +125,7 @@
           "font-size: 12px",
           "width: 30px;",
           "height: 8px;",
-          "padding: 6px;",
+          "padding: 3px 6px;",
           "margin: 0 6px;",
           "border: 1.5px solid black;",
           "border-radius: 5px;",
@@ -1752,7 +1752,7 @@
     this.api = {
       load_grid: function () {
         conf.data_adapter.load({}, function (data) {
-          num_of_pages = Math.ceil(data.count / conf.rtd);
+          num_of_pages = Math.ceil(data.rows.length / conf.rtd);
           add_headers(config.data_adapter.columns, data.schema);
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
@@ -1766,7 +1766,7 @@
           }
         });
         pag_tb.addEventListener("focus", function () {
-          pag_tb.value = "";
+          pag_tb.select();
         });
 
         next_butt.addEventListener("click", function () {
