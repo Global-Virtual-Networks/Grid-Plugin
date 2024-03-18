@@ -766,13 +766,13 @@
       css(conf.style.spacing, cancel_butt);
       css(conf.style.cancel_butt, cancel_butt);
       cancel_butt.addEventListener("click", function () {
-        //iterate through bef_aft_obj, and for each cell remove the input textbox and add text back to cell
-        for (const el_id in bef_aft_obj) {
-          //get the el
-          const el = document.getElementById(el_id);
-          const cell_tb = document.getElementById(el_id + "_tb");
+        const focus_row = edit_mode.get_edit_row();
+        for (let i = 0; i < focus_row.children.length; i++) {
+          const cell = focus_row.children[i];
+          const el = cell.firstChild.firstChild;
+          const cell_tb = el.firstChild;
           cell_tb.style.display = "none";
-          el.innerText = bef_aft_obj[el_id];
+          el.innerText = bef_aft_obj[el.id];
         }
         edit_mode_off();
       });
@@ -876,17 +876,12 @@
                         export_butt.innerText = "Export";*/
     };
 
-    const edit_mode_off = (clicked_butt) => {
-      //since bef_aft_obj will only have 1 property at a time, grab the first key in bef_aft_obj, which will be an integer representing a row number
-      const edited_row = document.getElementById(
-        "row_" + extract_row_num(Object.keys(bef_aft_obj)[0])
-      );
+    const edit_mode_off = () => {
+      const edited_row = edit_mode.get_edit_row();
       reset_row_backgrounds(edited_row);
       change_alignment("left", edited_row);
 
-      //wipe the object clean
       bef_aft_obj = {};
-
       edit_mode.set_mode(false);
     };
 
@@ -1256,6 +1251,13 @@
       rows_arr.push(row_arr);
       const tr = document.createElement("tr");
 
+      if (!headers_arr) {
+        const id = table.rows.length + (curr_page - 1) * conf.rtd - 1;
+        tr.setAttribute("id", id); //tr id is the row number, includes quite a bit of calculation because it takes pagination into account
+        tr.__row_nbr = id;
+        row_events(tr);
+      }
+
       //add cells to 'tr', if they are included in the listed columns of the 'columns' property in the config object
       const cols_obj = conf.data_adapter.columns;
       for (let i = 0; i < cols_obj.length; i++) {
@@ -1270,12 +1272,6 @@
         td.style.width = cols_obj[i].width + "px"; //apply cell width from corresponding column object
         td.style.textAlign = cols_obj[i].align; //apply align from corresponding column object
         tr.appendChild(td);
-      }
-      if (!headers_arr) {
-        const id = table.rows.length + (curr_page - 1) * conf.rtd - 1;
-        tr.setAttribute("id", id); //tr id is the row number, includes quite a bit of calculation because it takes pagination into account
-        tr.__row_nbr = id;
-        row_events(tr);
       }
       table.appendChild(tr);
       return tr;
@@ -1421,6 +1417,7 @@
             if (!edit_mode.get_mode() && event.ctrlKey) {
               if (!row.querySelector("input")) {
                 edit_mode.set_mode(true);
+                edit_mode.set_edit_row(row);
                 reset_row_backgrounds(row);
 
                 for (let i = 0; i < row.cells.length; i++) {
@@ -1453,7 +1450,7 @@
                   });
                   cell_tb.value = bef_aft_obj[id];
 
-                  if (id === this.id) {
+                  if (id === row.id) {
                     cell_tb.select();
                   }
                 }
