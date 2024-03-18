@@ -941,13 +941,8 @@
         },
         set_mode: function (bool) {
           edit_mode = bool;
-          if (!edit_mode) {
-            css(["background-color: #fff;"], grid_container);
-          } else {
-            css(conf.style.row_hov_color, grid_container);
-            css(["background-color: #fff;"], bott_row_headers);
-            css(["background-color: #fff;"], search_icon);
-          }
+          if (!edit_mode) css(["background-color: #fff;"], grid_container);
+          else css(conf.style.row_hov_color, grid_container);
           edit();
         },
         set_edit_row: function (curr_row) {
@@ -991,7 +986,6 @@
     let tot_num_cols;
     let table_cont;
     let tabledata_rows;
-    let ord_ro_obj;
     let ord_bind_obj = {};
     let ord_name_obj = {};
     let load_grid_called = false;
@@ -1058,7 +1052,7 @@
       );
 
       tabledata_rows.forEach((row, idx) => {
-        const row_dobj = add_row(row);
+        const row_dobj = add_row.call(this, row);
         set_row_background_color(row_dobj);
         row_dobj.addEventListener("click", function (event) {
           if (!event.ctrlKey && !edit_mode.get_mode()) {
@@ -1252,54 +1246,7 @@
       }
     };
 
-    const add_inputs_to_row = (el, row_num) => {
-      const row = el.parentElement.parentElement.parentElement;
-      if (!row.querySelector("input")) {
-        edit_mode.set_mode(true);
-        reset_row_backgrounds(row);
-
-        for (let i = 0; i < row.cells.length; i++) {
-          if (ord_ro_obj[i]) {
-            continue;
-          }
-          const cell = row.cells[i].children[0].children[0];
-          const id = cell.id;
-
-          //save cell's content to bef_aft_obj
-          bef_aft_obj[[id]] = cell.innerText;
-
-          //grab the width of the cell prior to adding in the tb
-          const cell_width = cell.parentElement.offsetWidth * 0.9;
-
-          cell.innerText = "";
-
-          //create, append, and adjust textbox into cell
-          const cell_tb = document.createElement("input");
-          cell_tb.setAttribute("id", id + "_tb");
-          css(["padding: 0;"], cell);
-          css(
-            [
-              "width: " + cell_width + "px",
-              "font-size: inherit;",
-              "height: inherit;",
-            ],
-            cell_tb
-          );
-          cell.appendChild(cell_tb);
-          cell_tb.addEventListener("click", function () {
-            cell_tb.select();
-          });
-          cell_tb.value = bef_aft_obj[id];
-
-          if (id === el.id) {
-            cell_tb.select();
-          }
-        }
-        change_alignment("center", row);
-      }
-    };
-
-    const add_row = (row_arr, headers_arr) => {
+    const add_row = function (row_arr, headers_arr) {
       //update rows_arr every time array is added
       const cells = row_arr.cell;
       if (cells) {
@@ -1319,7 +1266,7 @@
         } else {
           txt = "";
         }
-        const td = create_cell(i, txt, row_arr, headers_arr, tr);
+        const td = create_cell.call(this, i, txt, row_arr, headers_arr, tr);
         td.style.width = cols_obj[i].width + "px"; //apply cell width from corresponding column object
         td.style.textAlign = cols_obj[i].align; //apply align from corresponding column object
         tr.appendChild(td);
@@ -1334,14 +1281,14 @@
       return tr;
     };
 
-    const create_cell = (
+    const create_cell = function (
       cell_num,
       cell_text,
       row_arr,
       header_row,
       tr,
       col_obj
-    ) => {
+    ) {
       const cell = document.createElement("div");
       css(conf.style.cell, cell);
       if (screen.offsetWidth > 414) {
@@ -1467,18 +1414,54 @@
 
         cell.setAttribute("id", conv_to_snakecase(cell_text.toString()));
         td = document.createElement("td");
-        //add a click event listener to every cell inside the grid if corresponding schema ro property is false
-        // if (!ord_ro_obj[cell_num]) {
-        //   cell.addEventListener("click", function (event) {
-        //     const row_num = extract_row_num(this.id);
-        //     const curr_row = NimbleGrid_container.querySelectorAll("tr")[row_num];
-        //     edit_mode.set_edit_row(curr_row);
-        //     if (!edit_mode.get_mode() && event.ctrlKey) {
-        //       // const row = edit_mode.get_edit_row();
-        //       // add_inputs_to_row(this, row, row_num);
-        //     }
-        //   });
-        // }
+
+        if (this.schema[cell_num]) {
+          cell.addEventListener("click", function (event) {
+            const row = this.parentElement.parentElement.parentElement;
+            if (!edit_mode.get_mode() && event.ctrlKey) {
+              if (!row.querySelector("input")) {
+                edit_mode.set_mode(true);
+                reset_row_backgrounds(row);
+
+                for (let i = 0; i < row.cells.length; i++) {
+                  const cell = row.cells[i].children[0].children[0];
+                  const id = cell.id;
+
+                  //save cell's content to bef_aft_obj
+                  bef_aft_obj[[id]] = cell.innerText;
+
+                  //grab the width of the cell prior to adding in the tb
+                  const cell_width = cell.parentElement.offsetWidth * 0.9;
+
+                  cell.innerText = "";
+
+                  //create, append, and adjust textbox into cell
+                  const cell_tb = document.createElement("input");
+                  cell_tb.setAttribute("id", id + "_tb");
+                  css(["padding: 0;"], cell);
+                  css(
+                    [
+                      "width: " + cell_width + "px",
+                      "font-size: inherit;",
+                      "height: inherit;",
+                    ],
+                    cell_tb
+                  );
+                  cell.appendChild(cell_tb);
+                  cell_tb.addEventListener("click", function () {
+                    cell_tb.select();
+                  });
+                  cell_tb.value = bef_aft_obj[id];
+
+                  if (id === this.id) {
+                    cell_tb.select();
+                  }
+                }
+                change_alignment("center", row);
+              }
+            }
+          });
+        }
       }
       //set class attribute on td dom object and add right click event listeners to it
       // td.setAttribute("class", "column" + cell_num);
@@ -1702,21 +1685,8 @@
         sddl_opt.innerText = header;
       }
 
-      // ord_ro_obj = {};
-      // for (let i = 0; i < headers_ord.length; i++) {
-      //   const focus_idx = headers_ord[i];
-      //   let focus_schem;
-      //   for (const schem of schema) {
-      //     if (schem.ord == focus_idx) {
-      //       ord_ro_obj[focus_idx] = schem.ro;
-      //       ord_bind_obj[focus_idx] = schem.bind;
-      //       ord_name_obj[focus_idx] = schem.name;
-      //       break;
-      //     }
-      //   }
-      // }
-
-      add_row(headers_arr, true);
+      this.schema = schema;
+      add_row.call(this, headers_arr, true);
       tot_num_cols = headers_arr.length;
     };
 
