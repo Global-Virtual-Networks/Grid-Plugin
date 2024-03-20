@@ -5,23 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="NimbleGrid.js"></script>
+    <script src="ls-grid.js"></script>
     <title>Grid Plugin Demo</title>
   </head>
   <body>
-    <div
-      id="grid_container"
-      style="
-        width: auto;
-        max-width: 720px;
-        height: 650px;
-        margin: 40px 20px;
-        border: 2px solid black;
-      "
-    ></div>
+    <ls-grid></ls-grid>
   </body>
 </html>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   let ajax = {
     //rtd equals rows to display
     rtd: 23,
@@ -138,4 +129,4 @@
   };
   const grid = $("#grid_container").NimbleGrid(ajax);
   grid.api.load_grid();
-</script>
+</script> -->
