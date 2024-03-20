@@ -528,6 +528,7 @@ class NimbleGrid extends HTMLElement {
         };
       }
       conf.data_adapter.load(p, function (data) {
+        if (!self.schema) self.schema = data.schema;
         if (!table.querySelector("th")) {
           //here if a null dataset came back when first call on NimbleGrid function occurred
           add_headers(conf.data_adapter.columns, data.schema);
@@ -1697,7 +1698,6 @@ class NimbleGrid extends HTMLElement {
         sddl_opt.innerText = header;
       }
 
-      this.schema = schema;
       add_row.call(this, headers_arr, true);
       tot_num_cols = headers_arr.length;
     };
@@ -1736,6 +1736,7 @@ class NimbleGrid extends HTMLElement {
         $.extend(true, conf, config);
         conf.data_adapter.load({}, function (data) {
           num_of_pages = Math.ceil(data.rows.length / conf.rtd);
+          self.schema = data.schema;
           add_headers(config.data_adapter.columns, data.schema);
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
