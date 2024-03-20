@@ -4,6 +4,7 @@ class NimbleGrid extends HTMLElement {
     this.attachShadow({ mode: "open" });
     const NimbleGrid_container = document.createElement("div");
     NimbleGrid_container.style.cssText = this.getAttribute("style");
+    this.removeAttribute("style");
     this.shadowRoot.append(NimbleGrid_container);
 
     let rtd;
