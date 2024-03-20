@@ -12,7 +12,7 @@
     <ls-grid></ls-grid>
   </body>
 </html>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
   let ajax = {
     //rtd equals rows to display
     rtd: 23,
@@ -127,6 +127,6 @@
       alt_color: ["background-color: #ddd"],
     },
   };
-  const grid = $("#grid_container").NimbleGrid(ajax);
-  grid.api.load_grid();
-</script> -->
+  const grid = document.querySelector("ls-grid");
+  grid.api.load_grid(ajax);
+</script>
