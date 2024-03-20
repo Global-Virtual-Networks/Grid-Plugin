@@ -7,7 +7,7 @@ class NimbleGrid extends HTMLElement {
     this.shadowRoot.append(NimbleGrid_container);
 
     let rtd;
-    const conf = {
+    let conf = {
       //rtd equals rows to display
       rtd: 15,
       icons: {
@@ -1731,9 +1731,42 @@ class NimbleGrid extends HTMLElement {
       return Math.ceil(length / rtd);
     };
 
+    const extend = function () {
+      const extended = {};
+      var deep = false;
+      var i = 0;
+
+      if (typeof arguments[0] == "boolean") {
+        deep = arguments[0];
+        i++;
+      }
+
+      const merge = function (obj) {
+        for (const prop in obj) {
+          if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+            if (
+              deep &&
+              Object.prototype.toString.call(obj[prop]) === "[object Object]"
+            ) {
+              extended[prop] = extend(true, extended[prop], obj[prop]);
+            } else {
+              extended[prop] = obj[prop];
+            }
+          }
+        }
+      };
+
+      for (; i < arguments.length; i++) {
+        const obj = arguments[i];
+        merge(obj);
+      }
+
+      return extended;
+    };
+
     this.api = {
       load_grid: function (config) {
-        $.extend(true, conf, config);
+        conf = extend(true, conf, config);
         conf.data_adapter.load({}, function (data) {
           num_of_pages = Math.ceil(data.rows.length / conf.rtd);
           self.schema = data.schema;
@@ -1748,6 +1781,7 @@ class NimbleGrid extends HTMLElement {
     };
 
     create_grid();
+
     return this;
   }
 }
