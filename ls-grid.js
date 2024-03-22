@@ -1280,7 +1280,7 @@ class NimbleGrid extends HTMLElement {
       for (let i = 0; i < cols_obj.length; i++) {
         //create and add cell to table row
         let txt = row_arr[i];
-        if (txt) {
+        if (txt || txt == 0) {
           txt = txt.toString();
         } else {
           txt = "";
@@ -1308,7 +1308,7 @@ class NimbleGrid extends HTMLElement {
         css(conf.style.larger_width_cell, cell);
       }
       const row_num = rows_arr.length - 1;
-      cell.innerHTML = cell_text;
+      cell.innerText = cell_text;
       let td;
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
