@@ -1308,7 +1308,7 @@ class NimbleGrid extends HTMLElement {
         css(conf.style.larger_width_cell, cell);
       }
       const row_num = rows_arr.length - 1;
-      cell.innerText = cell_text;
+      cell.innerHTML = cell_text;
       let td;
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
