@@ -1078,8 +1078,7 @@ class NimbleGrid extends HTMLElement {
       set_pagination_nums();
 
       //client side sorting algorithm below
-      if (false) {
-        //sort_by !== null) {
+      if (sort_by !== null && conf.client_sort) {
         let switching, i, x, y, shouldSwitch;
         switching = true;
         const column_info = header_info[sort_by];
