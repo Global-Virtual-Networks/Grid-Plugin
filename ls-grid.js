@@ -112,15 +112,15 @@ class NimbleGrid extends HTMLElement {
           "align-items: center;",
           "justify-content: center;",
         ],
-        footer_parent_container: [
+        footer_container: [
+          "display: flex;",
+          "padding: 6px 18px;",
           "background-color: #b6b6b6",
           "padding : 3px 0",
           "position: absolute",
           "bottom: 0",
           "width: 100%",
         ],
-        footer_container: ["display: flex;", "padding: 6px 18px;"],
-        larger_width_footer_container: [],
         pager_cont: [
           "display: flex;",
           "align-items: center;",
@@ -658,21 +658,13 @@ class NimbleGrid extends HTMLElement {
     };
 
     const create_footer = (tabledata) => {
-      //create footer and append it to table container div
-      footer_parent_container = append_child(
-        "div",
-        grid_container,
-        "footer_parent_container"
-      );
-      css(conf.style.center_child_elems, footer_parent_container);
-      css(conf.style.footer_parent_container, footer_parent_container);
       footer_container = append_child(
         "div",
-        footer_parent_container,
+        grid_container,
         "footer_container"
       );
       css(conf.style.center_child_elems, footer_container);
-      css(conf.style.larger_width_footer_container, footer_container);
+      css(conf.style.footer_container, footer_container);
 
       //make footer invisible until data comes back from async call
       footer_container = footer_container;
@@ -995,7 +987,6 @@ class NimbleGrid extends HTMLElement {
     let table;
     let grid_container;
     let header_container;
-    let footer_parent_container;
     let footer_container;
     let num_of_pages;
     let tot_num_cols;
@@ -1779,10 +1770,10 @@ class NimbleGrid extends HTMLElement {
             grid_mode.set(conf.grid_mode);
 
             //to account for NO specified height with absolute positioning
-            footer_parent_container.style.position = "static";
+            footer_container.style.position = "static";
             NimbleGrid_container.style.height =
               NimbleGrid_container.offsetHeight + "px";
-            footer_parent_container.style.position = "absolute";
+            footer_container.style.position = "absolute";
           });
         }
         header_container.style.visibility = "visible";
