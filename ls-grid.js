@@ -1,11 +1,11 @@
-class NimbleGrid extends HTMLElement {
+class ls_grid extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    const NimbleGrid_container = document.createElement("div");
-    this.shadowRoot.append(NimbleGrid_container);
+    const ls_grid_container = document.createElement("div");
+    this.shadowRoot.append(ls_grid_container);
     window.addEventListener("DOMContentLoaded", () => {
-      NimbleGrid_container.style.cssText = this.getAttribute("style");
+      ls_grid_container.style.cssText = this.getAttribute("style");
       this.removeAttribute("style");
     });
 
@@ -184,12 +184,12 @@ class NimbleGrid extends HTMLElement {
     //add event listeners that will change the cursor depending on whether the ctrl key is being held or not
     document.addEventListener("keydown", function (event) {
       if (event.key === "Control") {
-        css(["cursor: pointer;"], NimbleGrid_container);
+        css(["cursor: pointer;"], ls_grid_container);
       }
     });
     document.addEventListener("keyup", function (event) {
       if (event.key === "Control") {
-        css(["cursor: auto;"], NimbleGrid_container);
+        css(["cursor: auto;"], ls_grid_container);
       }
     });
 
@@ -207,7 +207,7 @@ class NimbleGrid extends HTMLElement {
       return {
         set: function (mode) {
           if (mode === "scroll") {
-            css(conf.style.scroll_mode, NimbleGrid_container);
+            css(conf.style.scroll_mode, ls_grid_container);
             footer_container.style.display = "none";
           } else if (mode === "pagination") {
             //responsive_design();
@@ -218,7 +218,7 @@ class NimbleGrid extends HTMLElement {
                 mode +
                 "' for grid_mode property."
             );
-            NimbleGrid_container.removeChild(grid_parent_container);
+            ls_grid_container.removeChild(grid_parent_container);
           }
         },
       };
@@ -449,11 +449,7 @@ class NimbleGrid extends HTMLElement {
 
     const create_header = () => {
       //create header
-      grid_container = append_child(
-        "div",
-        NimbleGrid_container,
-        "grid_container"
-      );
+      grid_container = append_child("div", ls_grid_container, "grid_container");
       css(conf.style.grid_container, grid_container);
       header_container = append_child(
         "div",
@@ -534,7 +530,7 @@ class NimbleGrid extends HTMLElement {
       conf.data_adapter.load(p, function (data) {
         if (!self.schema) self.schema = data.schema;
         if (!table.querySelector("th")) {
-          //here if a null dataset came back when first call on NimbleGrid function occurred
+          //here if a null dataset came back when first call on ls_grid function occurred
           add_headers(conf.data_adapter.columns, data.schema);
           header_container.style.visibility = "visible";
           footer_container.style.visibility = "visible";
@@ -599,12 +595,12 @@ class NimbleGrid extends HTMLElement {
     };
 
     const responsive_design = () => {
-      const cells = NimbleGrid_container.querySelectorAll("#cell_cont");
+      const cells = ls_grid_container.querySelectorAll("#cell_cont");
       //grid cells media defaults
       // cell_max_width();
 
       //apply extra css in media query like fashion
-      if (NimbleGrid_container.offsetWidth > 414) {
+      if (ls_grid_container.offsetWidth > 414) {
         //footer container media queries
         css(conf.style.larger_width_entries_container, entries_container);
         css(conf.style.larger_width_pager_cont, pager_cont);
@@ -1170,7 +1166,7 @@ class NimbleGrid extends HTMLElement {
 
       //for whatever reason, cannot apply a % width to cells, it has to be in 'vw'. So have to calculate vw based off of the width of the plugin parent container
       const plugin_to_window_width =
-        (NimbleGrid_container.offsetWidth / document.body.offsetWidth) * 100;
+        (ls_grid_container.offsetWidth / document.body.offsetWidth) * 100;
       const max_cell_width = plugin_to_window_width / num_vis_cols;
 
       conf.style.cell.push("max-width:" + max_cell_width + "vw");
@@ -1181,7 +1177,7 @@ class NimbleGrid extends HTMLElement {
       excess_rows = [];
       const table_rows = table.rows;
       let bott_row_count = table_rows.length - 2;
-      while (grid_container.offsetHeight > NimbleGrid_container.offsetHeight) {
+      while (grid_container.offsetHeight > ls_grid_container.offsetHeight) {
         //make the bottom most row invisible
         const bott_row = table_rows[bott_row_count];
         bott_row.style.display = "none";
@@ -1476,11 +1472,11 @@ class NimbleGrid extends HTMLElement {
       //     //make sure edit mode is not on and no other right click context menus exists before creating one
       //     if (
       //       !edit_mode.get_mode() &&
-      //       NimbleGrid_container.querySelectorAll("#context_menu").length === 0
+      //       ls_grid_container.querySelectorAll("#context_menu").length === 0
       //     ) {
       //       const context_menu = append_child(
       //         "div",
-      //         NimbleGrid_container,
+      //         ls_grid_container,
       //         "context_menu"
       //       );
       //       css(conf.style.context_menu, context_menu);
@@ -1496,11 +1492,11 @@ class NimbleGrid extends HTMLElement {
       //       // Remove the context menu when user clicks anywhere else
       //       window.addEventListener("click", function (e) {
       //         if (e.target !== context_menu) {
-      //           NimbleGrid_container.removeChild(context_menu);
+      //           ls_grid_container.removeChild(context_menu);
       //         }
       //       });
       //     }
-      //     const col_cells = NimbleGrid_container.querySelectorAll("." + this.className);
+      //     const col_cells = ls_grid_container.querySelectorAll("." + this.className);
       //   });
 
       //add more event listeners to cells
@@ -1573,7 +1569,7 @@ class NimbleGrid extends HTMLElement {
 
     const reset_row_backgrounds = (tr) => {
       //find out whether you should apply row color or alt color to row
-      const all_TRs = NimbleGrid_container.querySelectorAll("table tr");
+      const all_TRs = ls_grid_container.querySelectorAll("table tr");
       let count = 0;
       for (let i = 0; i < all_TRs.length; i++) {
         if (tr === all_TRs[i] && i % 2 === 0) {
@@ -1717,7 +1713,7 @@ class NimbleGrid extends HTMLElement {
       }
 
       let grid_space =
-        NimbleGrid_container.parentElement.offsetHeight -
+        ls_grid_container.parentElement.offsetHeight -
         header_container.offsetHeight -
         footer_container.offsetHeight;
       rtd = Math.floor(grid_space / row_height) - 2; //subtracting by 2 to account for header row and padding between bottom row and footer
@@ -1770,8 +1766,8 @@ class NimbleGrid extends HTMLElement {
 
             //to account for NO specified height with absolute positioning
             footer_container.style.position = "static";
-            NimbleGrid_container.style.height =
-              NimbleGrid_container.offsetHeight + "px";
+            ls_grid_container.style.height =
+              ls_grid_container.offsetHeight + "px";
             footer_container.style.position = "absolute";
           });
         }
@@ -1785,4 +1781,4 @@ class NimbleGrid extends HTMLElement {
     return this;
   }
 }
-customElements.define("ls-grid", NimbleGrid);
+customElements.define("ls-grid", ls_grid);
