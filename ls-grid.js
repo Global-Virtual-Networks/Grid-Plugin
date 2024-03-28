@@ -1000,7 +1000,6 @@ class NimbleGrid extends HTMLElement {
     let tabledata_rows;
     let ord_bind_obj = {};
     let ord_name_obj = {};
-    let load_grid_called = false;
     const background_count = counter();
     const compressed_num_of_cols = counter();
     const header_click = counter();
@@ -1774,9 +1773,11 @@ class NimbleGrid extends HTMLElement {
           add_headers(config.data_adapter.columns, data.schema);
           populate_table(data.rows);
           grid_mode.set(conf.grid_mode);
-          load_grid_called = true; //this boolean variable is used to rearrange cols to match schema ord
           header_container.style.visibility = "visible";
           footer_container.style.visibility = "visible";
+          if (!NimbleGrid_container.style.height)
+            NimbleGrid_container.style.cssText +=
+              "height: " + NimbleGrid_container.offsetHeight * 1.1 + "px";
         });
       },
     };
