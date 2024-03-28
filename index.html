@@ -5,28 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="NimbleGrid.js"></script>
-    <title>Grid Plugin Demo</title>
+    <script src="ls-grid.js"></script>
+    <title>ls-grid Demo</title>
   </head>
   <body>
-    <div
-      id="grid_container"
-      style="
-        width: auto;
-        max-width: 720px;
-        height: auto;
-        max-height: 1000px;
-        margin: 40px 20px;
-        border: 2px solid black;
-      "
-    ></div>
+    <div style="display: flex; justify-content: center">
+      <ls-grid style="width: 800px"></ls-grid>
+    </div>
   </body>
 </html>
 <script type="text/javascript">
   let ajax = {
     //rtd equals rows to display
-    rtd: 25,
-    //data_adapter property communicates to NimbleGrid the columns to display, how to get the data, and the variable types of each column
+    rtd: 23,
+    client_sort: true,
+    //data_adapter property communicates to rid the columns to display, how to get the data, and the variable types of each column
     data_adapter: {
       //columns to display
       columns: [
@@ -39,7 +32,7 @@
         {
           display: "Name",
           name: "name",
-          width: 12,
+          width: 15,
           align: "left",
         },
         {
@@ -51,30 +44,30 @@
         {
           display: "Country of Origin",
           name: "country_of_origin",
-          width: 12,
-          align: "center",
+          width: 20,
+          align: "left",
         },
         {
           display: "Fav Num",
           name: "favorite_number",
-          width: 12,
+          width: 8,
           align: "center",
         },
         {
           display: "BY",
           name: "birth_year",
-          width: 8,
+          width: 12,
           align: "center",
         },
         {
           display: "Portfolio",
           name: "portfolio",
-          width: 30,
+          width: 25,
           align: "left",
         },
       ],
       //how to get the data(ajax call to a local file over VSCode LiveServer extension is used below)
-      load: function (callback) {
+      load: function (null_arg, callback) {
         // Define the URL of the file you want to fetch
         var url = "dummy_dataset.json";
 
@@ -129,14 +122,13 @@
       ],
     },
     //(Optional)on_row_click returns the row number
-    on_row_click: function (row_num) {
-      alert("Clicked on row #" + parseInt(row_num));
+    on_row_click: function (row_data) {
+      alert("Clicked on row " + row_data.id);
     },
     //(Optional)modify default styles this way
     style: {
       alt_color: ["background-color: #ddd"],
     },
   };
-  const grid = $("#grid_container").NimbleGrid(ajax);
-  grid.api.load_grid();
+  document.querySelector("ls-grid").api.load_grid(ajax);
 </script>
