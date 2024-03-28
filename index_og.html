@@ -9,7 +9,7 @@
     <title>Grid Plugin Demo</title>
   </head>
   <body>
-    <ls-grid></ls-grid>
+    <ls-grid style="height: 600px"></ls-grid>
   </body>
 </html>
 <script type="text/javascript">
@@ -128,5 +128,6 @@
       alt_color: ["background-color: #ddd"],
     },
   };
-  const grid = document.querySelector("ls-grid").api.load_grid(ajax);
+  const grid = document.querySelector("ls-grid");
+  grid.api.load_grid(ajax);
 </script>

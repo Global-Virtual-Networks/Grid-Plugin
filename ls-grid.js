@@ -1308,7 +1308,7 @@ class NimbleGrid extends HTMLElement {
         css(conf.style.larger_width_cell, cell);
       }
       const row_num = rows_arr.length - 1;
-      cell.innerHTML = cell_text;
+      cell.innerText = cell_text;
       let td;
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
@@ -1428,54 +1428,54 @@ class NimbleGrid extends HTMLElement {
         cell.setAttribute("id", conv_to_snakecase(cell_text.toString()));
         td = document.createElement("td");
 
-        if (this.schema[cell_num]) {
-          cell.addEventListener("click", function (event) {
-            const row = this.parentElement.parentElement.parentElement;
-            if (!edit_mode.get_mode() && event.ctrlKey) {
-              if (!row.querySelector("input")) {
-                edit_mode.set_mode(true);
-                edit_mode.set_edit_row(row);
-                reset_row_backgrounds(row);
+        // if (this.schema[cell_num]) {
+        //   cell.addEventListener("click", function (event) {
+        //     const row = this.parentElement.parentElement.parentElement;
+        //     if (!edit_mode.get_mode() && event.ctrlKey) {
+        //       if (!row.querySelector("input")) {
+        //         edit_mode.set_mode(true);
+        //         edit_mode.set_edit_row(row);
+        //         reset_row_backgrounds(row);
 
-                for (let i = 0; i < row.cells.length; i++) {
-                  const cell = row.cells[i].children[0].children[0];
-                  const id = cell.id;
+        //         for (let i = 0; i < row.cells.length; i++) {
+        //           const cell = row.cells[i].children[0].children[0];
+        //           const id = cell.id;
 
-                  //save cell's content to bef_aft_obj
-                  bef_aft_obj[[id]] = cell.innerText;
+        //           //save cell's content to bef_aft_obj
+        //           bef_aft_obj[[id]] = cell.innerText;
 
-                  //grab the width of the cell prior to adding in the tb
-                  const cell_width = cell.parentElement.offsetWidth * 0.9;
+        //           //grab the width of the cell prior to adding in the tb
+        //           const cell_width = cell.parentElement.offsetWidth * 0.9;
 
-                  cell.innerText = "";
+        //           cell.innerText = "";
 
-                  //create, append, and adjust textbox into cell
-                  const cell_tb = document.createElement("input");
-                  cell_tb.setAttribute("id", id + "_tb");
-                  css(["padding: 0;"], cell);
-                  css(
-                    [
-                      "width: " + cell_width + "px",
-                      "font-size: inherit;",
-                      "height: inherit;",
-                    ],
-                    cell_tb
-                  );
-                  cell.appendChild(cell_tb);
-                  cell_tb.addEventListener("click", function () {
-                    cell_tb.select();
-                  });
-                  cell_tb.value = bef_aft_obj[id];
+        //           //create, append, and adjust textbox into cell
+        //           const cell_tb = document.createElement("input");
+        //           cell_tb.setAttribute("id", id + "_tb");
+        //           css(["padding: 0;"], cell);
+        //           css(
+        //             [
+        //               "width: " + cell_width + "px",
+        //               "font-size: inherit;",
+        //               "height: inherit;",
+        //             ],
+        //             cell_tb
+        //           );
+        //           cell.appendChild(cell_tb);
+        //           cell_tb.addEventListener("click", function () {
+        //             cell_tb.select();
+        //           });
+        //           cell_tb.value = bef_aft_obj[id];
 
-                  if (id === row.id) {
-                    cell_tb.select();
-                  }
-                }
-                change_alignment("center", row);
-              }
-            }
-          });
-        }
+        //           if (id === row.id) {
+        //             cell_tb.select();
+        //           }
+        //         }
+        //         change_alignment("center", row);
+        //       }
+        //     }
+        //   });
+        // }
       }
       //set class attribute on td dom object and add right click event listeners to it
       // td.setAttribute("class", "column" + cell_num);
