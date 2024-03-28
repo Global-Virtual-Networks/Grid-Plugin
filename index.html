@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="ls-grid.js"></script>
-    <title>Grid Plugin Demo</title>
+    <title>ls-grid Demo</title>
   </head>
   <body>
-    <ls-grid></ls-grid>
+    <div style="display: flex; justify-content: center">
+      <ls-grid style="width: 800px"></ls-grid>
+    </div>
   </body>
 </html>
 <script type="text/javascript">
@@ -128,5 +130,5 @@
       alt_color: ["background-color: #ddd"],
     },
   };
-  const grid = document.querySelector("ls-grid").api.load_grid(ajax);
+  document.querySelector("ls-grid").api.load_grid(ajax);
 </script>
