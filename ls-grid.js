@@ -4,10 +4,6 @@ class ls_grid extends HTMLElement {
     this.attachShadow({ mode: "open" });
     const ls_grid_container = document.createElement("div");
     this.shadowRoot.append(ls_grid_container);
-    window.addEventListener("DOMContentLoaded", () => {
-      ls_grid_container.style.cssText = this.getAttribute("style");
-      this.removeAttribute("style");
-    });
 
     let rtd;
     let conf = {
@@ -1763,12 +1759,6 @@ class ls_grid extends HTMLElement {
             add_headers(config.data_adapter.columns, data.schema);
             populate_table(data.rows);
             grid_mode.set(conf.grid_mode);
-
-            //to account for NO specified height with absolute positioning
-            footer_container.style.position = "static";
-            ls_grid_container.style.height =
-              ls_grid_container.offsetHeight + "px";
-            footer_container.style.position = "absolute";
           });
         }
         header_container.style.visibility = "visible";
@@ -1779,6 +1769,21 @@ class ls_grid extends HTMLElement {
     create_grid();
 
     return this;
+  }
+
+  connectedCallback() {
+    const parent = this.shadowRoot.querySelector("div");
+    let inline_styles = this.getAttribute("style");
+    if (inline_styles) {
+      parent.style.cssText = inline_styles;
+      parent.style.margin = 0; //to prevent double booking
+    } else {
+      //to account for NO specified height with absolute positioning
+      const footer_container = parent.querySelector("#footer_container");
+      footer_container.style.position = "static";
+      parent.style.height = parent.offsetHeight + "px";
+      footer_container.style.position = "absolute";
+    }
   }
 }
 customElements.define("ls-grid", ls_grid);
