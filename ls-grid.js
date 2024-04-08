@@ -733,6 +733,7 @@ class ls_grid extends HTMLElement {
       });
 
       tot_pgs = append_child("p", pager_cont, "tot_pgs");
+      tot_pgs.style.textWrap = "nowrap";
 
       next_butt = append_child("button", pager_cont, "next_butt");
       const next_butt_img = append_child("img", next_butt);
