@@ -514,6 +514,12 @@ class ls_grid extends HTMLElement {
       });
     };
 
+    this.empty_table = function () {
+      while (table.firstChild) {
+        table.removeChild(table.lastChild);
+      }
+    };
+
     this.filter_rows = () => {
       const col = header_info[sort_by];
       let p = {};
