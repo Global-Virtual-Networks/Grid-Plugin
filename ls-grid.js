@@ -514,6 +514,12 @@ class ls_grid extends HTMLElement {
       });
     };
 
+    this.empty_table = function () {
+      while (table.firstChild) {
+        table.removeChild(table.lastChild);
+      }
+    };
+
     this.filter_rows = () => {
       const col = header_info[sort_by];
       let p = {};
@@ -733,6 +739,7 @@ class ls_grid extends HTMLElement {
       });
 
       tot_pgs = append_child("p", pager_cont, "tot_pgs");
+      tot_pgs.style.textWrap = "nowrap";
 
       next_butt = append_child("button", pager_cont, "next_butt");
       const next_butt_img = append_child("img", next_butt);
