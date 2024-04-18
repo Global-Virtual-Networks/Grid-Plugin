@@ -8,7 +8,7 @@ class ls_grid extends HTMLElement {
     let rtd;
     let conf = {
       //rtd equals rows to display
-      rtd: 15,
+      rtd: 23,
       icons: {
         ascending:
           "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAcAAAAECAMAAAB1GNVPAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADNQTFRF1NTUfX190dHRtLS0l5eXQEBAR0dH1dXVREREr6+v2dnZn5+fbGxseXl5RkZGzMzM////BUSGAAAAABF0Uk5T/////////////////////wAlrZliAAAAJklEQVR42mIQEBBgA2IGAQEORh4QzcrLycwtwMDHwsTPwMUOEGAAFi0BOZt2IEwAAAAASUVORK5CYII=",
@@ -38,7 +38,7 @@ class ls_grid extends HTMLElement {
           "overflow-x: auto;",
           "width: 100%;",
           "height: 100%;",
-          "min-height: 100px",
+          "min-height: 100vh",
           "position: relative",
         ],
         table: [
@@ -1780,13 +1780,22 @@ class ls_grid extends HTMLElement {
 
   connectedCallback() {
     const parent = this.shadowRoot.querySelector("div");
+    const footer_container = parent.querySelector("#footer_container");
     let inline_styles = this.getAttribute("style");
+
     if (inline_styles) {
       parent.style.cssText = inline_styles;
       parent.style.margin = 0; //to prevent double booking
+      
+      if (inline_styles.includes('height: ')) {
+        footer_container.style.position = 'absolute';
+      } else {
+        footer_container.style.position = 'relative';
+        parent.style.height = parent.offsetHeight + "px";
+      }
+
     } else {
       //to account for NO specified height with absolute positioning
-      const footer_container = parent.querySelector("#footer_container");
       footer_container.style.position = "static";
       parent.style.height = parent.offsetHeight + "px";
       footer_container.style.position = "absolute";
