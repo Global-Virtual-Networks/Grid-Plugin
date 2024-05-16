@@ -4,15 +4,9 @@ class ls_grid extends HTMLElement {
     this.attachShadow({ mode: "open" });
     const ls_grid_container = document.createElement("div");
     this.shadowRoot.append(ls_grid_container);
-    window.addEventListener("DOMContentLoaded", () => {
-      ls_grid_container.style.cssText = this.getAttribute("style");
-      this.removeAttribute("style");
-    });
 
     let rtd;
     let conf = {
-      //rtd equals rows to display
-      rtd: 15,
       icons: {
         ascending:
           "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAcAAAAECAMAAAB1GNVPAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADNQTFRF1NTUfX190dHRtLS0l5eXQEBAR0dH1dXVREREr6+v2dnZn5+fbGxseXl5RkZGzMzM////BUSGAAAAABF0Uk5T/////////////////////wAlrZliAAAAJklEQVR42mIQEBBgA2IGAQEORh4QzcrLycwtwMDHwsTPwMUOEGAAFi0BOZt2IEwAAAAASUVORK5CYII=",
@@ -518,6 +512,12 @@ class ls_grid extends HTMLElement {
       });
     };
 
+    this.empty_table = function () {
+      while (table.firstChild) {
+        table.removeChild(table.lastChild);
+      }
+    };
+
     this.filter_rows = () => {
       const col = header_info[sort_by];
       let p = {};
@@ -737,6 +737,7 @@ class ls_grid extends HTMLElement {
       });
 
       tot_pgs = append_child("p", pager_cont, "tot_pgs");
+      tot_pgs.style.textWrap = "nowrap";
 
       next_butt = append_child("button", pager_cont, "next_butt");
       const next_butt_img = append_child("img", next_butt);
@@ -1043,50 +1044,21 @@ class ls_grid extends HTMLElement {
 
       background_count.set_count(1);
       tabledata_len = tabledata_rows.length;
-      //in case current page doesn't exist after filters are applied
-      if (first_entry_index > tabledata_len) {
-        pagination_active(1);
-      }
-      tabledata_rows = tabledata_rows.slice(
-        first_entry_index,
-        first_entry_index + conf.rtd
-      );
-
-      tabledata_rows.forEach((row, idx) => {
-        const row_dobj = add_row.call(this, row);
-        set_row_background_color(row_dobj);
-        row_dobj.addEventListener("click", function (event) {
-          if (!event.ctrlKey && !edit_mode.get_mode()) {
-            if (typeof conf.on_row_click === "function") {
-              let obj = {};
-              const row = this.cells;
-              const cols = conf.data_adapter.columns;
-              for (let i = 0; i < row.length; i++) {
-                const key = cols[i].name.toLowerCase();
-                let value = row[i].textContent;
-                obj[key] = value;
-              }
-              conf.on_row_click.call(this, obj);
-            }
-          }
-        });
-      });
-      set_pagination_nums();
 
       //client side sorting algorithm below
+      const rows = tabledata_rows;
       if (sort_by !== null && conf.client_sort) {
         let switching, i, x, y, shouldSwitch;
         switching = true;
         const column_info = header_info[sort_by];
-        const rows = table.rows;
 
         while (switching) {
           switching = false;
 
-          for (i = 1; i < rows.length - 1; i++) {
+          for (i = 0; i < rows.length - 1; i++) {
             shouldSwitch = false;
-            x = rows[i].cells[sort_by].textContent;
-            y = rows[i + 1].cells[sort_by].textContent;
+            x = rows[i].cell[sort_by];
+            y = rows[i + 1].cell[sort_by];
             if (column_info.type === "int") {
               //int method includes precautions in case x or y is NaN(not a number)
               x = int(x);
@@ -1116,11 +1088,43 @@ class ls_grid extends HTMLElement {
             }
           }
           if (shouldSwitch) {
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            var tmp = rows[i];
+            rows[i] = rows[i + 1];
+            rows[i + 1] = tmp;
             switching = true;
           }
         }
       }
+
+      //in case current page doesn't exist after filters are applied
+      if (first_entry_index > tabledata_len) {
+        pagination_active(1);
+      }
+      tabledata_rows = rows.slice(
+        first_entry_index,
+        first_entry_index + conf.rtd
+      );
+
+      tabledata_rows.forEach((row, idx) => {
+        const row_dobj = add_row.call(this, row);
+        set_row_background_color(row_dobj);
+        row_dobj.addEventListener("click", function (event) {
+          if (!event.ctrlKey && !edit_mode.get_mode()) {
+            if (typeof conf.on_row_click === "function") {
+              let obj = {};
+              const row = this.cells;
+              const cols = conf.data_adapter.columns;
+              for (let i = 0; i < row.length; i++) {
+                const key = cols[i].name.toLowerCase();
+                let value = row[i].textContent;
+                obj[key] = value;
+              }
+              conf.on_row_click.call(this, obj);
+            }
+          }
+        });
+      });
+      set_pagination_nums();
 
       // //set display to none for any rows outside the index calculated below
       // const low = first_entry_index;
@@ -1296,7 +1300,7 @@ class ls_grid extends HTMLElement {
         css(conf.style.larger_width_cell, cell);
       }
       const row_num = rows_arr.length - 1;
-      cell.innerText = cell_text;
+      cell.innerHTML = cell_text;
       let td;
       //determine whether it is a header cell or not, and execute the corresponding code
       if (header_row) {
@@ -1763,12 +1767,6 @@ class ls_grid extends HTMLElement {
             add_headers(config.data_adapter.columns, data.schema);
             populate_table(data.rows);
             grid_mode.set(conf.grid_mode);
-
-            //to account for NO specified height with absolute positioning
-            footer_container.style.position = "static";
-            ls_grid_container.style.height =
-              ls_grid_container.offsetHeight + "px";
-            footer_container.style.position = "absolute";
           });
         }
         header_container.style.visibility = "visible";
@@ -1779,6 +1777,21 @@ class ls_grid extends HTMLElement {
     create_grid();
 
     return this;
+  }
+
+  connectedCallback() {
+    const parent = this.shadowRoot.querySelector("div");
+    let inline_styles = this.getAttribute("style");
+    if (inline_styles) {
+      parent.style.cssText = inline_styles;
+      parent.style.margin = 0; //to prevent double booking
+    } else {
+      //to account for NO specified height with absolute positioning
+      const footer_container = parent.querySelector("#footer_container");
+      footer_container.style.position = "static";
+      parent.style.height = parent.offsetHeight + "px";
+      footer_container.style.position = "absolute";
+    }
   }
 }
 customElements.define("ls-grid", ls_grid);
