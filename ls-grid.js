@@ -1763,6 +1763,16 @@ class ls_grid extends HTMLElement {
             condensedCellsContainer,
             row.nextElementSibling
           );
+
+          const condensedCellContainer = append_child(
+            "div",
+            condensedCellsContainer
+          );
+          condensedCellContainer.style.cssText =
+            "display: flex; align-items: center;";
+
+          const column = append_child("div", condensedCellsContainer);
+          condensedCellContainer.innerHTML = condensedCell.innerHTML;
         }
       }
     };
