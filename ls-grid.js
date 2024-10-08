@@ -1751,16 +1751,19 @@ class ls_grid extends HTMLElement {
     };
 
     const modifyCols = function () {
-      let hiddenCells = [];
-
       if (table.offsetWidth >= screen.width) {
         const rows = table.rows;
 
         for (const row of rows) {
           const cells = row.cells;
-          hiddenCells.push(row.removeChild(cells[cells.length - 1]));
+          const condensedCell = row.removeChild(cells[cells.length - 1]);
+
+          const condensedCellsContainer = document.createElement("div");
+          row.parentElement.insertBefore(
+            condensedCellsContainer,
+            row.nextElementSibling
+          );
         }
-        debugger;
       }
     };
 
