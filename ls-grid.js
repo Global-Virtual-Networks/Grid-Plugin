@@ -1742,12 +1742,31 @@ class ls_grid extends HTMLElement {
             ls_grid_container.style.height =
               ls_grid_container.offsetHeight + "px";
             footer_container.style.position = "absolute";
+            modifyCols();
           });
         }
         header_container.style.visibility = "visible";
         footer_container.style.visibility = "visible";
       },
     };
+
+    const modifyCols = function () {
+      let hiddenCells = [];
+
+      if (table.offsetWidth >= screen.width) {
+        const rows = table.rows;
+
+        for (const row of rows) {
+          const cells = row.cells;
+          hiddenCells.push(row.removeChild(cells[cells.length - 1]));
+        }
+        debugger;
+      }
+    };
+
+    window.addEventListener("resize", function () {
+      modifyCols();
+    });
 
     create_grid();
 
