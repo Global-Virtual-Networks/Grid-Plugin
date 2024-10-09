@@ -1757,15 +1757,18 @@ class ls_grid extends HTMLElement {
     };
 
     class condenseCols {
+      #table;
       #condensedDivs;
+      #headerCells;
 
       constructor(table) {
-        this.table = table;
+        this.#table = table;
         this.#condensedDivs = [];
+        this.#headerCells = [];
       }
 
       condense = function () {
-        const table = this.table;
+        const table = this.#table;
 
         if (table.offsetWidth >= screen.width) {
           let headerCell;
