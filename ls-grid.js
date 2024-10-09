@@ -569,7 +569,9 @@ class ls_grid extends HTMLElement {
         }
         num_of_pages = Math.ceil(search_matches.length / conf.rtd);
         table2.remove();
+        debugger;
         populate_table(search_matches);
+        debugger;
         table2.condense();
       });
     };
@@ -1802,8 +1804,7 @@ class ls_grid extends HTMLElement {
       remove = function () {
         const condensedDivs = this.#condensedDivs;
 
-        for (const div of condensedDivs)
-          div.removeChild(div.querySelector("td"));
+        for (const div of condensedDivs) div.parentElement.removeChild(div);
       };
 
       expand = function () {};
