@@ -972,6 +972,7 @@ class ls_grid extends HTMLElement {
     let sortedBy_icon;
     let headers_arr;
     let header_info = {};
+    let condensation;
 
     //elem = element
     const css = (property, elem) => {
@@ -1742,7 +1743,9 @@ class ls_grid extends HTMLElement {
             ls_grid_container.style.height =
               ls_grid_container.offsetHeight + "px";
             footer_container.style.position = "absolute";
-            modifyCols();
+            condensation = new condenseCols(table);
+
+            condensation.modifyCols();
           });
         }
         header_container.style.visibility = "visible";
@@ -1750,41 +1753,52 @@ class ls_grid extends HTMLElement {
       },
     };
 
-    const modifyCols = function () {
-      if (table.offsetWidth >= screen.width) {
-        const rows = table.rows;
-        let headerCell;
+    class condenseCols {
+      #privateVariable;
 
-        for (let i = 0; i < rows.length; i++) {
-          const row = rows[i];
-          const cells = row.cells;
-
-          const condensedCell = row.removeChild(cells[cells.length - 1]);
-          condensedCell.style.cssText = "width: auto; margin: 5px;";
-          condensedCell.querySelector("#cell_cont").style.cssText =
-            "border: none;";
-
-          if (i === 0) {
-            headerCell = condensedCell;
-            continue;
-          }
-
-          const condensedCellsContainer = document.createElement("div");
-          condensedCellsContainer.style.cssText =
-            "display: none; align-items: center;";
-          row.parentElement.insertBefore(
-            condensedCellsContainer,
-            row.nextElementSibling
-          );
-
-          condensedCellsContainer.appendChild(headerCell.cloneNode(true));
-          condensedCellsContainer.appendChild(condensedCell);
-        }
+      constructor(table) {
+        this.table = table;
+        this.#privateVariable = "This is private";
       }
-    };
+
+      modifyCols = function () {
+        const table = this.table;
+
+        if (table.offsetWidth >= screen.width) {
+          const rows = table.rows;
+          let headerCell;
+
+          for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const cells = row.cells;
+
+            const condensedCell = row.removeChild(cells[cells.length - 1]);
+            condensedCell.style.cssText = "width: auto; margin: 5px;";
+            condensedCell.querySelector("#cell_cont").style.cssText =
+              "border: none;";
+
+            if (i === 0) {
+              headerCell = condensedCell;
+              continue;
+            }
+
+            const condensedCellsContainer = document.createElement("div");
+            condensedCellsContainer.style.cssText =
+              "display: none; align-items: center;";
+            row.parentElement.insertBefore(
+              condensedCellsContainer,
+              row.nextElementSibling
+            );
+
+            condensedCellsContainer.appendChild(headerCell.cloneNode(true));
+            condensedCellsContainer.appendChild(condensedCell);
+          }
+        }
+      };
+    }
 
     window.addEventListener("resize", function () {
-      modifyCols();
+      condensation.modifyCols();
     });
 
     create_grid();
