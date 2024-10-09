@@ -568,7 +568,9 @@ class ls_grid extends HTMLElement {
           }
         }
         num_of_pages = Math.ceil(search_matches.length / conf.rtd);
+        table2.remove();
         populate_table(search_matches);
+        table2.condense();
       });
     };
 
@@ -1670,8 +1672,6 @@ class ls_grid extends HTMLElement {
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
       self.filter_rows();
-      debugger;
-      table2.condense();
     };
 
     const calc_rtd = function (length) {
@@ -1746,7 +1746,6 @@ class ls_grid extends HTMLElement {
               ls_grid_container.offsetHeight + "px";
             footer_container.style.position = "absolute";
             table2 = new condenseCols(table);
-
             table2.condense();
           });
         }
@@ -1765,13 +1764,6 @@ class ls_grid extends HTMLElement {
 
       condense = function () {
         const table = this.table;
-
-        //remove any previously existing columns
-        const tableChildren = table.children;
-        for (const row of tableChildren) {
-          if (row.localName === "div") table.removeChild(row);
-        }
-        //remove any previously existing columns
 
         if (table.offsetWidth >= screen.width) {
           let headerCell;
@@ -1805,6 +1797,13 @@ class ls_grid extends HTMLElement {
             this.#condensedDivs.push(condensedCellsContainer);
           }
         }
+      };
+
+      remove = function () {
+        const condensedDivs = this.#condensedDivs;
+
+        for (const div of condensedDivs)
+          div.removeChild(div.querySelector("td"));
       };
 
       expand = function () {};
