@@ -568,11 +568,9 @@ class ls_grid extends HTMLElement {
           }
         }
         num_of_pages = Math.ceil(search_matches.length / conf.rtd);
-        table2.remove();
-        debugger;
+        remove();
         populate_table(search_matches);
-        debugger;
-        table2.condense();
+        condense();
       });
     };
 
@@ -1747,8 +1745,7 @@ class ls_grid extends HTMLElement {
             ls_grid_container.style.height =
               ls_grid_container.offsetHeight + "px";
             footer_container.style.position = "absolute";
-            table2 = new condenseCols(table);
-            table2.condense();
+            condense();
           });
         }
         header_container.style.visibility = "visible";
@@ -1756,70 +1753,56 @@ class ls_grid extends HTMLElement {
       },
     };
 
-    class condenseCols {
-      #table;
-      #condensedDivs;
-      #headerCells;
+    let condensedDivs = [];
+    let headerCells = [];
 
-      constructor(table) {
-        this.#table = table;
-        this.#condensedDivs = [];
-        this.#headerCells = [];
-      }
+    const condense = function () {
+      if (table.offsetWidth >= screen.width) {
+        let headerCell;
+        const rows = table.rows;
 
-      condense = function () {
-        const table = this.#table;
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          const cells = row.cells;
 
-        if (table.offsetWidth >= screen.width) {
-          let headerCell;
-          const rows = table.rows;
+          const condensedCell = row.removeChild(cells[cells.length - 1]);
 
-          for (let i = 0; i < rows.length; i++) {
-            const row = rows[i];
-            const cells = row.cells;
+          if (i === 0) headerCells.push(condensedCell.cloneNode(true));
 
-            const condensedCell = row.removeChild(cells[cells.length - 1]);
+          condensedCell.style.cssText = "width: auto; margin: 5px;";
+          condensedCell.querySelector("#cell_cont").style.cssText =
+            "border: none;";
 
-            if (i === 0) this.#headerCells.push(condensedCell.cloneNode(true));
-
-            condensedCell.style.cssText = "width: auto; margin: 5px;";
-            condensedCell.querySelector("#cell_cont").style.cssText =
-              "border: none;";
-
-            if (i === 0) {
-              headerCell = condensedCell;
-              continue;
-            }
-
-            const condensedCellsContainer = document.createElement("div");
-            condensedCellsContainer.style.cssText =
-              "display: flex; align-items: center;";
-            row.parentElement.insertBefore(
-              condensedCellsContainer,
-              row.nextElementSibling
-            );
-
-            condensedCellsContainer.appendChild(headerCell.cloneNode(true));
-            condensedCellsContainer.appendChild(condensedCell);
-
-            this.#condensedDivs.push(condensedCellsContainer);
+          if (i === 0) {
+            headerCell = condensedCell;
+            continue;
           }
+
+          const condensedCellsContainer = document.createElement("div");
+          condensedCellsContainer.style.cssText =
+            "display: flex; align-items: center;";
+          row.parentElement.insertBefore(
+            condensedCellsContainer,
+            row.nextElementSibling
+          );
+
+          condensedCellsContainer.appendChild(headerCell.cloneNode(true));
+          condensedCellsContainer.appendChild(condensedCell);
+
+          condensedDivs.push(condensedCellsContainer);
         }
-      };
+      }
+    };
 
-      remove = function () {
-        const condensedDivs = this.#condensedDivs;
-        for (const div of condensedDivs) div.parentElement.removeChild(div);
+    const remove = function () {
+      for (const div of condensedDivs) div.parentElement.removeChild(div);
+      for (const cell of headerCells) table.rows[0].appendChild(cell);
+    };
 
-        const headerCells = this.#headerCells;
-        for (const cell of headerCells) this.#table.rows[0].appendChild(cell);
-      };
-
-      expand = function () {};
-    }
+    const expand = function () {};
 
     window.addEventListener("resize", function () {
-      table2.condense();
+      condense();
     });
 
     create_grid();
