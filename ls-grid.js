@@ -296,7 +296,7 @@ class ls_grid extends HTMLElement {
     };
 
     const self = this;
-    let sort_by = null;
+    let headerIdx = null;
     let curr_page = 1;
     let first_entry_index = 0;
     let last_entry_index;
@@ -559,7 +559,7 @@ class ls_grid extends HTMLElement {
     };
 
     this.filter_rows = () => {
-      const col = header_info[sort_by];
+      const col = header_info[headerIdx];
       let p = {};
       if (col) {
         p = {
@@ -904,7 +904,7 @@ class ls_grid extends HTMLElement {
           sortedBy_icon.style.visibility = "hidden";
           sortedBy_icon = undefined;
         }
-        sort_by = null;
+        headerIdx = null;
         rows_arr = [];
         pagination_active(1);
       }); /*           export_butt = append_child("button", container, "export_butt");
@@ -1074,18 +1074,18 @@ class ls_grid extends HTMLElement {
 
       //client side sorting algorithm below
       const rows = tabledata_rows;
-      if (sort_by !== null && conf.client_sort) {
+      if (headerIdx !== null && conf.client_sort) {
         let switching, i, x, y, shouldSwitch;
         switching = true;
-        const column_info = header_info[sort_by];
+        const column_info = header_info[headerIdx];
 
         while (switching) {
           switching = false;
 
           for (i = 0; i < rows.length - 1; i++) {
             shouldSwitch = false;
-            x = rows[i].cell[sort_by];
-            y = rows[i + 1].cell[sort_by];
+            x = rows[i].cell[headerIdx];
+            y = rows[i + 1].cell[headerIdx];
             if (column_info.type === "int") {
               //int method includes precautions in case x or y is NaN(not a number)
               x = int(x);
@@ -1349,7 +1349,7 @@ class ls_grid extends HTMLElement {
           for (let i = 0; i < header_row.length; i++) {
             const header_cell = header_row[i].children[0].children[0];
             if (this === header_cell) {
-              sort_by = i;
+              headerIdx = i;
               const sort_ord_asc = header_info[i].ascending;
               if (sort_ord_asc) {
                 ascending_icon.style.visibility = "hidden";
@@ -1399,7 +1399,7 @@ class ls_grid extends HTMLElement {
           for (let i = 0; i < header_row.length; i++) {
             const header_cell = header_row[i].children[0].children[0];
             if (this === header_cell) {
-              if (sort_by !== i) {
+              if (headerIdx !== i) {
                 //hide icon if its corresponding header cell has not been clicked
                 ascending_icon.style.visibility = "hidden";
                 descending_icon.style.visibility === "hidden";
