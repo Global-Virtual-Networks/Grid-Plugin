@@ -1760,7 +1760,9 @@ class ls_grid extends HTMLElement {
           const cells = row.cells;
 
           const condensedCell = row.removeChild(cells[cells.length - 1]);
-          condensedCell.style.width = "auto";
+          condensedCell.style.cssText = "width: auto; margin: 5px;";
+          condensedCell.querySelector("#cell_cont").style.cssText =
+            "border: none;";
 
           if (i === 0) {
             headerCell = condensedCell;
