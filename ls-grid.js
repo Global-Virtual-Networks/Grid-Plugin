@@ -25,7 +25,6 @@ class ls_grid extends HTMLElement {
           "data:image/png;base64, R0lGODlhEAAQAMQNACRIkC1TnjNZpj9otyxm2Dhu3D913Sxx7kRvwEJt1Ep1yEh630574f///1OA1lGD4VaE6V+L4GCM5GiU5W+W7G2Z5mec+3Ga536f7oKg542r8Iiu/5a076G+8KK9/6rE7yH5BAEAAA0ALAAAAAAQABAAAAVWYCOOZGme55RdJls+X1VGcul0Exl5uc1Jo8TGAywpNBFRwmLhJEsIzKMhIBwsmmlpQFmIANaLtySgGEbgx5ksKZAACXcpACGUwCYAw17iv+EogYKDJCEAOw==",
       },
       grid_mode: "pagination",
-      client_sort: true,
       style: {
         //css relating to table
         row_color: ["background-color: #ffffff"],
