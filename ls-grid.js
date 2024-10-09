@@ -573,6 +573,7 @@ class ls_grid extends HTMLElement {
         for (const div of condensedDivs) div.parentElement.removeChild(div);
         condensedDivs = [];
         for (const cell of headerCells) table.rows[0].appendChild(cell);
+        headerCells = [];
         //remove HTML elements holding condensed columns
 
         populate_table(search_matches);
