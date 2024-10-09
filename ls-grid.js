@@ -972,7 +972,7 @@ class ls_grid extends HTMLElement {
     let sortedBy_icon;
     let headers_arr;
     let header_info = {};
-    let condensation;
+    let table2;
 
     //elem = element
     const css = (property, elem) => {
@@ -1743,9 +1743,9 @@ class ls_grid extends HTMLElement {
             ls_grid_container.style.height =
               ls_grid_container.offsetHeight + "px";
             footer_container.style.position = "absolute";
-            condensation = new condenseCols(table);
+            table2 = new condenseCols(table);
 
-            condensation.modifyCols();
+            table2.condense();
           });
         }
         header_container.style.visibility = "visible";
@@ -1754,14 +1754,14 @@ class ls_grid extends HTMLElement {
     };
 
     class condenseCols {
-      #privateVariable;
+      #condensedDivs = [];
 
       constructor(table) {
         this.table = table;
-        this.#privateVariable = "This is private";
+        this.#condensedDivs = "This is private";
       }
 
-      modifyCols = function () {
+      condense = function () {
         const table = this.table;
 
         if (table.offsetWidth >= screen.width) {
@@ -1795,10 +1795,12 @@ class ls_grid extends HTMLElement {
           }
         }
       };
+
+      expand = function () {};
     }
 
     window.addEventListener("resize", function () {
-      condensation.modifyCols();
+      table2.condense();
     });
 
     create_grid();
