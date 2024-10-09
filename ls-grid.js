@@ -1670,6 +1670,8 @@ class ls_grid extends HTMLElement {
       first_entry_index = (new_page - 1) * conf.rtd;
       pag_tb.value = curr_page;
       self.filter_rows();
+      debugger;
+      table2.condense();
     };
 
     const calc_rtd = function (length) {
@@ -1754,19 +1756,26 @@ class ls_grid extends HTMLElement {
     };
 
     class condenseCols {
-      #condensedDivs = [];
+      #condensedDivs;
 
       constructor(table) {
         this.table = table;
-        this.#condensedDivs = "This is private";
+        this.#condensedDivs = [];
       }
 
       condense = function () {
         const table = this.table;
 
+        //remove any previously existing columns
+        const tableChildren = table.children;
+        for (const row of tableChildren) {
+          if (row.localName === "div") table.removeChild(row);
+        }
+        //remove any previously existing columns
+
         if (table.offsetWidth >= screen.width) {
-          const rows = table.rows;
           let headerCell;
+          const rows = table.rows;
 
           for (let i = 0; i < rows.length; i++) {
             const row = rows[i];
@@ -1784,7 +1793,7 @@ class ls_grid extends HTMLElement {
 
             const condensedCellsContainer = document.createElement("div");
             condensedCellsContainer.style.cssText =
-              "display: none; align-items: center;";
+              "display: flex; align-items: center;";
             row.parentElement.insertBefore(
               condensedCellsContainer,
               row.nextElementSibling
@@ -1792,6 +1801,8 @@ class ls_grid extends HTMLElement {
 
             condensedCellsContainer.appendChild(headerCell.cloneNode(true));
             condensedCellsContainer.appendChild(condensedCell);
+
+            this.#condensedDivs.push(condensedCellsContainer);
           }
         }
       };
