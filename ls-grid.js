@@ -1159,16 +1159,6 @@ class ls_grid extends HTMLElement {
       });
       set_pagination_nums();
 
-      // //set display to none for any rows outside the index calculated below
-      // const low = first_entry_index;
-      // const high = first_entry_index + conf.rtd;
-      // const rows = table.rows;
-      // for (let i = 1; i < rows.length; i++) {
-      //   if (i < low || i > high) {
-      //     rows[i].style.display = "none";
-      //   }
-      // }
-
       //iterate through table and set background colors on rows
       background_count.reset();
       for (const row of table.rows) {
