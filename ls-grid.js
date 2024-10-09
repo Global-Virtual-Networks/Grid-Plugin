@@ -229,6 +229,12 @@ class ls_grid extends HTMLElement {
 
           condensedDivs.push(condensedCellsContainer);
         }
+
+        table_cont.style.cssText +=
+          "height: " +
+          "calc(100% - " +
+          (header_container.offsetHeight + footer_container.offsetHeight + 20) +
+          "px);"; //added 20 for whitespace at bottom of HTML element
       }
     };
 
@@ -1694,6 +1700,7 @@ class ls_grid extends HTMLElement {
     const create_grid = function () {
       create_header();
       table_cont = append_child("div", grid_container, "table_cont");
+      table_cont.style.overflowY = "auto";
       table = append_child("table", table_cont, "table1");
       css(conf.style.table, table);
       create_footer();
