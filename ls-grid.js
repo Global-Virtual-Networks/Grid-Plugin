@@ -1778,13 +1778,10 @@ class ls_grid extends HTMLElement {
             const row = rows[i];
             const cells = row.cells;
 
-            const condensedCell = cells[cells.length - 1];
+            const condensedCell = row.removeChild(cells[cells.length - 1]);
 
-            if (i === 0) {
-              this.#headerCells.push(condensedCell.cloneNode(true));
-            }
+            if (i === 0) this.#headerCells.push(condensedCell.cloneNode(true));
 
-            row.removeChild(condensedCell);
             condensedCell.style.cssText = "width: auto; margin: 5px;";
             condensedCell.querySelector("#cell_cont").style.cssText =
               "border: none;";
