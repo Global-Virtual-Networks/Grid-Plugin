@@ -568,9 +568,16 @@ class ls_grid extends HTMLElement {
           }
         }
         num_of_pages = Math.ceil(search_matches.length / conf.rtd);
-        remove();
+
+        //remove HTML elements holding condensed columns
+        for (const div of condensedDivs) div.parentElement.removeChild(div);
+        condensedDivs = [];
+        for (const cell of headerCells) table.rows[0].appendChild(cell);
+        //remove HTML elements holding condensed columns
+
         populate_table(search_matches);
-        condense();
+
+        condenseCols();
       });
     };
 
@@ -1745,7 +1752,7 @@ class ls_grid extends HTMLElement {
             ls_grid_container.style.height =
               ls_grid_container.offsetHeight + "px";
             footer_container.style.position = "absolute";
-            condense();
+            condenseCols();
           });
         }
         header_container.style.visibility = "visible";
@@ -1756,7 +1763,7 @@ class ls_grid extends HTMLElement {
     let condensedDivs = [];
     let headerCells = [];
 
-    const condense = function () {
+    const condenseCols = function () {
       if (table.offsetWidth >= screen.width) {
         let headerCell;
         const rows = table.rows;
@@ -1794,15 +1801,10 @@ class ls_grid extends HTMLElement {
       }
     };
 
-    const remove = function () {
-      for (const div of condensedDivs) div.parentElement.removeChild(div);
-      for (const cell of headerCells) table.rows[0].appendChild(cell);
-    };
-
     const expand = function () {};
 
     window.addEventListener("resize", function () {
-      condense();
+      condenseCols();
     });
 
     create_grid();
