@@ -195,7 +195,7 @@ class ls_grid extends HTMLElement {
     let headerCells = [];
 
     const condenseCols = function () {
-      if (self.offsetWidth >= self.parentElement.offsetWidth) {
+      if (self.offsetWidth >= screen.width) {
         let headerCell;
         const rows = table.rows;
 
@@ -203,9 +203,15 @@ class ls_grid extends HTMLElement {
           const row = rows[i];
           const cells = row.cells;
 
-          const condensedCell = row.removeChild(cells[cells.length - 1]);
+          const condensedCell = cells[cells.length - 1];
 
-          if (i === 0) headerCells.push(condensedCell.cloneNode(true));
+          if (i === 0) {
+            headerCells.push(condensedCell.cloneNode(true));
+            ls_grid_container.style.width =
+              ls_grid_container.offsetWidth - condensedCell.offsetWidth + "px";
+          }
+
+          row.removeChild(condensedCell);
 
           condensedCell.style.cssText = "width: auto; margin: 5px;";
           condensedCell.querySelector("#cell_cont").style.cssText =
