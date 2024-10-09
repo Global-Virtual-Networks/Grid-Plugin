@@ -1771,7 +1771,7 @@ class ls_grid extends HTMLElement {
 
           const condensedCellsContainer = document.createElement("div");
           condensedCellsContainer.style.cssText =
-            "display: flex; align-items: center;";
+            "display: none; align-items: center;";
           row.parentElement.insertBefore(
             condensedCellsContainer,
             row.nextElementSibling
