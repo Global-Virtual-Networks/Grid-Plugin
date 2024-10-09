@@ -1753,26 +1753,30 @@ class ls_grid extends HTMLElement {
     const modifyCols = function () {
       if (table.offsetWidth >= screen.width) {
         const rows = table.rows;
+        let headerCell;
 
-        for (const row of rows) {
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
           const cells = row.cells;
+
           const condensedCell = row.removeChild(cells[cells.length - 1]);
+          condensedCell.style.width = "auto";
+
+          if (i === 0) {
+            headerCell = condensedCell;
+            continue;
+          }
 
           const condensedCellsContainer = document.createElement("div");
+          condensedCellsContainer.style.cssText =
+            "display: flex; align-items: center;";
           row.parentElement.insertBefore(
             condensedCellsContainer,
             row.nextElementSibling
           );
 
-          const condensedCellContainer = append_child(
-            "div",
-            condensedCellsContainer
-          );
-          condensedCellContainer.style.cssText =
-            "display: flex; align-items: center;";
-
-          const column = append_child("div", condensedCellsContainer);
-          condensedCellContainer.innerHTML = condensedCell.innerHTML;
+          condensedCellsContainer.appendChild(headerCell.cloneNode(true));
+          condensedCellsContainer.appendChild(condensedCell);
         }
       }
     };
