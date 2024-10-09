@@ -25,6 +25,7 @@ class ls_grid extends HTMLElement {
           "data:image/png;base64, R0lGODlhEAAQAMQNACRIkC1TnjNZpj9otyxm2Dhu3D913Sxx7kRvwEJt1Ep1yEh630574f///1OA1lGD4VaE6V+L4GCM5GiU5W+W7G2Z5mec+3Ga536f7oKg542r8Iiu/5a076G+8KK9/6rE7yH5BAEAAA0ALAAAAAAQABAAAAVWYCOOZGme55RdJls+X1VGcul0Exl5uc1Jo8TGAywpNBFRwmLhJEsIzKMhIBwsmmlpQFmIANaLtySgGEbgx5ksKZAACXcpACGUwCYAw17iv+EogYKDJCEAOw==",
       },
       grid_mode: "pagination",
+      client_sort: true,
       style: {
         //css relating to table
         row_color: ["background-color: #ffffff"],
@@ -1071,50 +1072,21 @@ class ls_grid extends HTMLElement {
 
       background_count.set_count(1);
       tabledata_len = tabledata_rows.length;
-      //in case current page doesn't exist after filters are applied
-      if (first_entry_index > tabledata_len) {
-        pagination_active(1);
-      }
-      tabledata_rows = tabledata_rows.slice(
-        first_entry_index,
-        first_entry_index + conf.rtd
-      );
-
-      tabledata_rows.forEach((row, idx) => {
-        const row_dobj = add_row.call(this, row);
-        set_row_background_color(row_dobj);
-        row_dobj.addEventListener("click", function (event) {
-          if (!event.ctrlKey && !edit_mode.get_mode()) {
-            if (typeof conf.on_row_click === "function") {
-              let obj = {};
-              const row = this.cells;
-              const cols = conf.data_adapter.columns;
-              for (let i = 0; i < row.length; i++) {
-                const key = cols[i].name.toLowerCase();
-                let value = row[i].textContent;
-                obj[key] = value;
-              }
-              conf.on_row_click.call(this, obj);
-            }
-          }
-        });
-      });
-      set_pagination_nums();
 
       //client side sorting algorithm below
+      const rows = tabledata_rows;
       if (sort_by !== null && conf.client_sort) {
         let switching, i, x, y, shouldSwitch;
         switching = true;
         const column_info = header_info[sort_by];
-        const rows = table.rows;
 
         while (switching) {
           switching = false;
 
-          for (i = 1; i < rows.length - 1; i++) {
+          for (i = 0; i < rows.length - 1; i++) {
             shouldSwitch = false;
-            x = rows[i].cells[sort_by].textContent;
-            y = rows[i + 1].cells[sort_by].textContent;
+            x = rows[i].cell[sort_by];
+            y = rows[i + 1].cell[sort_by];
             if (column_info.type === "int") {
               //int method includes precautions in case x or y is NaN(not a number)
               x = int(x);
@@ -1144,11 +1116,43 @@ class ls_grid extends HTMLElement {
             }
           }
           if (shouldSwitch) {
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            var tmp = rows[i];
+            rows[i] = rows[i + 1];
+            rows[i + 1] = tmp;
             switching = true;
           }
         }
       }
+
+      //in case current page doesn't exist after filters are applied
+      if (first_entry_index > tabledata_len) {
+        pagination_active(1);
+      }
+      tabledata_rows = rows.slice(
+        first_entry_index,
+        first_entry_index + conf.rtd
+      );
+
+      tabledata_rows.forEach((row, idx) => {
+        const row_dobj = add_row.call(this, row);
+        set_row_background_color(row_dobj);
+        row_dobj.addEventListener("click", function (event) {
+          if (!event.ctrlKey && !edit_mode.get_mode()) {
+            if (typeof conf.on_row_click === "function") {
+              let obj = {};
+              const row = this.cells;
+              const cols = conf.data_adapter.columns;
+              for (let i = 0; i < row.length; i++) {
+                const key = cols[i].name.toLowerCase();
+                let value = row[i].textContent;
+                obj[key] = value;
+              }
+              conf.on_row_click.call(this, obj);
+            }
+          }
+        });
+      });
+      set_pagination_nums();
 
       // //set display to none for any rows outside the index calculated below
       // const low = first_entry_index;
