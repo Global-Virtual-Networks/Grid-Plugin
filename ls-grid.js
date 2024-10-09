@@ -191,6 +191,49 @@ class ls_grid extends HTMLElement {
       }
     });
 
+    let condensedDivs = [];
+    let headerCells = [];
+
+    const condenseCols = function () {
+      if (table.offsetWidth >= screen.width) {
+        let headerCell;
+        const rows = table.rows;
+
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          const cells = row.cells;
+
+          const condensedCell = row.removeChild(cells[cells.length - 1]);
+
+          if (i === 0) headerCells.push(condensedCell.cloneNode(true));
+
+          condensedCell.style.cssText = "width: auto; margin: 5px;";
+          condensedCell.querySelector("#cell_cont").style.cssText =
+            "border: none;";
+
+          if (i === 0) {
+            headerCell = condensedCell;
+            continue;
+          }
+
+          const condensedCellsContainer = document.createElement("div");
+          condensedCellsContainer.style.cssText =
+            "display: flex; align-items: center;";
+          row.parentElement.insertBefore(
+            condensedCellsContainer,
+            row.nextElementSibling
+          );
+
+          condensedCellsContainer.appendChild(headerCell.cloneNode(true));
+          condensedCellsContainer.appendChild(condensedCell);
+
+          condensedDivs.push(condensedCellsContainer);
+        }
+      }
+    };
+
+    const expand = function () {};
+
     //child_el = child element
     const append_child = (child_el, parent, id) => {
       const child = document.createElement(child_el);
@@ -1760,49 +1803,6 @@ class ls_grid extends HTMLElement {
         footer_container.style.visibility = "visible";
       },
     };
-
-    let condensedDivs = [];
-    let headerCells = [];
-
-    const condenseCols = function () {
-      if (table.offsetWidth >= screen.width) {
-        let headerCell;
-        const rows = table.rows;
-
-        for (let i = 0; i < rows.length; i++) {
-          const row = rows[i];
-          const cells = row.cells;
-
-          const condensedCell = row.removeChild(cells[cells.length - 1]);
-
-          if (i === 0) headerCells.push(condensedCell.cloneNode(true));
-
-          condensedCell.style.cssText = "width: auto; margin: 5px;";
-          condensedCell.querySelector("#cell_cont").style.cssText =
-            "border: none;";
-
-          if (i === 0) {
-            headerCell = condensedCell;
-            continue;
-          }
-
-          const condensedCellsContainer = document.createElement("div");
-          condensedCellsContainer.style.cssText =
-            "display: flex; align-items: center;";
-          row.parentElement.insertBefore(
-            condensedCellsContainer,
-            row.nextElementSibling
-          );
-
-          condensedCellsContainer.appendChild(headerCell.cloneNode(true));
-          condensedCellsContainer.appendChild(condensedCell);
-
-          condensedDivs.push(condensedCellsContainer);
-        }
-      }
-    };
-
-    const expand = function () {};
 
     window.addEventListener("resize", function () {
       condenseCols();
