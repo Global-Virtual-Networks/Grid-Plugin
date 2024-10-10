@@ -292,8 +292,6 @@ class ls_grid extends HTMLElement {
       }
     };
 
-    const expand = function () {};
-
     //child_el = child element
     const append_child = (child_el, parent, id) => {
       const child = document.createElement(child_el);
@@ -652,7 +650,7 @@ class ls_grid extends HTMLElement {
         }
         num_of_pages = Math.ceil(search_matches.length / conf.rtd);
 
-        //remove HTML elements holding condensed columns
+        //return condensed columns back to table in the standard format
         ls_grid_container.style.width = ogLsGridWidth + "px";
 
         for (const div of condensedDivs) div.parentElement.removeChild(div);
@@ -661,7 +659,7 @@ class ls_grid extends HTMLElement {
         //add columns back in the correct order
         for (const cell of headerCells) table.rows[0].appendChild(cell);
         headerCells = [];
-        //remove HTML elements holding condensed columns
+        //return condensed columns back to table in the standard format
 
         populate_table(search_matches);
 
@@ -1819,8 +1817,15 @@ class ls_grid extends HTMLElement {
       },
     };
 
+    let prevWidth = window.innerWidth;
+
     window.addEventListener("resize", function () {
-      condenseCols();
+      let currWidth = window.innerWidth;
+
+      if (currWidth > prevWidth) self.filter_rows();
+      else if (currWidth < prevWidth) condenseCols();
+
+      prevWidth = currWidth;
     });
 
     create_grid();
