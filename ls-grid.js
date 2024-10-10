@@ -289,12 +289,17 @@ class ls_grid extends HTMLElement {
               "display: flex; align-items: center; justify-content: space-between;";
             rowCell1.addEventListener("click", function (e) {
               // this.removeEventListener("click", foo);
-              if (condensedCol.style.display === "none") {
-                condensedCol.style.display = "flex";
-                condColsIcon.style.transform = "rotate(180deg)";
-              } else {
-                condensedCol.style.display = "none";
-                condColsIcon.style.transform = "rotate(90deg)";
+              let elem = this.parentElement.nextElementSibling;
+
+              while (elem.localName !== "tr") {
+                if (elem.style.display === "none") {
+                  elem.style.display = "flex";
+                  condColsIcon.style.transform = "rotate(180deg)";
+                } else {
+                  elem.style.display = "none";
+                  condColsIcon.style.transform = "rotate(90deg)";
+                }
+                elem = elem.nextElementSibling;
               }
               // this.addEventListener("click", foo);
             });
