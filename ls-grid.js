@@ -284,11 +284,10 @@ class ls_grid extends HTMLElement {
           condensedDivs.push(condensedCellsContainer);
         }
 
-        table_cont.style.cssText +=
-          "height: " +
+        table_cont.style.height =
           "calc(100% - " +
           (header_container.offsetHeight + footer_container.offsetHeight + 20) +
-          "px);"; //added 20 for whitespace at bottom of HTML element
+          "px)"; //added 20 for whitespace at bottom of HTML element
       }
     };
 
@@ -652,6 +651,7 @@ class ls_grid extends HTMLElement {
 
         //return condensed columns back to table in the standard format
         ls_grid_container.style.width = ogLsGridWidth + "px";
+        table_cont.style.height = "auto";
 
         for (const div of condensedDivs) div.parentElement.removeChild(div);
         condensedDivs = [];
