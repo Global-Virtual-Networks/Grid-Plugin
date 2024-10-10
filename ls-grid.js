@@ -58,7 +58,7 @@ class ls_grid extends HTMLElement {
     let table2;
     let rtd;
     let condensedDivs = [];
-    let headerCells = [];
+    let headerCells = new Map(); //using Map class because it allows HTML elements to exist as keys
 
     let conf = {
       icons: {
@@ -254,7 +254,11 @@ class ls_grid extends HTMLElement {
           const condensedCell = cells[cells.length - 1];
 
           if (i === 0) {
-            headerCells.unshift(condensedCell.cloneNode(true)); //add element to beginning of array
+            headerCells = new Map([
+              [condensedCell.cloneNode(true), condensedCell.offsetWidth],
+              ...headerCells,
+            ]); //add element to beginning of array
+
             ls_grid_container.style.width =
               ls_grid_container.offsetWidth - condensedCell.offsetWidth + "px";
           }
@@ -657,8 +661,9 @@ class ls_grid extends HTMLElement {
         condensedDivs = [];
 
         //add columns back in the correct order
-        for (const cell of headerCells) table.rows[0].appendChild(cell);
-        headerCells = [];
+        for (const [cell, width] of headerCells)
+          table.rows[0].appendChild(cell);
+        headerCells.clear();
         //return condensed columns back to table in the standard format
 
         populate_table(search_matches);
