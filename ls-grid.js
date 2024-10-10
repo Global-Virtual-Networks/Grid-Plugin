@@ -279,11 +279,19 @@ class ls_grid extends HTMLElement {
           row.parentElement.insertBefore(condensedCol, row.nextElementSibling);
 
           const rowCell1 = row.cells[0];
+          // if (false) {
           if (!rowCell1.querySelector("img")) {
             const condColsIcon = document.createElement("img");
             condColsIcon.src = conf.icons.ascending;
             condColsIcon.style.transform = "rotate(90deg)";
-            rowCell1.appendChild(condColsIcon);
+            rowCell1.insertBefore(condColsIcon, rowCell1.children[0]);
+            rowCell1.style.cssText =
+              "display: flex; align-items: center; justify-content: space-around;";
+            rowCell1.parentElement.addEventListener("click", function (e) {
+              // this.removeEventListener("click", foo);
+              alert("hi");
+              // this.addEventListener("click", foo);
+            });
           }
 
           condensedCol.appendChild(headerCell.cloneNode(true));
