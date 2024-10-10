@@ -287,7 +287,7 @@ class ls_grid extends HTMLElement {
             rowCell1.insertBefore(condColsIcon, rowCell1.children[0]);
             rowCell1.style.cssText =
               "display: flex; align-items: center; justify-content: space-between;";
-            rowCell1.parentElement.addEventListener("click", function (e) {
+            rowCell1.addEventListener("click", function (e) {
               // this.removeEventListener("click", foo);
               if (condensedCol.style.display === "none") {
                 condensedCol.style.display = "flex";
@@ -308,7 +308,7 @@ class ls_grid extends HTMLElement {
 
         table_cont.style.height =
           "calc(100% - " +
-          (header_container.offsetHeight + footer_container.offsetHeight + 20) +
+          (header_container.offsetHeight + footer_container.offsetHeight) +
           "px)"; //added 20 for whitespace at bottom of HTML element
       }
     };
