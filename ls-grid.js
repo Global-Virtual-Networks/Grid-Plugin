@@ -275,7 +275,7 @@ class ls_grid extends HTMLElement {
           }
 
           const condensedCol = document.createElement("div");
-          condensedCol.style.cssText = "display: flex; align-items: center;";
+          condensedCol.style.cssText = "display: none; align-items: center;";
           row.parentElement.insertBefore(condensedCol, row.nextElementSibling);
 
           const rowCell1 = row.cells[0];
@@ -286,10 +286,16 @@ class ls_grid extends HTMLElement {
             condColsIcon.style.transform = "rotate(90deg)";
             rowCell1.insertBefore(condColsIcon, rowCell1.children[0]);
             rowCell1.style.cssText =
-              "display: flex; align-items: center; justify-content: space-around;";
+              "display: flex; align-items: center; justify-content: space-between;";
             rowCell1.parentElement.addEventListener("click", function (e) {
               // this.removeEventListener("click", foo);
-              alert("hi");
+              if (condensedCol.style.display === "none") {
+                condensedCol.style.display = "flex";
+                condColsIcon.style.transform = "rotate(180deg)";
+              } else {
+                condensedCol.style.display = "none";
+                condColsIcon.style.transform = "rotate(90deg)";
+              }
               // this.addEventListener("click", foo);
             });
           }
