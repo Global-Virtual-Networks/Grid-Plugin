@@ -1827,8 +1827,13 @@ class ls_grid extends HTMLElement {
     window.addEventListener("resize", function () {
       let currWidth = window.innerWidth;
 
-      if (currWidth > prevWidth) self.filter_rows();
-      else condenseCols();
+      if (currWidth > prevWidth) {
+        const condensedColWidth = !headerCells.entries().next().done
+          ? headerCells.entries().next().value[1]
+          : 0;
+        if (ls_grid_container.offsetWidth + condensedColWidth <= screen.width)
+          self.filter_rows();
+      } else condenseCols();
 
       prevWidth = currWidth;
     });
