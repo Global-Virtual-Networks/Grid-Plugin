@@ -1823,7 +1823,7 @@ class ls_grid extends HTMLElement {
       let currWidth = window.innerWidth;
 
       if (currWidth > prevWidth) self.filter_rows();
-      else if (currWidth < prevWidth) condenseCols();
+      else condenseCols();
 
       prevWidth = currWidth;
     });
