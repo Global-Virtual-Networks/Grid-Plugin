@@ -254,7 +254,7 @@ class ls_grid extends HTMLElement {
           const condensedCell = cells[cells.length - 1];
 
           if (i === 0) {
-            headerCells.push(condensedCell.cloneNode(true));
+            headerCells.unshift(condensedCell.cloneNode(true)); //add element to beginning of array
             ls_grid_container.style.width =
               ls_grid_container.offsetWidth - condensedCell.offsetWidth + "px";
           }
@@ -654,8 +654,11 @@ class ls_grid extends HTMLElement {
 
         //remove HTML elements holding condensed columns
         ls_grid_container.style.width = ogLsGridWidth + "px";
+
         for (const div of condensedDivs) div.parentElement.removeChild(div);
         condensedDivs = [];
+
+        //add columns back in the correct order
         for (const cell of headerCells) table.rows[0].appendChild(cell);
         headerCells = [];
         //remove HTML elements holding condensed columns
