@@ -279,7 +279,7 @@ class ls_grid extends HTMLElement {
           row.parentElement.insertBefore(condensedCol, row.nextElementSibling);
 
           const rowCell1 = row.cells[0];
-          // if (false) {
+
           if (!rowCell1.querySelector("img")) {
             const condColsIcon = document.createElement("img");
             condColsIcon.src = conf.icons.ascending;
