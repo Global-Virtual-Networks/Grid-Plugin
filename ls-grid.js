@@ -9,6 +9,8 @@ class ls_grid extends HTMLElement {
       this.removeAttribute("style");
     });
 
+    let ogLsGridWidth;
+
     let rtd;
     let conf = {
       icons: {
@@ -179,6 +181,7 @@ class ls_grid extends HTMLElement {
         ],
       },
     };
+
     //add event listeners that will change the cursor depending on whether the ctrl key is being held or not
     document.addEventListener("keydown", function (event) {
       if (event.key === "Control") {
@@ -625,6 +628,7 @@ class ls_grid extends HTMLElement {
         num_of_pages = Math.ceil(search_matches.length / conf.rtd);
 
         //remove HTML elements holding condensed columns
+        ls_grid_container.style.width = ogLsGridWidth + "px";
         for (const div of condensedDivs) div.parentElement.removeChild(div);
         condensedDivs = [];
         for (const cell of headerCells) table.rows[0].appendChild(cell);
@@ -1795,6 +1799,7 @@ class ls_grid extends HTMLElement {
             self.schema = data.schema;
             add_headers(config.data_adapter.columns, data.schema);
             populate_table(data.rows);
+            ogLsGridWidth = ls_grid_container.offsetWidth;
             grid_mode.set(conf.grid_mode);
 
             //to account for NO specified height with absolute positioning
