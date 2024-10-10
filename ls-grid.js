@@ -9,9 +9,57 @@ class ls_grid extends HTMLElement {
       this.removeAttribute("style");
     });
 
+    const self = this;
+    let headerIdx = null;
+    let curr_page = 1;
+    let first_entry_index = 0;
+    let last_entry_index;
+    let tabledata_len;
+    let pag_tb;
+    let tot_pgs;
+    let entries_container;
+    let pager_cont;
+    let cancel_butt;
+    let save_butt;
+    let bef_aft_obj = {};
+    let search_bar;
+    let search_container;
+    let search_ddl;
+    let search_icon;
+    let reset_butt;
+    let export_butt;
+    let sf_idx;
+    let default_sf = "All"; //sf equals search filter
+    let prev_butt;
+    let next_butt;
+    let first_butt;
+    let last_butt;
+    let edit_butts_cont;
     let ogLsGridWidth;
-
+    let rows_arr = [];
+    let excess_cols = [];
+    let excess_rows = [];
+    let cols_ascending = {};
+    let bott_row_headers;
+    let table_name;
+    let table;
+    let grid_container;
+    let header_container;
+    let footer_container;
+    let num_of_pages;
+    let tot_num_cols;
+    let table_cont;
+    let tabledata_rows;
+    let ord_bind_obj = {};
+    let ord_name_obj = {};
+    let sortedBy_icon;
+    let headers_arr;
+    let header_info = {};
+    let table2;
     let rtd;
+    let condensedDivs = [];
+    let headerCells = [];
+
     let conf = {
       icons: {
         ascending:
@@ -194,9 +242,6 @@ class ls_grid extends HTMLElement {
       }
     });
 
-    let condensedDivs = [];
-    let headerCells = [];
-
     const condenseCols = function () {
       while (self.offsetWidth >= screen.width) {
         let headerCell;
@@ -279,6 +324,8 @@ class ls_grid extends HTMLElement {
       };
     };
 
+    const grid_mode = grid_mde();
+
     const set_pagination_nums = () => {
       //dataset is displayed correctly, even though first_entry_index is off by one? To prevent further issues, displaying a different variables variable in entries_container
       let fe_idx = first_entry_index;
@@ -310,29 +357,7 @@ class ls_grid extends HTMLElement {
       };
     };
 
-    const self = this;
-    let headerIdx = null;
-    let curr_page = 1;
-    let first_entry_index = 0;
-    let last_entry_index;
-    let tabledata_len;
-    let pag_tb;
-    let tot_pgs;
-    let entries_container;
-    let pager_cont;
-    let cancel_butt;
-    let save_butt;
-    let bef_aft_obj = {};
-    let search_bar;
-    let search_container;
-    let search_ddl;
-    let search_icon;
-    let reset_butt;
-    let export_butt;
-    const grid_mode = grid_mde();
     const search_mode = mode();
-    let sf_idx;
-    let default_sf = "All"; //sf equals search filter
 
     function Search(grid_container, headers_arr) {
       var self = this; //have to use 'var' as variable type because it wasn't available in the public methods otherwise
@@ -714,12 +739,6 @@ class ls_grid extends HTMLElement {
       reset_export();
     };
 
-    let prev_butt;
-    let next_butt;
-    let first_butt;
-    let last_butt;
-    let edit_butts_cont;
-
     const paginate_listeners = function (element, callback) {
       element.addEventListener("mouseover", function () {
         this.style.background = "";
@@ -975,6 +994,10 @@ class ls_grid extends HTMLElement {
       };
     };
 
+    const background_count = counter();
+    const compressed_num_of_cols = counter();
+    const header_click = counter();
+
     const edit_mde = () => {
       //initialize a static variable
       let edit_mode = false;
@@ -1000,6 +1023,8 @@ class ls_grid extends HTMLElement {
       };
     };
 
+    const edit_mode = edit_mde();
+
     const window_sze = () => {
       let prev_width, prev_height;
 
@@ -1017,31 +1042,7 @@ class ls_grid extends HTMLElement {
       };
     };
 
-    let rows_arr = [];
-    let excess_cols = [];
-    let excess_rows = [];
-    let cols_ascending = {};
-    let bott_row_headers;
-    let table_name;
-    let table;
-    let grid_container;
-    let header_container;
-    let footer_container;
-    let num_of_pages;
-    let tot_num_cols;
-    let table_cont;
-    let tabledata_rows;
-    let ord_bind_obj = {};
-    let ord_name_obj = {};
-    const background_count = counter();
-    const compressed_num_of_cols = counter();
-    const header_click = counter();
     const window_size = window_sze();
-    const edit_mode = edit_mde();
-    let sortedBy_icon;
-    let headers_arr;
-    let header_info = {};
-    let table2;
 
     //elem = element
     const css = (property, elem) => {
