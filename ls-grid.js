@@ -1828,10 +1828,13 @@ class ls_grid extends HTMLElement {
       const currWidth = window.innerWidth;
       const mapEntries = headerCells.entries().next();
 
-      if (currWidth > prevWidth && !mapEntries.done) {
-        //window is being enlarged AND condensed columns
-        if (ls_grid_container.offsetWidth + mapEntries.value[1] <= screen.width)
-          self.filter_rows();
+      //window is being enlarged AND condensed columns exist AND there's room for an extra column width wise
+      if (
+        currWidth > prevWidth &&
+        !mapEntries.done &&
+        ls_grid_container.offsetWidth + mapEntries.value[1] <= screen.width
+      ) {
+        self.filter_rows();
       } else if (currWidth < prevWidth) condenseCols();
 
       prevWidth = currWidth;
