@@ -1825,15 +1825,14 @@ class ls_grid extends HTMLElement {
     let prevWidth = window.innerWidth;
 
     window.addEventListener("resize", function () {
-      let currWidth = window.innerWidth;
+      const currWidth = window.innerWidth;
+      const mapEntries = headerCells.entries().next();
 
-      if (currWidth > prevWidth) {
-        const condensedColWidth = !headerCells.entries().next().done
-          ? headerCells.entries().next().value[1]
-          : 0;
-        if (ls_grid_container.offsetWidth + condensedColWidth <= screen.width)
+      if (currWidth > prevWidth && !mapEntries.done) {
+        //window is being enlarged AND condensed columns
+        if (ls_grid_container.offsetWidth + mapEntries.value[1] <= screen.width)
           self.filter_rows();
-      } else condenseCols();
+      } else if (currWidth < prevWidth) condenseCols();
 
       prevWidth = currWidth;
     });
