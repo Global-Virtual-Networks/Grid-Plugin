@@ -275,18 +275,19 @@ class ls_grid extends HTMLElement {
             continue;
           }
 
-          const condensedCellsContainer = document.createElement("div");
-          condensedCellsContainer.style.cssText =
-            "display: flex; align-items: center;";
-          row.parentElement.insertBefore(
-            condensedCellsContainer,
-            row.nextElementSibling
-          );
+          const condensedCol = document.createElement("div");
+          condensedCol.style.cssText = "display: flex; align-items: center;";
+          row.parentElement.insertBefore(condensedCol, row.nextElementSibling);
 
-          condensedCellsContainer.appendChild(headerCell.cloneNode(true));
-          condensedCellsContainer.appendChild(condensedCell);
+          const rowCell1 = row.cells[0];
+          if (!rowCell1.querySelector("svg")) {
+            rowCell1.innerHTML += conf.icons.plusMinus;
+          }
 
-          condensedDivs.push(condensedCellsContainer);
+          condensedCol.appendChild(headerCell.cloneNode(true));
+          condensedCol.appendChild(condensedCell);
+
+          condensedDivs.push(condensedCol);
         }
 
         table_cont.style.height =
