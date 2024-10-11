@@ -2,10 +2,8 @@ class ls_grid extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    const ls_grid_container = document.createElement("div");
-    this.shadowRoot.append(ls_grid_container);
     window.addEventListener("DOMContentLoaded", () => {
-      ls_grid_container.style.cssText = this.getAttribute("style");
+      grid_container.style.cssText += this.getAttribute("style");
       this.removeAttribute("style");
     });
 
@@ -235,17 +233,17 @@ class ls_grid extends HTMLElement {
     //add event listeners that will change the cursor depending on whether the ctrl key is being held or not
     document.addEventListener("keydown", function (event) {
       if (event.key === "Control") {
-        css(["cursor: pointer;"], ls_grid_container);
+        css(["cursor: pointer;"], grid_container);
       }
     });
     document.addEventListener("keyup", function (event) {
       if (event.key === "Control") {
-        css(["cursor: auto;"], ls_grid_container);
+        css(["cursor: auto;"], grid_container);
       }
     });
 
     const condenseCols = function () {
-      while (ls_grid_container.offsetWidth >= screen.width) {
+      while (grid_container.offsetWidth >= screen.width) {
         let headerCell;
         const rows = table.rows;
 
@@ -261,8 +259,8 @@ class ls_grid extends HTMLElement {
               ...headerCells,
             ]); //add element to beginning of array
 
-            ls_grid_container.style.width =
-              ls_grid_container.offsetWidth - condensedCell.offsetWidth + "px";
+            grid_container.style.width =
+              grid_container.offsetWidth - condensedCell.offsetWidth + "px";
           }
 
           row.removeChild(condensedCell);
@@ -358,7 +356,7 @@ class ls_grid extends HTMLElement {
       return {
         set: function (mode) {
           if (mode === "scroll") {
-            css(conf.style.scroll_mode, ls_grid_container);
+            css(conf.style.scroll_mode, grid_container);
             footer_container.style.display = "none";
           } else if (mode === "pagination") {
             set_pagination_nums();
@@ -368,7 +366,7 @@ class ls_grid extends HTMLElement {
                 mode +
                 "' for grid_mode property."
             );
-            ls_grid_container.removeChild(grid_parent_container);
+            grid_container.removeChild(grid_parent_container);
           }
         },
       };
@@ -579,7 +577,7 @@ class ls_grid extends HTMLElement {
 
     const create_header = () => {
       //create header
-      grid_container = append_child("div", ls_grid_container, "grid_container");
+      grid_container = append_child("div", this.shadowRoot, "grid_container");
       css(conf.style.grid_container, grid_container);
       header_container = append_child(
         "div",
@@ -703,7 +701,7 @@ class ls_grid extends HTMLElement {
         num_of_pages = Math.ceil(search_matches.length / conf.rtd);
 
         //return condensed columns back to table in the standard format
-        ls_grid_container.style.width = ogLsGridWidth + "px";
+        grid_container.style.width = ogLsGridWidth + "px";
         table_cont.style.height = "auto";
         rowClickEvent = true;
 
@@ -1267,7 +1265,7 @@ class ls_grid extends HTMLElement {
 
       //for whatever reason, cannot apply a % width to cells, it has to be in 'vw'. So have to calculate vw based off of the width of the plugin parent container
       const plugin_to_window_width =
-        (ls_grid_container.offsetWidth / document.body.offsetWidth) * 100;
+        (grid_container.offsetWidth / document.body.offsetWidth) * 100;
       const max_cell_width = plugin_to_window_width / num_vis_cols;
 
       conf.style.cell.push("max-width:" + max_cell_width + "vw");
@@ -1278,7 +1276,7 @@ class ls_grid extends HTMLElement {
       excess_rows = [];
       const table_rows = table.rows;
       let bott_row_count = table_rows.length - 2;
-      while (grid_container.offsetHeight > ls_grid_container.offsetHeight) {
+      while (grid_container.offsetHeight > grid_container.offsetHeight) {
         //make the bottom most row invisible
         const bott_row = table_rows[bott_row_count];
         bott_row.style.display = "none";
@@ -1572,11 +1570,11 @@ class ls_grid extends HTMLElement {
       //     //make sure edit mode is not on and no other right click context menus exists before creating one
       //     if (
       //       !edit_mode.get_mode() &&
-      //       ls_grid_container.querySelectorAll("#context_menu").length === 0
+      //       grid_container.querySelectorAll("#context_menu").length === 0
       //     ) {
       //       const context_menu = append_child(
       //         "div",
-      //         ls_grid_container,
+      //         grid_container,
       //         "context_menu"
       //       );
       //       css(conf.style.context_menu, context_menu);
@@ -1592,11 +1590,11 @@ class ls_grid extends HTMLElement {
       //       // Remove the context menu when user clicks anywhere else
       //       window.addEventListener("click", function (e) {
       //         if (e.target !== context_menu) {
-      //           ls_grid_container.removeChild(context_menu);
+      //           grid_container.removeChild(context_menu);
       //         }
       //       });
       //     }
-      //     const col_cells = ls_grid_container.querySelectorAll("." + this.className);
+      //     const col_cells = grid_container.querySelectorAll("." + this.className);
       //   });
 
       //add more event listeners to cells
@@ -1669,7 +1667,7 @@ class ls_grid extends HTMLElement {
 
     const reset_row_backgrounds = (tr) => {
       //find out whether you should apply row color or alt color to row
-      const all_TRs = ls_grid_container.querySelectorAll("table tr");
+      const all_TRs = grid_container.querySelectorAll("table tr");
       let count = 0;
       for (let i = 0; i < all_TRs.length; i++) {
         if (tr === all_TRs[i] && i % 2 === 0) {
@@ -1814,7 +1812,7 @@ class ls_grid extends HTMLElement {
       }
 
       let grid_space =
-        ls_grid_container.parentElement.offsetHeight -
+        grid_container.parentElement.offsetHeight -
         header_container.offsetHeight -
         footer_container.offsetHeight;
       rtd = Math.floor(grid_space / row_height) - 2; //subtracting by 2 to account for header row and padding between bottom row and footer
@@ -1863,13 +1861,12 @@ class ls_grid extends HTMLElement {
             self.schema = data.schema;
             add_headers(config.data_adapter.columns, data.schema);
             populate_table(data.rows);
-            ogLsGridWidth = ls_grid_container.offsetWidth;
+            ogLsGridWidth = grid_container.offsetWidth;
             grid_mode.set(conf.grid_mode);
 
             //to account for NO specified height with absolute positioning
             footer_container.style.position = "static";
-            ls_grid_container.style.height =
-              ls_grid_container.offsetHeight + "px";
+            grid_container.style.height = grid_container.offsetHeight + "px";
             footer_container.style.position = "absolute";
             condenseCols();
           });
@@ -1889,7 +1886,7 @@ class ls_grid extends HTMLElement {
       if (
         currWidth > prevWidth &&
         !mapEntries.done &&
-        ls_grid_container.offsetWidth + mapEntries.value[1] <= screen.width
+        grid_container.offsetWidth + mapEntries.value[1] <= screen.width
       ) {
         self.filter_rows();
       } else if (currWidth < prevWidth) condenseCols();
