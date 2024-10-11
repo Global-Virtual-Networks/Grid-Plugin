@@ -327,19 +327,21 @@ class ls_grid extends HTMLElement {
       }
 
       //display any previously visible condensed columns
-      for (const idx of visCondensedRows) {
-        const tr = table.rows[parseInt(idx) + 1];
-        const cell1Icon = tr.cells[0].querySelector("img");
-        let elem = tr.nextElementSibling;
+      if (!rowClickEvent) {
+        for (const idx of visCondensedRows) {
+          const tr = table.rows[parseInt(idx) + 1];
+          const cell1Icon = tr.cells[0].querySelector("img");
+          let elem = tr.nextElementSibling;
 
-        while (elem.localName !== "tr") {
-          if (elem.style.display === "none") {
-            elem.style.display = "flex";
-            cell1Icon.style.transform = "rotate(180deg)";
+          while (elem.localName !== "tr") {
+            if (elem.style.display === "none") {
+              elem.style.display = "flex";
+              cell1Icon.style.transform = "rotate(180deg)";
+            }
+            elem = elem.nextElementSibling;
           }
-          elem = elem.nextElementSibling;
         }
-      }
+      } else visCondensedRows = [];
     };
 
     //child_el = child element
