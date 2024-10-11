@@ -59,6 +59,7 @@ class ls_grid extends HTMLElement {
     let rtd;
     let condensedDivs = [];
     let headerCells = new Map(); //using Map class because it allows HTML elements to exist as keys
+    let visCondensedRows = [];
     let rowClickEvent = true;
 
     let conf = {
@@ -289,15 +290,22 @@ class ls_grid extends HTMLElement {
             rowCell1.style.cssText =
               "display: flex; align-items: center; justify-content: space-between;";
             rowCell1.addEventListener("click", function (e) {
-              let elem = this.parentElement.nextElementSibling;
+              const parentTR = this.parentElement;
+              let elem = parentTR.nextElementSibling;
 
               while (elem.localName !== "tr") {
                 if (elem.style.display === "none") {
                   elem.style.display = "flex";
                   condColsIcon.style.transform = "rotate(180deg)";
+                  if (!visCondensedRows.includes(parentTR))
+                    visCondensedRows.push(parentTR);
                 } else {
                   elem.style.display = "none";
                   condColsIcon.style.transform = "rotate(90deg)";
+                  visCondensedRows.splice(
+                    visCondensedRows.indexOf(parentTR),
+                    1
+                  );
                 }
                 elem = elem.nextElementSibling;
               }
@@ -317,6 +325,23 @@ class ls_grid extends HTMLElement {
 
         rowClickEvent = false;
       }
+
+      //display any previously visible condensed columns
+      // for (const tr of visCondensedRows) {
+      //   let elem = tr;
+
+      //   while (elem.localName !== "tr") {
+      //     if (elem.style.display === "none") {
+      //       elem.style.display = "flex";
+      //       condColsIcon.style.transform = "rotate(180deg)";
+      //     } else {
+      //       elem.style.display = "none";
+      //       condColsIcon.style.transform = "rotate(90deg)";
+      //     }
+      //     elem = elem.nextElementSibling;
+      //   }
+      // }
+      // visCondensedRows = [];
     };
 
     //child_el = child element
