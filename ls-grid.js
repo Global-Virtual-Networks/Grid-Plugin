@@ -336,9 +336,6 @@ class ls_grid extends HTMLElement {
           if (elem.style.display === "none") {
             elem.style.display = "flex";
             cell1Icon.style.transform = "rotate(180deg)";
-          } else {
-            elem.style.display = "none";
-            cell1Icon.style.transform = "rotate(90deg)";
           }
           elem = elem.nextElementSibling;
         }
