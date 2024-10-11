@@ -340,7 +340,6 @@ class ls_grid extends HTMLElement {
           elem = elem.nextElementSibling;
         }
       }
-      // visCondensedRows = [];
     };
 
     //child_el = child element
