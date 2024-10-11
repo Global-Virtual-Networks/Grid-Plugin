@@ -297,13 +297,13 @@ class ls_grid extends HTMLElement {
                 if (elem.style.display === "none") {
                   elem.style.display = "flex";
                   condColsIcon.style.transform = "rotate(180deg)";
-                  if (!visCondensedRows.includes(parentTR))
-                    visCondensedRows.push(parentTR);
+                  if (!visCondensedRows.includes(parentTR.id))
+                    visCondensedRows.push(parentTR.id);
                 } else {
                   elem.style.display = "none";
                   condColsIcon.style.transform = "rotate(90deg)";
                   visCondensedRows.splice(
-                    visCondensedRows.indexOf(parentTR),
+                    visCondensedRows.indexOf(parentTR.id),
                     1
                   );
                 }
@@ -327,20 +327,19 @@ class ls_grid extends HTMLElement {
       }
 
       //display any previously visible condensed columns
-      // for (const tr of visCondensedRows) {
-      //   let elem = tr;
-
-      //   while (elem.localName !== "tr") {
-      //     if (elem.style.display === "none") {
-      //       elem.style.display = "flex";
-      //       condColsIcon.style.transform = "rotate(180deg)";
-      //     } else {
-      //       elem.style.display = "none";
-      //       condColsIcon.style.transform = "rotate(90deg)";
-      //     }
-      //     elem = elem.nextElementSibling;
-      //   }
-      // }
+      for (const idx of visCondensedRows) {
+        let elem = table.rows[parseInt(idx) + 1].nextElementSibling;
+        while (elem.localName !== "tr") {
+          if (elem.style.display === "none") {
+            elem.style.display = "flex";
+            // condColsIcon.style.transform = "rotate(180deg)";
+          } else {
+            elem.style.display = "none";
+            // condColsIcon.style.transform = "rotate(90deg)";
+          }
+          elem = elem.nextElementSibling;
+        }
+      }
       // visCondensedRows = [];
     };
 
