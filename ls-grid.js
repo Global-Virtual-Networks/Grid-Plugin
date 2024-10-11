@@ -1186,7 +1186,12 @@ class ls_grid extends HTMLElement {
         const row_dobj = add_row.call(this, row);
         set_row_background_color(row_dobj);
         row_dobj.addEventListener("click", function (event) {
-          if (!rowClickEvent && event.target == this.children[0]) return; //do NOT activate event listener if condensed cols exist AND cell 1 within the row is clicked
+          const cell1 = this.cells[0];
+          if (
+            !rowClickEvent &&
+            (cell1 == event.target || cell1.contains(event.target))
+          )
+            return; //do NOT activate event listener if condensed cols exist AND cell 1 within the row is clicked
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
               let obj = {};
