@@ -4,6 +4,10 @@ class ls_grid extends HTMLElement {
     this.attachShadow({ mode: "open" });
     window.addEventListener("DOMContentLoaded", () => {
       grid_container.style.cssText += this.getAttribute("style");
+
+      if (!grid_container.style.width)
+        grid_container.style.width = grid_container.offsetWidth + "px";
+
       this.removeAttribute("style");
     });
 
@@ -88,7 +92,6 @@ class ls_grid extends HTMLElement {
         grid_container: [
           "background-color: #fff",
           "overflow-x: auto;",
-          "width: 100%;",
           "height: 100%;",
           "min-height: 100px",
           "position: relative",
