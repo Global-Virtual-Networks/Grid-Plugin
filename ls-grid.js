@@ -245,7 +245,7 @@ class ls_grid extends HTMLElement {
     });
 
     const condenseCols = function () {
-      while (self.offsetWidth >= screen.width) {
+      while (ls_grid_container.offsetWidth >= screen.width) {
         let headerCell;
         const rows = table.rows;
 
