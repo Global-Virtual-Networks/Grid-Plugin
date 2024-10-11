@@ -59,6 +59,7 @@ class ls_grid extends HTMLElement {
     let rtd;
     let condensedDivs = [];
     let headerCells = new Map(); //using Map class because it allows HTML elements to exist as keys
+    let rowClickEvent = true;
 
     let conf = {
       icons: {
@@ -315,6 +316,8 @@ class ls_grid extends HTMLElement {
           "calc(100% - " +
           (header_container.offsetHeight + footer_container.offsetHeight) +
           "px)"; //added 20 for whitespace at bottom of HTML element
+
+        rowClickEvent = false;
       }
     };
 
@@ -679,6 +682,7 @@ class ls_grid extends HTMLElement {
         //return condensed columns back to table in the standard format
         ls_grid_container.style.width = ogLsGridWidth + "px";
         table_cont.style.height = "auto";
+        rowClickEvent = true;
 
         for (const div of condensedDivs) div.parentElement.removeChild(div);
         condensedDivs = [];
@@ -1182,6 +1186,7 @@ class ls_grid extends HTMLElement {
         const row_dobj = add_row.call(this, row);
         set_row_background_color(row_dobj);
         row_dobj.addEventListener("click", function (event) {
+          if (!rowClickEvent) return;
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
               let obj = {};
