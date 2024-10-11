@@ -328,14 +328,17 @@ class ls_grid extends HTMLElement {
 
       //display any previously visible condensed columns
       for (const idx of visCondensedRows) {
-        let elem = table.rows[parseInt(idx) + 1].nextElementSibling;
+        const tr = table.rows[parseInt(idx) + 1];
+        const cell1Icon = tr.cells[0].querySelector("img");
+        let elem = tr.nextElementSibling;
+
         while (elem.localName !== "tr") {
           if (elem.style.display === "none") {
             elem.style.display = "flex";
-            // condColsIcon.style.transform = "rotate(180deg)";
+            cell1Icon.style.transform = "rotate(180deg)";
           } else {
             elem.style.display = "none";
-            // condColsIcon.style.transform = "rotate(90deg)";
+            cell1Icon.style.transform = "rotate(90deg)";
           }
           elem = elem.nextElementSibling;
         }
