@@ -289,7 +289,6 @@ class ls_grid extends HTMLElement {
             rowCell1.style.cssText =
               "display: flex; align-items: center; justify-content: space-between;";
             rowCell1.addEventListener("click", function (e) {
-              // this.removeEventListener("click", foo);
               let elem = this.parentElement.nextElementSibling;
 
               while (elem.localName !== "tr") {
@@ -302,7 +301,6 @@ class ls_grid extends HTMLElement {
                 }
                 elem = elem.nextElementSibling;
               }
-              // this.addEventListener("click", foo);
             });
           }
 
@@ -1192,6 +1190,7 @@ class ls_grid extends HTMLElement {
             (cell1 == event.target || cell1.contains(event.target))
           )
             return; //do NOT activate event listener if condensed cols exist AND cell 1 within the row is clicked
+
           if (!event.ctrlKey && !edit_mode.get_mode()) {
             if (typeof conf.on_row_click === "function") {
               let obj = {};
