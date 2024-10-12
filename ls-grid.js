@@ -268,7 +268,7 @@ class ls_grid extends HTMLElement {
 
           row.removeChild(condensedCell);
 
-          condensedCell.style.cssText = "width: auto; margin: 5px;";
+          condensedCell.style.cssText = "width: auto;";
           condensedCell.querySelector("#cell_cont").style.cssText =
             "border: none;";
 
